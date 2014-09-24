@@ -55,3 +55,6 @@ target/
 
 # Djando sqlite exception
 *.sqlite3
+
+# Django migrations
+apps/main/migrations
