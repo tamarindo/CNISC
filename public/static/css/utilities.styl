@@ -1,0 +1,148 @@
+/* 
+ * ------------------------------
+ * Mixins'n'Vars
+ * ------------------------------
+ */
+
+red			= #e53424
+dark-red 	= #981509
+gray 		= #646464
+dark-gray 	= #323232
+lighten-gray= #e2e2e2
+light-gray 	= #aeaeae
+marine		= #0aa1b0
+dark-marine = #07717b
+light-blue  = #f1f5f6
+green       = #00B233
+light-green = #00FF48
+
+.visuallyhidden
+    border 0
+    clip rect(0 0 0 0)
+    height 1px
+    margin -1px
+    overflow hidden
+    padding 0
+    position absolute
+    width 1px
+
+.screen-reader-text
+  clip rect(1px, 1px, 1px, 1px)
+  position absolute
+  &:focus
+    clip auto
+    display block
+    height auto
+    line-height normal
+    position absolute
+    left 5px
+    top 5px
+    text-decoration none
+    text-transform none
+    width auto
+    z-index 100000
+
+.vertical-align
+    width 100%
+    display table
+    > div
+        display table-cell
+        vertical-align middle
+
+.block-center
+    margin 0 auto
+
+/*
+ * Buttons
+ */
+
+button-color(color, fcolor = #fff)
+    color color
+    border-color color
+    &:hover
+        color fcolor
+        background-color color
+
+.button
+    padding 0.5rem 1.5rem
+    border 1px solid light-gray
+    background-color transparent
+    &.white
+        button-color(#fff, red)
+    &.red
+        button-color(red)
+        &.inverted
+            background-color red
+            color #fff
+            &:hover
+                background-color darken(red,10%)
+    &.green
+        button-color(green)
+        &.inverted
+            background-color green
+            color #fff
+            &:hover
+                background-color darken(green,10%)
+
+/*
+ * Lists, menus
+ */
+
+.list
+	margin 0
+	list-style-type none
+
+
+.hoverable
+    li:hover
+        background-color #f5f5f5
+
+.inline-list
+	li
+		display inline-block
+
+.pull-right
+	float right
+
+/*
+ * Text
+ */
+
+.left-text
+	text-align left
+
+.right-text
+	text-align right
+
+.center-text
+	text-align center
+
+.text-big
+    font-size 1.7rem
+
+.alert
+    background-color #FDFBCD
+    color #9B7106
+    border-left 10px solid #E2B749
+    padding 1rem
+
+/*
+ * Responsive Utilities
+ */
+
+.inline-list-desktop
+	display none
+
+	li
+		display inline-block
+	
+	@media (min-width: 50em)
+		display inline-block
+
+.text-center-s
+	@media (max-width: 50em )
+		text-align center
+
+.text-center-xs
+	@media (max-width: 40em )
+		text-align center

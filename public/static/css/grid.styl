@@ -1,0 +1,59 @@
+/**
+ * Grid System
+ *
+ * @package CNISC
+ * @since CNISC 0.1
+ */
+
+.container
+	margin 0 auto
+	max-width 62.5rem
+	width 90%
+
+.clearfix
+	*zoom 1
+	&:after
+	&:before
+		content " "
+		display table
+	&:after
+		clear both
+
+// Fluid columns
+.column-s
+	float left
+	padding-left 1rem
+	padding-right 1rem
+	&.half
+		width 50%
+
+// Make columns have a margin when colapse
+.column
+	margin-bottom 1rem
+
+// Responsive columns Desktop
+@media (min-width: 42em)
+	.column
+		float left
+		padding-left 1rem
+		padding-right 1rem
+		&.full
+			width 100%
+		&.half
+			width 50%
+		&.third
+			width 33.3%
+		&.two-thirds
+			width 66.7%
+		&.fourth
+			width 25%
+		&.inverse-flow
+			float right
+
+// Responsive columns Small devices
+@media (max-width: 42em )
+	.half-xs
+		float left
+		padding-left 1rem
+		padding-right 1rem
+		width 50%
