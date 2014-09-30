@@ -147,7 +147,7 @@ class View_Messages_User(models.Model):
 	objects = GenericManager()
 
 	def __unicode__(self):
-		return self.subject
+		return self.message.subject
 
 class Attachment(models.Model):
 	message = models.ForeignKey(Message, verbose_name=_("Mensaje"))
