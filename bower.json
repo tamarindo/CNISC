@@ -1,0 +1,8 @@
+{
+  "name": "CNISC",
+  "version": "0.0.1",
+  "description": "Sistema de notificaciones del programa de Ingeniería en Sistemas y Computación (ISC) de la Universidad Tecnológica de Pereira",
+  "dependencies": {
+    "angular": "~1.2.26"
+  }
+}
