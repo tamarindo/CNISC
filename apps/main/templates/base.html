@@ -15,12 +15,18 @@
 	{% block style %}
 	{% endblock %}
 </head>
-<body>
+<body ng-app="cnisc" {% block bodyattrs %}{% endblock %}>
 
-	{% block body %}    
-	{% endblock %}
+	<div class="container">
 
-
+		{% block body %}
+		{% endblock %}
+	
+	</div>
+	
+	<script src="{% static "js/lib/jquery/dist/jquery.min.js" %}"></script>
+	<script src="{% static "js/lib/angular/angular.min.js" %}"></script>
+	<script src="{% static "js/app.js" %}"></script>
 	{% block js %}
 	{% endblock %}
 
