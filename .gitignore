@@ -85,3 +85,5 @@ public/static/js/lib/
 
 # Users Environment Variables
 .lock-wscript
+
+ideas/
