@@ -87,3 +87,4 @@ public/static/js/lib/
 .lock-wscript
 
 ideas/
+*.min.*
