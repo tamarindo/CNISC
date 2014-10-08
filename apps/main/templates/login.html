@@ -1,35 +1,36 @@
-{% load i18n %}
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="{{ PROJECT_NAME }}, {{ PROJECT_DESCRIPTION }}">
-        <meta name="tamarindolabs" content="">
-        <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico">
-        <title>{% block title %}{% endblock %}</title>
-        <link href="{{ STATIC_URL }}libs/boostrap3/css/bootstrap.css" rel="stylesheet">
-        <link href="{{ STATIC_URL }}css/style_login_admin_sas.css" rel="stylesheet">
-        {% block style %}
-        {% endblock %}
-    </head>
-    <body>    
-    <div class="row">
-        <div  class=" col-xs-12 col-sm-12"></div>
-        <div class="container">
-          <form id="formulario" method="post" action="" accept-charset="utf-8">
-              {% csrf_token %}
-              {{formulario}}
-              <input class="btn" type="submit" value="Login" />
-          </form>
-        </div>
-    </div>
-    </body>
+{% extends "base.html" %}
+{% block title %}
+  Centro de Notificaciones ISC - UTP
+{% endblock %}
 
-    <script type="text/javascript">
-     {% if mensaje%}
-        var msj = '{{mensaje}}';
-        alert(msj);
-     {% endif %}
-     </script>
-</html>
+{% block bodyattrs %}class="login-page"{% endblock %}
+
+{% block body %} 
+
+  <header class="login-header center-text">
+    <img src="{{STATIC_URL}}img/logo-isc.png" alt="Logotipo programa Ingeniería en Sistemas y Computación (ISC) - UTP">
+    <h1 class="main-title">
+      Centro de Notificaciones ISC - UTPereira
+    </h1>
+  </header>
+
+  <form name="login" method="post" action="/login/" class="main-login-form form-validate">
+    {% csrf_token %}
+    <fieldset class="input-icon">
+      <input name="username" type="text" autofocus placeholder="Código">
+      <span class="icon-user"><i class="screen-reader-text">Código</i></span>
+    </fieldset>
+    <fieldset class="input-icon">
+      <input name="password" type="password" minlength="4" placeholder="Contraseña">
+      <span class="icon-lock"><i class="screen-reader-text">Contraseña</i></span>
+    </fieldset>
+    <fieldset>
+      <input class="button green" type="submit" value="Ingresar" />
+    </fieldset>
+  </form>
+
+{% endblock %}
+
+{% block js %}
+  <script src="{{STATIC_URL}}js/login-extra.js"></script>
+{% endblock %}
