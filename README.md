@@ -14,7 +14,7 @@ Esta aplicación hace parte del proyecto de grado: Sistema de Gestión de Activi
 ## Dependencias
 Es necesario tener instalado [Git](http://git-scm.com), [Python (>=2.7)](https://www.python.org) y [Node.js (>=0.10)](http://nodejs.org) para correr la aplicación.
 
-Se recomienda instalar la aplicación en un entorno virtual `virtualenv` de Python para que las dependencias instaladas no causen conflictos.
+Aunque es opcional, se recomienda instalar la aplicación en un entorno virtual `virtualenv` de Python para que las dependencias instaladas no causen conflictos. En la instalación hacemos uso del wrapper [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/)
 
 También se ha utilizado [PIP de Python](#) para manejar paquetes. Debe instalarse.
 
@@ -24,16 +24,15 @@ También se ha utilizado [PIP de Python](#) para manejar paquetes. Debe instalar
 
 		$ git clone https://github.com/tamarindo/CNISC.git && cd CNISC
 
-2. Instalar dependencias requeridas
+2. Recomendación: Iniciar un nuevo entorno virtual `virtualenv`
 		
-		$ pip install -r requirements.txt
-		$ npm install
+		$ mkvirtualenv cniscenv
 
-3. Configurar la base de datos
+3. Sincronizar paquetes y base de datos
 
-		$ python manage.py syncdb
-		$ python manage.py makemigrations
-		$ python manage.py migrate main
+	Se instalarán los paquetes necesarios a través de los gestores pip, npm y bower. Además se sincronizará la base de datos. El proceso pedirá crear un nuevo super usuario para la Aplicación.
+
+		$ make sync
 
 4. Compilar assets
 
