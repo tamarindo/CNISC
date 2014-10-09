@@ -43,3 +43,23 @@ También se ha utilizado [PIP de Python](#) para manejar paquetes. Debe instalar
 		$ python manage.py runserver
 
 La aplicación será accesible desde `http://127.0.0.1:8000/`
+
+## Convenciones
+Los nombres de funciones se definen bajo las siguientes convenciones
+
+* **URL:** En español separadas por guión medio. Ej: `http://dominio.com/panel-de-control`
+* **Nombres de funciones:** tanto backend como frontend: Camel case en idioma inglés. Ej: `someFunction()`
+* **Nombres de las clases CSS:** En inglés separadas por guión medio. Ej: `some-css-class`
+* **Nombres de id en CSS:** En español separados por guión medio. Ej: `estudiante-21`
+* **Configuración de los editores de texto:** Están definidas en el archivo `.editorconfig` la mayoría de los editores reconocerán este archivo y utilizaran su formato al abrir el proyecto en el mismo.
+* **Comentarios:** Utilizar comentarios en bloque `/* */` sólo para documentaciones extensas. Utilizar comentarios inline `//` sólo para comentar lineas de código en particular. En Python utilizar sólo el símbolo `#` para ambos tipos de comentarios.
+
+		/*
+		 * Some function
+		 * Demostrative function that does nothing
+		*/
+		var someFunction = function( obj ) {
+			obj.name = 'New name'; // Inline comment. Dont make comments for self explaneatory lines.
+			
+			return obj;
+		}
