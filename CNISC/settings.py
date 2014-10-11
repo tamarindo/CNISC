@@ -21,8 +21,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '614+m4hd)64isqk#s%9*-4z)uvtumlnj&12ebqpwp15p4%249r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-TEMPLATE_DEBUG = True
+import os
+
+try:
+    from .local_settings import DEBUG , TEMPLATE_DEBUG
+except Exception:
+    DEBUG = True
+    TEMPLATE_DEBUG = True
+
 ALLOWED_HOSTS = []
 
 APPS = ["apps.main",
@@ -64,12 +70,15 @@ WSGI_APPLICATION = 'CNISC.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+try:
+    from .local_settings import DATABASES
+except Exception, e:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
@@ -96,4 +105,3 @@ MEDIA_ROOT = ( os.path.join (BASE_DIR,'public/media') )
 
 STATIC_URL= '/static/'
 MEDIA_URL = '/media/'
-
