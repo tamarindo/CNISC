@@ -13,16 +13,16 @@ import json
 # URL PUBLICAS RENDER TEMPLATE
 def home(request):
 	if request.user.is_authenticated():
-		ob_user = User.objects.get(username='admin')
-		if ob_user:
-			msj = " el usuario admin si existe"
-		else:
-			msj = " el usuario admin no existe"
-		template = "home.html"
-		return render_to_response(template, locals(),context_instance=RequestContext(request))
+		ob_user=User.objects.get(id=request.user.id)
+		if ob_user.userext.profile.is_admin == 1:
+			mensajes_no_vistos=count(View_Messages_User.objects.filter(user=ob_user,seen=False))
+			mensajes=View_Messages_User.objects.filter(user=ob_user)
+			template="mainAdminTemplate.html"
+		else :
+			template="mainUserTemplate.html"
+		return render_to_response(template,locals(),context_instance=RequestContext(request))		
 	else:
 		return HttpResponseRedirect(reverse("login"))
-
 # URL AJAX POST
 
 def v_logout(request):

@@ -88,3 +88,6 @@ public/static/js/lib/
 
 ideas/
 *.min.*
+
+#settings local
+CNISC/local_settings.py

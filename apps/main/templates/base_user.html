@@ -1,0 +1,47 @@
+{% load static from staticfiles %}
+
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static "css/min/main.min.css" %}" rel="stylesheet">
+
+    {% block style %}
+    {% endblock %}
+</head>
+<body ng-app="cnisc" {% block bodyattrs %}{% endblock %}>
+<header>
+    <div class="container">
+        <div class="user-present" ><figure class="logo-user"><img src=""/></figure> <p>{{ob_user.get_full_name}}</p> </div>
+        <div class="search">
+            <from id="main-search">
+                <input> <div class="magnifier"></div>
+            </from>
+        </div>
+        <div class="notifier"> 
+            <img/>
+            <span id="numbre_new_msj">{{mensajes_no_vistos}}</span> 
+            <span class="{% if mensajes_no_vistos > 0 %} hay-mensajes-nuevos-icon {% endif %}">Mensajes</span> 
+        </div>
+        <div class="preferences"> <img/> <span>Preferencias</span> </div>
+    </div>
+</header>
+    <div class="container">
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    <script src="{% static "js/lib/jquery/dist/jquery.min.js" %}"></script>
+    <script src="{% static "js/lib/angular/angular.min.js" %}"></script>
+    <script src="{% static "js/app.js" %}"></script>
+    {% block js %}
+    {% endblock %}
+
+</body>
+</html>

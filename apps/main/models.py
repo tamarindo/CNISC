@@ -28,45 +28,8 @@ class GenericManager(models.Manager):
 
 
 
-# Data Base 
+# Data Base
 
-class UserExt(models.Model):
-	"""Extended to Django User model"""
-	user = models.OneToOneField(User, verbose_name=_("Usuario"))
-	gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name=_("Genero"), null=True, blank=True)
-	phone = models.CharField(max_length=25, verbose_name=_("Telefono"), null=True, blank=True) 
-	mobile = models.CharField(max_length=25, verbose_name=_("Celular"), null=True, blank=True) 
-	address = models.CharField(max_length=60, verbose_name=_("direccion"),null=True,)
-	city = models.CharField(max_length=60, verbose_name=_("ciudad"), null=True,  blank=True)
-	province = models.CharField(max_length=60, verbose_name=_("estado"), null=True,  blank=True)        
-	country = models.CharField(max_length=60, verbose_name=_("pais"), null=True,  blank=True)    
-	date_born = models.DateField(null=True, verbose_name=_("Fecha de nacimiento"),  blank=True)
-
-	# ------ datos para todas las tablas
-	is_active = models.BooleanField(default=True)
-	date_added = models.DateTimeField(auto_now_add=True)
-	date_modified = models.DateTimeField(auto_now=True)
-	objects = GenericManager()
-
-	def __unicode__(self):
-		return self.user.username
-
-	# TODO: funcion para traer imagen de facebook
-
-class ConfUser(models.Model):
-	"""Extended to Django User model"""
-	user = models.OneToOneField(User, verbose_name=_("Usuario"))
-	email_alt = models.CharField(max_length=25, verbose_name=_("Email segundario"), null=True, blank=True)
-	type_visualization = models.IntegerField(verbose_name=_("Tipo de visualizacion"), null=True, blank=True)
-
-	# ------ datos para todas las tablas
-	is_active = models.BooleanField(default=True)
-	date_added = models.DateTimeField(auto_now_add=True)
-	date_modified = models.DateTimeField(auto_now=True)
-	objects = GenericManager()
-
-	def __unicode__(self):
-		return self.user.username
 
 # --------------------------------------
 # PROFILES
@@ -76,6 +39,7 @@ class Profile(models.Model):
 	name = models.CharField(max_length=20, verbose_name=_("Nombre del tipo del perfil"), null=True, blank=True)
 	type_visualization = models.BooleanField( verbose_name=_("Tipo de visualizacion"), default=True)
 	abbr = models.CharField(max_length=5, verbose_name=_("Abreviacion del nombre del perfil"), null=True, blank=True)
+	is_admin = models.BooleanField(default=False)
 
 	# ------ datos para todas las tablas
 	is_active = models.BooleanField(default=True)
@@ -115,6 +79,47 @@ class Student(models.Model):
 	def __unicode__(self):
 		return self.profile.name
 
+
+
+class UserExt(models.Model):
+	"""Extended to Django User model"""
+	user = models.OneToOneField(User, verbose_name=_("Usuario"))
+	profile = models.ForeignKey(Profile, verbose_name=_("Perfil"))
+	gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name=_("Genero"), null=True, blank=True)
+	phone = models.CharField(max_length=25, verbose_name=_("Telefono"), null=True, blank=True)
+	mobile = models.CharField(max_length=25, verbose_name=_("Celular"), null=True, blank=True)
+	address = models.CharField(max_length=60, verbose_name=_("direccion"),null=True,)
+	city = models.CharField(max_length=60, verbose_name=_("ciudad"), null=True,  blank=True)
+	province = models.CharField(max_length=60, verbose_name=_("estado"), null=True,  blank=True)
+	country = models.CharField(max_length=60, verbose_name=_("pais"), null=True,  blank=True)
+	date_born = models.DateField(null=True, verbose_name=_("Fecha de nacimiento"),  blank=True)
+
+	# ------ datos para todas las tablas
+	is_active = models.BooleanField(default=True)
+	date_added = models.DateTimeField(auto_now_add=True)
+	date_modified = models.DateTimeField(auto_now=True)
+	objects = GenericManager()
+
+	def __unicode__(self):
+		return self.user.username
+
+	# TODO: funcion para traer imagen de facebook
+
+class ConfUser(models.Model):
+	"""Extended to Django User model"""
+	user = models.OneToOneField(User, verbose_name=_("Usuario"))
+	email_alt = models.CharField(max_length=25, verbose_name=_("Email segundario"), null=True, blank=True)
+	type_visualization = models.IntegerField(verbose_name=_("Tipo de visualizacion"), null=True, blank=True)
+
+	# ------ datos para todas las tablas
+	is_active = models.BooleanField(default=True)
+	date_added = models.DateTimeField(auto_now_add=True)
+	date_modified = models.DateTimeField(auto_now=True)
+	objects = GenericManager()
+
+	def __unicode__(self):
+		return self.user.username
+		
 # --------------------------------------
 # Messages
 # --------------------------------------
@@ -161,4 +166,3 @@ class Attachment(models.Model):
 
 	def __unicode__(self):
 		return self.data
-	
