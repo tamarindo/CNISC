@@ -28,8 +28,20 @@ def home(request):
 		return render_to_response(template,locals(),context_instance=RequestContext(request))		
 	else:
 		return HttpResponseRedirect(reverse("login"))
-# URL AJAX POST
 
+def preferences():
+	if request.user.is_authenticated():
+		ob_user=User.objects.get(id=request.user.id)
+		if ob_user.userext.profile.is_admin == 1:		
+			template="preferencesUserTemplate.html"	
+		else:
+			template="preferencesAdminTemplate.html"			
+	else:
+		return HttpResponseRedirect(reverse("login"))
+
+
+
+# URL AJAX POST
 def v_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse("login"))
