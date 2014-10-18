@@ -37,7 +37,6 @@ class GenericManager(models.Manager):
 
 class Profile(models.Model):
 	name = models.CharField(max_length=20, verbose_name=_("Nombre del tipo del perfil"), null=True, blank=True)
-	type_visualization = models.BooleanField( verbose_name=_("Tipo de visualizacion"), default=True)
 	abbr = models.CharField(max_length=5, verbose_name=_("Abreviacion del nombre del perfil"), null=True, blank=True)
 	is_admin = models.BooleanField(default=False)
 
