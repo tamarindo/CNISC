@@ -32,7 +32,12 @@ except Exception:
 ALLOWED_HOSTS = []
 
 APPS = ["apps.main",
-        "apps.oauthSocial"]
+        "apps.messaging",
+        "apps.userManager",
+        "apps.tags",
+        "apps.oauthSocial",
+        "apps.parceadores",
+        ]
 try:
     import django_extensions
     APPS += ["django_extensions"]
