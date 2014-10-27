@@ -59,6 +59,11 @@ target/
 
 # Django migrations
 apps/main/migrations
+apps/messaging/migrations
+apps/oauthSocial/migrations
+apps/parceadores/migrations
+apps/tags/migrations
+apps/userManager/migrations
 
 # Logs
 logs
