@@ -13,10 +13,10 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include(main_urls)),
-    url(r'^oauth/', include(oauthSocial_urls)),
-    url(r'^', include(messaging_urls)),
-    url(r'^tags/', include(tags_urls)),
-    url(r'^parce/', include(parceadores_urls)),
+    url(r'^api/oauth/', include(oauthSocial_urls)),
+    url(r'^api/mensajes/', include(messaging_urls)),
+    url(r'^api/tags/', include(tags_urls)),
+    url(r'^api/parce/', include(parceadores_urls)),
     url(r'^', include(userManager_urls))
 
 )
