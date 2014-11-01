@@ -31,7 +31,6 @@ def home(request):
 			for item_view_message in list_view_message:
 				vector_temp_message.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
 			vector_messages=json.dumps(vector_temp_message)
-			pprint.pprint(vector_messages)
 			template="mainUserTemplate.html"
 			return render_to_response(template,locals(),context_instance=RequestContext(request))		
 	else:
@@ -53,11 +52,15 @@ def preferences():
 
 def changeTypeVisualization(request):
 	type_visua=request.GET.get('typeVisua')
-	ob_confuser=ConfUser.objects.get(user=request.user)
-	ob_confuser.type_visualization = type_visua
-	exito=True
-	try:
-		ob_confuser.save()
-	except:
-		exito= False	
-	return HttpResponse(json.dumps({'exito':exito}),content_type="application/json")
+	ob_confuser=ConfUser.objects.get_or_none(user=request.user)
+	pprint.pprint(ob_confuser)
+	if type_visua:
+		ob_confuser.type_visualization = type_visua
+		try:
+			ob_confuser.save()
+			retorno = {'error':0,'msj':''}
+		except:
+			retorno = {'error':1,'msj':'error al guardar'}	
+	else:
+		retorno = {'error':1,'msj':'Faltan Parametros'}
+	return HttpResponse(json.dumps(retorno),content_type="application/json")
