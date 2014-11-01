@@ -17,6 +17,6 @@ urlpatterns = patterns('',
     url(r'^', include(messaging_urls)),
     url(r'^tags/', include(tags_urls)),
     url(r'^parce/', include(parceadores_urls)),
-    url(r'^', include(userManager_urls)),
+    url(r'^', include(userManager_urls))
 
 )

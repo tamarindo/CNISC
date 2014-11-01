@@ -5,12 +5,16 @@ from django.core.urlresolvers import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login , logout
 from django.template import RequestContext  # para hacer funcionar {% csrf_token %}
+from django.contrib.auth.models import User
+
 from apps.main.models import *
 from apps.oauthSocial.models import *
 from apps.parceadores.models import *
 from apps.tags.models import *
 from apps.userManager.models import *
-from django.contrib.auth.models import User
+
+from apps.userManager.urls import userManager_urls
+
 import pprint
 import json
 
@@ -29,7 +33,7 @@ def home(request):
 			vector_messages=json.dumps(vector_temp_message)
 			pprint.pprint(vector_messages)
 			template="mainUserTemplate.html"
-		return render_to_response(template,locals(),context_instance=RequestContext(request))		
+			return render_to_response(template,locals(),context_instance=RequestContext(request))		
 	else:
 		return HttpResponseRedirect(reverse("login"))
 
@@ -55,5 +59,5 @@ def changeTypeVisualization(request):
 	try:
 		ob_confuser.save()
 	except:
-		exito= False
+		exito= False	
 	return HttpResponse(json.dumps({'exito':exito}),content_type="application/json")

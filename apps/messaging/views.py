@@ -8,8 +8,8 @@ from django.template import RequestContext  # para hacer funcionar {% csrf_token
 from django.contrib.auth.models import User
 
 # Create your views here.
-
 # ------------------------------------------------------- funciones de mensaje ----------------------------------------------------------------------
+
 def getMessage(request):
 	ob_user=User.objects.get(id=request.user.id)
 	lim_inf=request.GET.get('lim_inf')
@@ -47,4 +47,10 @@ def seenAllMessage(request):
 		except:
 			exito= False
 	return HttpResponse(json.dumps({'exito':exito}),content_type="application/json")
+
+
+# def changeemail(request):
+	
+
+	
 # ------------------------------------------------------- funciones de mensaje ----------------------------------------------------------------------

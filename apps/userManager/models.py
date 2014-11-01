@@ -26,6 +26,16 @@ class GenericManager(models.Manager):
             return None
             
 
+            
+class baseModel(models.Model):
+    # ------ datos para todas las tablas
+	is_active = models.BooleanField(default=True)
+	date_added = models.DateTimeField(auto_now_add=True)
+	date_modified = models.DateTimeField(auto_now=True)
+	objects = GenericManager()
+    
+	class Meta:
+		abstract = True
 
 # Data Base
 
@@ -34,21 +44,15 @@ class GenericManager(models.Manager):
 # PROFILES
 # --------------------------------------
 
-class Profile(models.Model):
+class Profile(baseModel):
 	name = models.CharField(max_length=20, verbose_name=_("Nombre del tipo del perfil"), null=True, blank=True)
 	abbr = models.CharField(max_length=5, verbose_name=_("Abreviacion del nombre del perfil"), null=True, blank=True)
 	is_admin = models.BooleanField(default=False)
 
-	# ------ datos para todas las tablas
-	is_active = models.BooleanField(default=True)
-	date_added = models.DateTimeField(auto_now_add=True)
-	date_modified = models.DateTimeField(auto_now=True)
-	objects = GenericManager()
-
 	def __unicode__(self):
 		return self.name
 
-class UserExt(models.Model):
+class UserExt(baseModel):
 	"""Extended to Django User model"""
 	user = models.OneToOneField(User, verbose_name=_("Usuario"))
 	profile = models.ForeignKey(Profile, verbose_name=_("Perfil"))
@@ -61,40 +65,22 @@ class UserExt(models.Model):
 	country = models.CharField(max_length=60, verbose_name=_("pais"), null=True,  blank=True)
 	date_born = models.DateField(null=True, verbose_name=_("Fecha de nacimiento"),  blank=True)
 
-	# ------ datos para todas las tablas
-	is_active = models.BooleanField(default=True)
-	date_added = models.DateTimeField(auto_now_add=True)
-	date_modified = models.DateTimeField(auto_now=True)
-	objects = GenericManager()
-
 	def __unicode__(self):
 		return self.user.username
 
-class Graduate(models.Model):
-	profile = models.OneToOneField(Profile, verbose_name=_("Perfil"))
+class Graduate(baseModel):
+	UserExt = models.OneToOneField(UserExt, verbose_name=_("UserExt"))
 	program = models.CharField(max_length=50, verbose_name=_("Egresado del programa de"), null=True, blank=True)
 	job = models.CharField(max_length=50, verbose_name=_("Empleo"), null=True, blank=True)
 	scope = models.CharField(max_length=20, verbose_name=_("Ambito laboral"), null=True, blank=True)
 
-	# ------ datos para todas las tablas
-	is_active = models.BooleanField(default=True)
-	date_added = models.DateTimeField(auto_now_add=True)
-	date_modified = models.DateTimeField(auto_now=True)
-	objects = GenericManager()
-
 	def __unicode__(self):
-		return self.profile.name
+		return self.UserExt.user.username
 
-class Student(models.Model):
-	profile = models.OneToOneField(Profile, verbose_name=_("Perfil"))
+class Student(baseModel):
+	UserExt = models.OneToOneField(UserExt, verbose_name=_("UserExt"))
 	semester = models.IntegerField(verbose_name=_("Semestre"), null=True, blank=True)
 	academic_state = models.CharField(max_length=50, verbose_name=_("Estado academico"), null=True, blank=True)
 
-	# ------ datos para todas las tablas
-	is_active = models.BooleanField(default=True)
-	date_added = models.DateTimeField(auto_now_add=True)
-	date_modified = models.DateTimeField(auto_now=True)
-	objects = GenericManager()
-
 	def __unicode__(self):
-		return self.profile.name
+		return self.UserExt.user.username
