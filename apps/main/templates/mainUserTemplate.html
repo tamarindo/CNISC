@@ -9,11 +9,12 @@
 
 {% block body %}
 
-<div id="sugerencia-main-user" class="suggestion-main">
-	<p>hola {{ob_user.get_full_name}} Bienvenido al nuevo sistema de notificación del programa de Ingenieria de Sistema y Computacion.</p>
+<div cn-alert class="alert" ng-hide="hide">
 	<p>
-	Recuerda ir a las <a><span>Configuraciones</span></a> para que recibas las notificaciones como mejor te parezca.
-	</br><a href=""><span>Agrega un correo</span></a> y <a href=""><span>enlaza tus cuentas de Facebook y Twitter</span></a> para ser notificado alli también.
+	Hola {{ob_user.get_full_name}} Bienvenido al nuevo sistema de notificación del programa de Ingenieria de Sistema y Computacion.
+	</p>
+	<p>
+	Recuerda ir a las <a>Configuraciones</a> para que recibas las notificaciones como mejor te parezca. <a href="">Agrega un correo</a> y <a href="">enlaza tus cuentas de Facebook y Twitter</a> para ser notificado alli también.
 	</p>
 </div>
 
@@ -21,47 +22,9 @@
 	
 </div>
 
-<div id="panel-opciones-user">
-	<div class="title-option">
-	<img src=""> <span>OPCIONES</span>
-	</div>
-	<div class="commands-option">
-		<div><a href=""><img src=""><span>Marcar todo como leido</span></a></div>
-		<div><a href=""><img src=""><span>cargar nuevas notificaciones</span></a></div>
-	</div>
-	<div class="configuration-option">
-		<p>Precentación</p>
-		<div><img src=""><span>Ver sólo titulos</span></div>
-		<div><img src=""><span>ver resumen</span></div>
-	</div>
-</div>
-
 <script type="text/javascript">
 	var vector_messages = {{vector_messages|safe}}
-
 </script>
-
-<script id="template-body-mensajes" type="text/template">
-	<section>
-		<div id="mensajes-diretos-contenedor">
-			<div><h2>Mensajes Directos</h2></div>
-		</div>
-		<div id="otros-mensajes-contenedor">
-			<div><h2>Otros Mensajes</h2></div>
-		</div>
-	</section>
-	<div id="visualizador de mensaje">
-	</div>
-</script>
-
-
-<script id="template-aviso-mensaje" type="text/template">
-	<article id="item-mensaje">
-		<h4></h4>
-		<p></p>
-	</article>
-</script>
-
 
 
 {% endblock %}
