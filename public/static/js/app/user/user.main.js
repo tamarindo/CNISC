@@ -6,7 +6,7 @@
 (function(){
 	'use strict';
 
-	var app = angular.module('user', ['shareComponents'])
+	var app = angular.module('user', ['shareComponents', 'Messaging'])
 
 		// Cambiar el control de expresiones para prevenir 
 		// inconvenientes con las de Django.

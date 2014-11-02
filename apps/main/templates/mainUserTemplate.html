@@ -18,15 +18,38 @@
 	</p>
 </div>
 
-<div id="contenedor-principal-mensajes" class="">
+<section ng-controller="messages" class="full-container clearfix" id="messages">
+	<aside class="third column messages">
+		<ul class="list message-list">
+			<li ng-repeat="mensaje in list">
+				<a href class="message" ng-class="{active : mensaje.isActive}" ng-click="show($index)">
+					<h3 class="message-title">{[{mensaje.asunto}]}</h3>
+					<div class="meta">
+						<time datetime="date {[{mensaje.fecha | date}]}"><i class="icon-clock"></i> {[{mensaje.fecha | date}]}</time>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</aside>
+	<article class="two-thirds column message-content">
+		<header class="message-header">
+			<h2 class="message-title">{[{activeMessage.asunto}]}</h2>
+			<p class="meta">
+				Publicado el {[{activeMessage.fecha}]}
+			</p>
+		</header>
+		<div class="entry-content">
+			{[{activeMessage.mensaje}]}
+		</div>
+	</article>
 	
-</div>
-
-<script type="text/javascript">
-	var vector_messages = {{vector_messages|safe}}
-</script>
-
+</section>
+	
 
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+<script type="text/javascript">
+	var vector_messages = {{vector_messages|safe}}
+</script>
+{% endblock %}

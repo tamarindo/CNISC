@@ -130,7 +130,6 @@ table
 	word-wrap break-word
 
 #content
-	margin 1rem auto 1.2rem
 	padding-bottom 1.3rem
 
 .main-navigation
@@ -155,7 +154,6 @@ table
 .main-header
 	border-bottom 3px solid lighten-gray
 	padding .5rem 0
-	margin-bottom 1rem
 
 .logo-user
 	img
@@ -166,3 +164,54 @@ table
 	figcaption
 		@media (max-width: 34.25em)
 			screen-reader-text()
+			
+.messages
+	padding 0
+	border-right 2px solid lighten-gray
+
+.message-list
+	margin 0
+	
+	.message
+		color light-gray
+		display block
+		padding .6rem 5px .6rem 1rem
+		position relative
+		
+		.message-title
+			color gray
+			margin 0
+			
+		&.active
+			color #fff
+			background-color primary
+			.message-title
+				color #fff
+		
+		&:after
+			font-family 'cnisc'
+			speak none
+			font-style normal
+			font-weight normal
+			font-variant normal
+			text-transform none
+			line-height 1
+			-webkit-font-smoothing antialiased
+			-moz-osx-font-smoothing grayscale
+			content '\e62e'
+			absolute right 1rem top 50%
+			font-size 20px
+			margin-top -10px
+			
+	li
+		border-bottom 1px solid lighten-gray
+			
+	.meta
+		font-size .8rem
+		
+.message-content
+	.message-title
+		margin-bottom 0
+	.meta
+		color light-gray
+		margin-top 0

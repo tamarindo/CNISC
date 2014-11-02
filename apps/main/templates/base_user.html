@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <div class="container" id="content">
+    <div id="content">
         {% block body %}
         {% endblock %}
     </div>
@@ -87,6 +87,7 @@
     <script src="{% static "js/lib/angular/angular.min.js" %}"></script>
     <script src="{% static "js/lib/angular-animate/angular-animate.min.js" %}"></script>
     <script src="{% static "js/app/user/user.main.js" %}"></script>
+    <script src="{% static "js/app/messaging/messaging.main.js" %}"></script>
     <script src="{% static "js/app/share/share.directives.js" %}"></script>
     {% block js %}
     {% endblock %}
