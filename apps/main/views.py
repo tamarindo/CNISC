@@ -51,7 +51,7 @@ def preferences():
 # URL AJAX POST
 
 def changeTypeVisualization(request):
-	type_visua=request.GET.get('typeVisua')
+	type_visua=request.POST.get('typeVisua')
 	ob_confuser=ConfUser.objects.get_or_none(user=request.user)
 	pprint.pprint(ob_confuser)
 	if type_visua:
