@@ -7,5 +7,5 @@ userManager_urls = patterns('apps.userManager.views',
 	# urls de login
     url(r'^logout$', 'v_logout', name="v_logout"),
     url(r'^login/$','login', name="login"),
-    url(r'^apis/userManager/cambiar_correo$', 'changeemail', name="changeemail"),
+    url(r'^api/userManager/cambiar_correo$', 'changeemail', name="changeemail"),
 )

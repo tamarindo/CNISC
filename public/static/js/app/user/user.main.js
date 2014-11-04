@@ -1,13 +1,12 @@
 /*
- * Archivo principal de la aplicación angular
- * Define el módulo de la aplicación principal: 'cnisc'
+ * Archivo principal de la aplicación para el usuario
  *
 */
 
 (function(){
 	'use strict';
 
-	var cniscApp = angular.module('cnisc', [])
+	var app = angular.module('user', ['shareComponents', 'Messaging'])
 
 		// Cambiar el control de expresiones para prevenir 
 		// inconvenientes con las de Django.

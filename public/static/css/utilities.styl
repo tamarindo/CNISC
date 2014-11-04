@@ -4,17 +4,20 @@
  * ------------------------------
  */
 
-red			= #e53424
-dark-red 	= #981509
-gray 		= #646464
-dark-gray 	= #323232
+red         = #e53424
+dark-red    = #981509
+gray        = #646464
+dark-gray   = #323232
 lighten-gray= #e2e2e2
-light-gray 	= #aeaeae
-marine		= #0aa1b0
+light-gray  = #aeaeae
+marine      = #0aa1b0
 dark-marine = #07717b
 light-blue  = #f1f5f6
+blue        = #3498db
 green       = #00B233
 light-green = #00FF48
+
+primary = blue
 
 .visuallyhidden
     border 0
@@ -26,7 +29,7 @@ light-green = #00FF48
     position absolute
     width 1px
 
-.screen-reader-text
+screen-reader-text()
   clip rect(1px, 1px, 1px, 1px)
   position absolute
   &:focus
@@ -41,6 +44,9 @@ light-green = #00FF48
     text-transform none
     width auto
     z-index 100000
+
+.screen-reader-text
+    screen-reader-text()
 
 .vertical-align
     width 100%
@@ -92,6 +98,12 @@ button
 	li
 		display inline-block
 
+.inline
+    display inline-block
+
+.pull-left
+    float left
+
 .pull-right
 	float right
 
@@ -111,11 +123,6 @@ button
 .text-big
     font-size 1.7rem
 
-.alert
-    background-color #FDFBCD
-    color #9B7106
-    border-left 10px solid #E2B749
-    padding 1rem
 
 /*
  * Responsive Utilities
@@ -137,3 +144,31 @@ button
 .text-center-xs
 	@media (max-width: 40em )
 		text-align center
+  
+ /*
+ * UI Components
+ */
+.alert
+    background-color #FDFBCD
+    border-left 1rem solid #E2B749
+    color #9B7106
+    margin 1rem
+    padding 1rem 1rem .5rem
+    position relative
+    transition opacity 250ms ease-out
+    
+    .alert-close
+        absolute top 10px right 10px
+        display block
+        font-size 12px
+        text-align center
+        height 20px 
+        width 20px
+        background-color #E2B749
+        border-radius 50%
+        a
+            line-height 20px
+            color #FDFBCD
+            
+    &.ng-hide
+        opacity 0

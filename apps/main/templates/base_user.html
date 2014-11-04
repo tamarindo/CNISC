@@ -15,31 +15,80 @@
     {% block style %}
     {% endblock %}
 </head>
-<body ng-app="cnisc" {% block bodyattrs %}{% endblock %}>
-<header>
-    <div class="container">
-        <div class="user-present" ><figure class="logo-user"><img src=""/></figure> <p>{{ob_user.get_full_name}}</p> </div>
-        <div class="search">
-            <from id="main-search">
-                <input> <div class="magnifier"></div>
-            </from>
+<body ng-app="user" class="user">
+    <header class="main-header">
+        <div class="container clearfix">
+            <figure class="logo-user pull-left">
+                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/soffes/73.jpg" alt="Foto de {{ob_user.get_full_name}}" />
+                <figcaption class="inline">
+                    <h3 class="name">{{ob_user.get_full_name}}</h3>
+                </figcaption>
+            </figure>
+            <hgroup class="pull-right">
+                <nav role="navigation" class="main-navigation">
+                    <ul class="list inline-list">
+                        <li class="menu-item">
+                            <a href="#buscar" class="search-messages">
+                                <i class="icon-search">
+                                    <span class="text-hide-m">Buscar</span>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#mensajes" class="messages">
+                                <i class="icon-mail">
+                                    {% if mensajes_no_vistos > 0 %}
+                                        <span class="unread">{{mensajes_no_vistos}}</span>
+                                    {% endif %}
+                                    <span class="text-hide-m">Mensajes</span>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#opciones" class="options">
+                                <i class="icon-menu">
+                                    <span class="text-hide-m">Visualización</span>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#preferencias" class="preferences">
+                                <i class="icon-cog">
+                                    <span class="text-hide-m">Preferencias</span>
+                                </i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </hgroup>
         </div>
-        <div class="notifier"> 
-            <img/>
-            <span id="numbre_new_msj">{{mensajes_no_vistos}}</span> 
-            <span class="{% if mensajes_no_vistos > 0 %} hay-mensajes-nuevos-icon {% endif %}">Mensajes</span> 
+    </header>
+    
+    <div id="opciones" style="display:none">
+        <div class="title-option">
+        <img src=""> <span>OPCIONES</span>
         </div>
-        <div class="preferences"> <img/> <span>Preferencias</span> </div>
+        <div class="commands-option">
+            <div><a href=""><img src=""><span>Marcar todo como leido</span></a></div>
+            <div><a href=""><img src=""><span>cargar nuevas notificaciones</span></a></div>
+        </div>
+        <div class="configuration-option">
+            <p>Precentación</p>
+            <div><img src=""><span>Ver sólo titulos</span></div>
+            <div><img src=""><span>ver resumen</span></div>
+        </div>
     </div>
-</header>
-    <div class="container">
+
+    <div id="content">
         {% block body %}
         {% endblock %}
     </div>
 
-    <script src="{% static "js/lib/jquery/dist/jquery.min.js" %}"></script>
     <script src="{% static "js/lib/angular/angular.min.js" %}"></script>
-    <script src="{% static "js/app.js" %}"></script>
+    <script src="{% static "js/lib/angular-animate/angular-animate.min.js" %}"></script>
+    <script src="{% static "js/app/user/user.main.js" %}"></script>
+    <script src="{% static "js/app/messaging/messaging.main.js" %}"></script>
+    <script src="{% static "js/app/share/share.directives.js" %}"></script>
     {% block js %}
     {% endblock %}
 

@@ -32,7 +32,8 @@ También se ha utilizado [PIP de Python](#) para manejar paquetes. Debe instalar
 
 	Se instalarán los paquetes necesarios a través de los gestores pip, npm y bower. Además se sincronizará la base de datos. El proceso pedirá crear un nuevo super usuario para la Aplicación.
 
-		$ make sync
+		$ make install
+		$ make migrate
 
 4. Compilar assets
 
@@ -40,7 +41,7 @@ También se ha utilizado [PIP de Python](#) para manejar paquetes. Debe instalar
 
 5. Iniciar servidor
 
-		$ python manage.py runserver
+		$ make run
 
 La aplicación será accesible desde `http://127.0.0.1:8000/`
 

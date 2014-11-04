@@ -14,6 +14,7 @@ from apps.tags.models import *
 from apps.userManager.models import *
 
 from apps.userManager.urls import userManager_urls
+from apps.messaging.models import View_Messages_User
 
 import pprint
 import json

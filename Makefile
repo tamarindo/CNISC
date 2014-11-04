@@ -1,11 +1,16 @@
 clean:
 	rm -f db.sqlite3
 
-sync:
+migrate:
+	python manage.py makemigrations
+	python manage.py migrate
+
+run:
+	python manage.py runserver
+
+install:
 	pip install -r requirements.txt
 	npm install
 	python manage.py syncdb
-	python manage.py migrate --noinput
-	python manage.py migrate main --noinput
 
-all: sync
+all: run
