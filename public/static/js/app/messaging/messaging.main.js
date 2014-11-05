@@ -11,7 +11,7 @@
 
 		// Initiate
 		var lastActiveIndex = 0;
-		$scope.list = window.vector_messages;
+		$scope.list = window.vector_messages['mensajes'];
 		$scope.activeMessage = $scope.list[0];
 		$scope.activeMessage.isActive = true;
 
