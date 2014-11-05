@@ -20,16 +20,32 @@
 
 <section ng-controller="messages" class="full-container clearfix" id="messages">
 	<aside class="third column messages">
-		<ul class="list message-list">
-			<li ng-repeat="mensaje in list">
-				<a href class="message" ng-class="{active : mensaje.isActive}" ng-click="show($index)">
-					<h3 class="message-title">{[{mensaje.asunto}]}</h3>
-					<div class="meta">
-						<time datetime="date {[{mensaje.fecha | date}]}"><i class="icon-clock"></i> {[{mensaje.fecha | date}]}</time>
-					</div>
-				</a>
-			</li>
-		</ul>
+		<section>
+			<h2 class="list-header flat">Mensajes Privados</h2>
+			<ul class="list message-list">
+				<li ng-repeat="mensaje in ::list[0]" ng-init="list=0">
+					<a href class="message" ng-class="{active : mensaje.isActive}" ng-click="show($index, list)">
+						<h3 class="message-title">{[{mensaje.asunto}]}</h3>
+						<div class="meta">
+							<time datetime="date {[{mensaje.fecha | date}]}"><i class="icon-clock"></i> {[{mensaje.fecha | date}]}</time>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</section>
+		<section>
+			<h2 class="list-header flat">Otros Mensajes</h2>
+			<ul class="list message-list" >
+				<li ng-repeat="mensaje in ::list[1]" ng-init="list=1">
+					<a href class="message" ng-class="{active : mensaje.isActive}" ng-click="show($index, list)">
+						<h3 class="message-title">{[{mensaje.asunto}]}</h3>
+						<div class="meta">
+							<time datetime="date {[{mensaje.fecha | date}]}"><i class="icon-clock"></i> {[{mensaje.fecha | date}]}</time>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</section>
 	</aside>
 	<article class="two-thirds column message-content">
 		<header class="message-header">
