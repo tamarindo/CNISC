@@ -81,6 +81,11 @@ table
 		&:hover
 			background-color #f1f1f1
 
+button.flat
+	outline none
+	background-color transparent
+	border none
+	font-weight 400
 
 // Login Form
 // ----------------------------------
@@ -158,6 +163,51 @@ table
 	color #fff
 	a
 		color #fff
+
+#opciones
+	absolute top 0 right 0
+	width 70%
+	max-width 24em
+	height 100%
+	background-color rgba(#000,.8)
+	color #fff
+	padding 1rem 2rem
+	z-index 5
+	transition all 250ms ease-in-out
+	.list:first-of-type
+		padding 1rem 0
+		border-top 1px solid light-gray
+		border-bottom 1px solid light-gray
+	.list:last-of-type
+		li:first-child
+			padding-right 1rem
+	.secondary-title
+		margin-bottom .5rem
+	.close
+		absolute top 1rem right 1rem
+		font-size 14px
+	&.ng-hide
+		opacity 0
+	&.ng-hide-remove
+		animation 150ms slideIn linear
+	&.ng-hide-add
+		animation 150ms slideOut linear
+		
+@keyframes slideIn
+	0%
+		opacity 0
+		transform translateX(70%)
+	100%
+		opacity 1
+		transform translateX(0)
+		
+@keyframes slideOut
+	0%
+		opacity 1
+		transform translateX(0)
+	100%
+		opacity 0
+		transform translateX(70%)
 
 .logo-user
 	img

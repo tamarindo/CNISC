@@ -45,7 +45,7 @@
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="#opciones" class="options">
+                            <a href="#opciones" ng-click="showMenu=!showMenu" class="options">
                                 <i class="icon-menu">
                                     <span class="text-hide-m">Visualización</span>
                                 </i>
@@ -64,19 +64,18 @@
         </div>
     </header>
     
-    <div id="opciones" style="display:none">
-        <div class="title-option">
-        <img src=""> <span>OPCIONES</span>
-        </div>
-        <div class="commands-option">
-            <div><a href=""><img src=""><span>Marcar todo como leido</span></a></div>
-            <div><a href=""><img src=""><span>cargar nuevas notificaciones</span></a></div>
-        </div>
-        <div class="configuration-option">
-            <p>Precentación</p>
-            <div><img src=""><span>Ver sólo titulos</span></div>
-            <div><img src=""><span>ver resumen</span></div>
-        </div>
+    <div id="opciones" ng-show="showMenu" class="">
+        <h2 class="title-option center-text main-title">Opciones</h2>
+        <ul class="list">
+            <li><button class="flat"><i class="icon-checkmark"> </i>Marcar todo como leido</button></li>
+            <li><button class="flat"><i class="icon-spinner"> </i>Cargar nuevas mensajes</button></li>
+        </ul>
+        <h3 class="secondary-title">Presentación</h3>
+        <ul class="list inline-list">
+            <li><button class="flat"><i class="icon-list2"> </i>Ver sólo titulos</button></li>
+            <li><button class="flat"><i class="icon-menu"> </i>Ver resumen</button></li>
+        </ul>
+        <button ng-click="showMenu=!showMenu" class="flat close"><span class="icon-close"> </span><span class="screen-reader-text">Cerrar menú</span></button>
     </div>
 
     <div id="content">
