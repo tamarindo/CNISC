@@ -17,6 +17,10 @@
 		];
 
 		$scope.activeMessage = $scope.list[0][0]; // First message of mensajes array
+
+		if( !$scope.activeMessage )
+			return;
+
 		$scope.activeMessage.isActive = true;
 
 		// Show the selected message
