@@ -18,7 +18,6 @@ lib64/
 parts/
 sdist/
 var/
-migrations/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -56,14 +55,6 @@ target/
 
 # Djando sqlite exception
 *.sqlite3
-
-# Django migrations
-apps/main/migrations
-apps/messaging/migrations
-apps/oauthSocial/migrations
-apps/parceadores/migrations
-apps/tags/migrations
-apps/userManager/migrations
 
 # Logs
 logs
