@@ -1,0 +1,6 @@
+<a href class="message" ng-class="{active : mensaje.isActive}" ng-click="show($index, list)">
+	<h3 class="message-title">{[{mensaje.asunto}]}</h3>
+	<div class="meta">
+		<time datetime="date {[{mensaje.fecha | date}]}"><i class="icon-clock"></i> {[{mensaje.fecha | date}]}</time>
+	</div>
+</a>

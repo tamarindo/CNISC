@@ -5,7 +5,7 @@
 (function(){
 	'use strict';
 
-	var messaging = angular.module('Messaging', []);
+	var messaging = angular.module('Messaging', ['messageDirectives']);
 
 	messaging.controller('messages', ['$scope', function($scope){
 
