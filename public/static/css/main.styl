@@ -237,16 +237,12 @@ button.flat
 		padding .6rem 5px .6rem 1rem
 		position relative
 		
-		.message-title
-			color gray
-			margin 0
-			
 		&.active
 			color #fff
 			background-color primary
 			.message-title
 				color #fff
-		
+						
 		&:after
 			font-family 'cnisc'
 			speak none
@@ -261,7 +257,15 @@ button.flat
 			absolute right 1rem top 50%
 			font-size 20px
 			margin-top -10px
+		
+		&.seen
+			.message-title
+				font-weight 400
 			
+		.message-title
+			color gray
+			margin 0
+		
 	li
 		border-bottom 1px solid lighten-gray
 			
