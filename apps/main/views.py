@@ -9,10 +9,10 @@ from django.contrib.auth.models import User
 
 from apps.main.models import *
 from apps.oauthSocial.models import *
+from apps.oauthSocial.utilis import *
 from apps.parceadores.models import *
 from apps.tags.models import *
 from apps.userManager.models import *
-
 from apps.userManager.urls import userManager_urls
 from apps.messaging.models import View_Messages_User
 
@@ -50,13 +50,16 @@ def home(request):
 	else:
 		return HttpResponseRedirect(reverse("login"))
 
-def preferences():
+def preferences(request):
 	if request.user.is_authenticated():
-		ob_user=User.objects.get(id=request.user.id)
+
+		estado_twitter=verificar_conexion_twitter(request.user)
+		ob_user=User.objects.get(id=request.user.id)	
 		if ob_user.userext.profile.is_admin == 1:		
-			template="preferencesUserTemplate.html"	
+			template="preferencesAdminTemplate.html"	
 		else:
-			template="preferencesAdminTemplate.html"			
+			template="preferencesUserTemplate.html"	
+		return render_to_response(template,locals(),context_instance=RequestContext(request))					
 	else:
 		return HttpResponseRedirect(reverse("login"))
 
@@ -67,7 +70,6 @@ def preferences():
 def changeTypeVisualization(request):
 	type_visua=request.POST.get('typeVisua')
 	ob_confuser=ConfUser.objects.get_or_none(user=request.user)
-	pprint.pprint(ob_confuser)
 	if type_visua:
 		ob_confuser.type_visualization = type_visua
 		try:
