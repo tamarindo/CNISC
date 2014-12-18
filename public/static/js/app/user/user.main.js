@@ -21,4 +21,13 @@
 			$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 		}]);
 
+	app.controller('mainController', [ '$scope' ,function($scope){
+		
+		$scope.list = [
+			vector_messages['mensajes-privados'],
+			vector_messages['mensajes']
+		];
+	
+	}]);
+
 })();

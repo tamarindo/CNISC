@@ -15,7 +15,7 @@
     {% block style %}
     {% endblock %}
 </head>
-<body ng-app="user" class="user">
+<body ng-app="user" class="user" ng-controller="mainController">
     <header class="main-header">
         <div class="container clearfix">
             <figure class="logo-user pull-left">
@@ -92,6 +92,7 @@
     <script src="{% static "js/app/messaging/messaging.main.js" %}"></script>
     <script src="{% static "js/app/share/share.directives.js" %}"></script>
     <script src="{% static "js/app/messaging/messaging.directives.js" %}"></script>
+    <script src="{% static "js/app/api/api.services.js" %}"></script>
     {% block js %}
     {% endblock %}
 
