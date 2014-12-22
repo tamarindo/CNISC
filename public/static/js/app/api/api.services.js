@@ -13,10 +13,19 @@
 		oauth : '/api/oauth/'
 	});
 
+	// Marcar como leido un mensaje
 	api.factory('ApiMarkMessageAsSeen', ['$resource', 'ApiUrl', function($resource, ApiUrl) {
 
 		return $resource( ApiUrl.messaging + 'marcar_como_leido' );
 
-	}])
+	}]);
+
+	// Marcar todos los mensajes como leidos
+	api.factory('ApiMarkAllMessagesAsSeen', ['$resource', 'ApiUrl', function($resource, ApiUrl) {
+
+		return $resource( ApiUrl.messaging + 'marcar_todo_como_leido' );
+
+	}]);
+
 
 })();
