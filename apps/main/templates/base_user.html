@@ -75,8 +75,12 @@
         </ul>
         <h3 class="secondary-title">Presentación</h3>
         <ul class="list inline-list">
-            <li><button class="flat"><i class="icon-list2"> </i>Ver sólo titulos</button></li>
-            <li><button class="flat"><i class="icon-menu"> </i>Ver resumen</button></li>
+            <li>
+                <button class="flat" ng-click="toggleMessageExcerpt(false)"><i class="icon-list2"> </i>Ver sólo titulos</button>
+            </li>
+            <li>
+                <button class="flat" ng-click="toggleMessageExcerpt(true)"><i class="icon-menu"> </i>Ver resumen</button>
+            </li>
         </ul>
         <button ng-click="showMenu=!showMenu" class="flat close"><span class="icon-close"> </span><span class="screen-reader-text">Cerrar menú</span></button>
     </div>
