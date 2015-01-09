@@ -16,8 +16,12 @@ from apps.userManager.models import *
 from apps.userManager.urls import userManager_urls
 from apps.messaging.models import View_Messages_User
 
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 import pprint
 import json
+
+@ensure_csrf_cookie
 
 # URL PUBLICAS RENDER TEMPLATE
 

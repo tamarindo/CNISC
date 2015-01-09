@@ -23,13 +23,13 @@
 		<section>
 			<h2 class="list-header flat">Mensajes Privados</h2>
 			<ul class="list message-list">
-				<li ng-repeat="mensaje in ::list[0]" ng-init="list=0" message-item></li>
+				<li ng-repeat="mensaje in list[0] | filter: buscar" ng-init="list=0" message-item></li>
 			</ul>
 		</section>
 		<section>
 			<h2 class="list-header flat">Otros Mensajes</h2>
 			<ul class="list message-list" >
-				<li ng-repeat="mensaje in ::list[1]" ng-init="list=1" message-item></li>
+				<li ng-repeat="mensaje in list[1] | filter: buscar" ng-init="list=1" message-item></li>
 			</ul>
 		</section>
 	</aside>

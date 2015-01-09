@@ -7,14 +7,10 @@
 
 	var messaging = angular.module('Messaging', ['messageDirectives']);
 
-	messaging.controller('messages', ['$scope', function($scope){
+	messaging.controller('messages', ['$scope', 'ApiMarkMessageAsSeen', function($scope, ApiMarkMessageAsSeen){
 
 		// Initiate
 		var lastActiveIndex = [0, 0]; // last active index, last active list
-		$scope.list = [
-			vector_messages['mensajes-privados'],
-			vector_messages['mensajes']
-		];
 
 		$scope.activeMessage = $scope.list[0][0]; // First message of mensajes array
 
@@ -37,6 +33,21 @@
 				// Update new active item
 				$scope.list[list][index].isActive = true;
 				$scope.activeMessage = $scope.list[list][index];
+			}
+
+			// Marcar el mensaje como leido
+			markAsRead(index, list);
+		}
+
+		var markAsRead = function( index, list) {
+			var response;
+			var message = $scope.list[list][index];
+
+			if( ! $scope.list[list][index].esvisto ) {
+				message.esvisto = true;
+
+				// Solicitud a la API
+				ApiMarkMessageAsSeen.save( $.param({ id: message.id.toString() }) );
 			}
 		}
 
