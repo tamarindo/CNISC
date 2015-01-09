@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django_wysiwyg',
 ) + tuple(APPS)
 
 MIDDLEWARE_CLASSES = (
@@ -110,3 +111,8 @@ MEDIA_ROOT = ( os.path.join (BASE_DIR,'public/media') )
 
 STATIC_URL= '/static/'
 MEDIA_URL = '/media/'
+
+# configuracion para el modulo de wysiwyg
+
+DJANGO_WYSIWYG_FLAVOR = 'ckeditor' 
+DJANGO_WYSIWYG_MEDIA_URL = STATIC_URL + "libs/ckeditor/" 

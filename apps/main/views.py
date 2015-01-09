@@ -20,11 +20,22 @@ import pprint
 import json
 
 # URL PUBLICAS RENDER TEMPLATE
+
+# vistas compartidas
 def home(request):
 	if request.user.is_authenticated():
 		ob_user=User.objects.get(id=request.user.id)
 		if ob_user.userext.profile.is_admin == 1:
+			
+			vector_env_temp_message=[]
+			list_view_message=Message.objects.filter(sender=ob_user)[0:5]
+
+			for item_view_message in list_view_message:
+				vector_env_temp_message.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+
 			template="mainAdminTemplate.html"
+			return render_to_response(template,locals(),context_instance=RequestContext(request))
+		
 		else :
 
 			vector_temp_message=[]
@@ -34,17 +45,14 @@ def home(request):
 			for item_view_message in list_view_message:
 				vector_temp_message.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
 
-
-
 			vector_temp_message_private=[]
 			list_view_message_private=View_Messages_User.objects.filter(user=ob_user,private=True)[0:5]
 
 			for item_view_message in list_view_message_private:
 				vector_temp_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
 
-
-			dic_messages= json.dumps({'mensajes':vector_temp_message,'mensajes-privados': vector_temp_message_private})
-			pprint.pprint(dic_messages)			
+			dic_messages= json.dumps({'mensajes':vector_temp_message,'mensajes-privados': vector_temp_message_private})		
+			
 			template="mainUserTemplate.html"
 			return render_to_response(template,locals(),context_instance=RequestContext(request))		
 	else:
@@ -53,17 +61,32 @@ def home(request):
 def preferences(request):
 	if request.user.is_authenticated():
 
-		estado_twitter=verificar_conexion_twitter(request.user)
 		ob_user=User.objects.get(id=request.user.id)	
 		if ob_user.userext.profile.is_admin == 1:		
 			template="preferencesAdminTemplate.html"	
 		else:
+			estado_twitter=verificar_conexion_twitter(request.user)
 			template="preferencesUserTemplate.html"	
 		return render_to_response(template,locals(),context_instance=RequestContext(request))					
 	else:
 		return HttpResponseRedirect(reverse("login"))
+# vistas usuario final
+
+# vistas de usuario gestor
 
 
+def preferences(request):
+	if request.user.is_authenticated():
+
+		ob_user=User.objects.get(id=request.user.id)	
+		if ob_user.userext.profile.is_admin == 1:		
+			template="preferencesAdminTemplate.html"	
+		else:
+			estado_twitter=verificar_conexion_twitter(request.user)
+			template="preferencesUserTemplate.html"	
+		return render_to_response(template,locals(),context_instance=RequestContext(request))					
+	else:
+		return HttpResponseRedirect(reverse("login"))
 
 # URL AJAX POST
 

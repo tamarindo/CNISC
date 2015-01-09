@@ -1,4 +1,5 @@
- {% extends "base_admin.html" %}
+{% extends "base_admin.html" %}
+{% load wysiwyg %}
 {% block title %}
  
 {% endblock %}
@@ -7,6 +8,22 @@
 
 {% endblock %}
 
-{% block body %}  {{msj}} {% endblock %}
+{% block body %}  
+<section class="">
+	<form>
+		<div><label>Asunto</label><input/></div>
+		<div><label>Para</label><input/></div>
+		<div>
+		<textarea id="my_text">This is some text. Please edit it</textarea>
+    	{% wysiwyg_editor "my_text" %}
+   
+		</div>
+	</form>
+</section>
+
+<section class=""></section>
+
+
+{% endblock %}
 
 {% block js %}{% endblock %}

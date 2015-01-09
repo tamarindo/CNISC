@@ -1,5 +1,5 @@
 {% load static from staticfiles %}
-
+{% load wysiwyg %}
 <!doctype html>
 <html lang="es">
 <head>
@@ -11,7 +11,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{% static "css/min/main.min.css" %}" rel="stylesheet">
-
+    {% wysiwyg_setup  %}
+    
     {% block style %}
     {% endblock %}
 </head>
