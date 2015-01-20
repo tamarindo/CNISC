@@ -74,5 +74,5 @@ def autentificar_usuario_twitter(request):
 		return HttpResponseRedirect(auth['auth_url'])
 
 
- # metodos para tw
+ # metodos para fb
 

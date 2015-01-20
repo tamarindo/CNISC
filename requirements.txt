@@ -1,2 +1,9 @@
 Django==1.7
-twython==3.2
+argparse==1.2.1
+django-wysiwyg==0.7.0
+djangorestframework==3.0.2
+oauthlib==0.7.1
+requests==2.4.3
+requests-oauthlib==0.4.2
+twython==3.2.0
+wsgiref==0.1.2
