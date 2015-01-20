@@ -27,7 +27,7 @@ class Mensajes(View):
 
 			ob_user=User.objects.get(id=request.user.id)
 			lim_inf=request.POST.get('lim_inf')
-			lim_sup=request.POST.get('lim_sup')
+			lim_sup=50
 			private=request.POST.get('private')	
 
 			if lim_inf and lim_sup and private:
