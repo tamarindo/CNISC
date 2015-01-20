@@ -7,10 +7,12 @@ from django.contrib.auth import login as auth_login , logout
 from django.template import RequestContext  # para hacer funcionar {% csrf_token %}
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
+from django.views.generic import View
 
-# Create your views here.
 import pprint
 import json
+import re
+
 #  ----------------------------------------------------------   login  ---------------------------------------------------------------------------- 
 def v_logout(request):
     logout(request)
@@ -41,14 +43,68 @@ def login(request):
 		return render_to_response('login.html',{'formulario':formularioLogin},context_instance=RequestContext(request))
 #  ----------------------------------------------------------   login  ---------------------------------------------------------------------------- 
 
+
+
+
+
+# -------------------------------------------- API V2 ---------------------------------------------
+class Usuario(View):
+
+	http_method_names = ['get','pull','post','delete']
+
+
+	def get(self,request,*args,**kwargs):
+		pass 
+		# traer Usuario
+
+	def post(self,request,*args,**kwargs):
+		pass
+		# Crear Usuario
+
+	def pull(self,request,*args,**kwargs):
+		pass 
+		# Modificar Usuario
+
+	def delete(self,request,*args,**kwargs):
+		pass
+		# Eliminar Usaurio
+
+
+
+		
+class Email(View):
+
+	http_method_names = ['pull']
+
+	def pull(self,request,*args,**kwargs):
+		email=request.POST.get('email')
+		if email:
+			id_user = request.user.id
+			ob_user = User.objects.get(id=id_user)
+			EmailV = re.match("^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,10}$",email)
+			if EmailV != None:
+				ob_user.confuser.email_alt=email
+				try :
+					ob_user.confuser.save()
+					retorno = {'error':0}
+				except :
+					retorno = {'error':1,'msj':'error al guardar'}
+
+			else :
+				retorno = {'error':1,'msj':'error en el formato'}			
+		else:	
+			retorno = {'error':1,'msj':'valores insuficientes'}
+		return HttpResponse(json.dumps(retorno),content_type="application/json")
+
+
+
+# -------------------------------------------- API V1 ---------------------------------------------
 def changeemail(request):
-	import re
 	email=request.POST.get('email')
 	if email:
 		id_user = request.user.id
 		ob_user = User.objects.get(id=id_user)
 		EmailV = re.match("^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,10}$",email)
-		print EmailV
 		if EmailV != None:
 			ob_user.confuser.email_alt=email
 			try :

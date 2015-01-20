@@ -9,6 +9,9 @@ from twython import Twython
 
 import pprint
 
+
+
+ # metodos para tw
 def callbacktwitter(request):
 	ob_app=App.objects.get_or_none(provedor="Twitter")
 
@@ -71,4 +74,5 @@ def autentificar_usuario_twitter(request):
 		return HttpResponseRedirect(auth['auth_url'])
 
 
+ # metodos para tw
 

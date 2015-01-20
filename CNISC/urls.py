@@ -6,6 +6,7 @@ from apps.tags.urls import tags_urls
 from apps.userManager.urls import userManager_urls
 from apps.oauthSocial.urls import oauthSocial_urls
 
+
 from django.contrib import admin
 
 
@@ -13,10 +14,9 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include(main_urls)),
-    url(r'^api/oauth/', include(oauthSocial_urls)),
-    url(r'^api/mensajes/', include(messaging_urls)),
-    url(r'^api/tags/', include(tags_urls)),
-    url(r'^api/parce/', include(parceadores_urls)),
-    url(r'^', include(userManager_urls))
-
+    url(r'^oauth/', include(oauthSocial_urls)),
+   	url(r'^', include(userManager_urls)),   
+    url(r'^api/', include(messaging_urls)),
+    url(r'^api/', include(tags_urls)),
+    url(r'^api/', include(parceadores_urls)),
 )

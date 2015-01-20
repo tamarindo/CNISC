@@ -74,25 +74,15 @@ def preferences(request):
 		return render_to_response(template,locals(),context_instance=RequestContext(request))					
 	else:
 		return HttpResponseRedirect(reverse("login"))
+
 # vistas usuario final
 
 # vistas de usuario gestor
 
 
-def preferences(request):
-	if request.user.is_authenticated():
 
-		ob_user=User.objects.get(id=request.user.id)	
-		if ob_user.userext.profile.is_admin == 1:		
-			template="preferencesAdminTemplate.html"	
-		else:
-			estado_twitter=verificar_conexion_twitter(request.user)
-			template="preferencesUserTemplate.html"	
-		return render_to_response(template,locals(),context_instance=RequestContext(request))					
-	else:
-		return HttpResponseRedirect(reverse("login"))
+# API
 
-# URL AJAX POST
 
 def changeTypeVisualization(request):
 	type_visua=request.POST.get('typeVisua')
