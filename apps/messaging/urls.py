@@ -2,8 +2,7 @@ from django.conf.urls import patterns, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 
-from apps.messaging.views import Mensajes
-
+from apps.messaging.views import Mensajes 
 
 admin.autodiscover()
 

@@ -8,7 +8,7 @@ from django.template import RequestContext  # para hacer funcionar {% csrf_token
 from django.contrib.auth.models import User
 from django.views.generic import View
 
-from apps.messaging.models import View_Messages_User
+from apps.messaging.models import View_Messages_User , Message
 
 import pprint
 import json
@@ -20,14 +20,11 @@ class Mensajes(View):
 	http_method_names = ['get','pull','post']
 
 	def get(self,request,*args,**kwargs):
-		pprint.pprint(args)
 		if args == () :
-
 			#Enviar Varios Mensajes en base a los parametros
-
 			ob_user=User.objects.get(id=request.user.id)
 			lim_inf=request.POST.get('lim_inf')
-			lim_sup=50
+			lim_sup=lim_inf+50
 			private=request.POST.get('private')	
 
 			if lim_inf and lim_sup and private:
@@ -94,7 +91,43 @@ class Mensajes(View):
 			return Response(retorno)
 
 
+	def post(self,request,*args,**kwargs):
+
+		#Crear Mensaje
+
+		#prueba
+		#subject="importante "
+		#json_recipients='{2,1}'
+		#content_men='<div> <h1> Manzanarez RENACE del INFIERNO "CALDAS DEL DEMONIO" </h1> <p> este es una articulo de la comunidad zatanica de manzanares</p> </div>'
+		#private=False
+		
+		subject=request.POST.get('subject')
+		json_recipients=request.POST.get('json_recipients')
+		content_men=request.POST.get('content_men')
+		private=request.POST.get('private')
+
+		if subject and json_recipients and content_men and private != None:
+
+			new_mensaje= Message(sender=request.user,subject=subject,content=content_men)
+			new_mensaje.save()
+			recipients=json.loads(json_recipients)
+
+			for receiver in recipients:
+				ob_user = User.objects.get(pk=receiver)
+				if ob_user:
+					newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
+					newView.save()
+			retorno = {'error':0,'msj':' '}
+
+		else:
+			retorno = {'error':1,'msj':'Faltan parametros'}
+
+		return HttpResponse(json.dumps(retorno),content_type="application/json")
+
+
+
 # Api Vieja	  Despues de Provar la nueva api se pude eliminar
+
 
 
 def getMessage(request):

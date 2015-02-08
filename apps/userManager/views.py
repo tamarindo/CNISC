@@ -54,8 +54,44 @@ class Usuario(View):
 
 
 	def get(self,request,*args,**kwargs):
-		pass 
 		# traer Usuario
+		if args == () :
+			#Enviar Varios Mensajes en base a los parametros
+			ob_user=User.objects.get(id=request.user.id)
+			lim_inf=request.POST.get('lim_inf')
+			lim_sup=lim_inf+50
+			private=request.POST.get('private')	
+
+			if lim_inf and lim_sup and private:
+
+				if private:
+					vector_view_message_private  = []			
+					list_view_message_private = View_Messages_User.objects.filter(user=ob_user, message__id__gte = lim_inf,message__id__lte = lim_sup,private = True ).order_by('date_added')
+
+					for item_view_message in list_view_message_private:
+						vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+					retorno = vector_view_message_private
+				
+				else:
+					vector_view_message_no_private = []
+					list_view_message_no_private = View_Messages_User.objects.filter(user=ob_user, message__id__gte = lim_inf,message__id__lte = lim_sup,private = False).order_by('date_added')
+
+					for item_view_message in list_view_message_no_private:
+						vector_view_message_no_private.append(
+						dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+					retorno = vector_view_message_no_private   
+			else:
+				retorno = {'error':1,'msj':'Faltan parametros'}
+		else:
+			#Enviar un solo Mensaje
+			
+			ob_user=User.objects.get(id=request.user.id)
+			if ob_user != None:
+				retorno = dict([('username',ob_user.username),('fist_name',ob_user.fist_name),("last_name",ob_user.last_name),("email",ob_user.email),("phone",ob_user.userext.phone),("mobile",ob_user.userext.mobile),("address",ob_user.userext.address),("city",ob_user.userext.mobile),("province",ob_user.userext.province),("country",ob_user.userext.country),('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d "))])
+			else:
+				retorno = {'error':1,'msj':'usuario inexistente'}		
+		
+		return HttpResponse(json.dumps(retorno),content_type="application/json")
 
 	def post(self,request,*args,**kwargs):
 		pass
@@ -76,7 +112,7 @@ class Email(View):
 
 	http_method_names = ['pull']
 
-	def pull(self,request,*args,**kwargs):
+	def put(self,request,*args,**kwargs):
 		email=request.POST.get('email')
 		if email:
 			id_user = request.user.id
@@ -96,6 +132,36 @@ class Email(View):
 			retorno = {'error':1,'msj':'valores insuficientes'}
 		return HttpResponse(json.dumps(retorno),content_type="application/json")
 
+
+
+
+def autocomplete(request):
+
+	if request.method == 'GET' :
+		table = request.GET.get('table')
+		key = request.GET.get('key')		
+		if table == 'usuarios' :
+			ob_users= user.objects.filter(username=key,fist_name__contains=key, last_name__contains=key,email__contains=key)
+			vec_user=[]
+			for ob_user in ob_users:
+				vec_user.appent(dict([('username',ob_user.username),('fist_name',ob_user.fist_name),("last_name",ob_user.last_name),("email",ob_user.email)]))
+			retorno = {'error':0}						
+	else:
+		retorno = {'error':1,'msj':'Error en methodo de envio'}
+
+	return HttpResponse(json.dumps(retorno),content_type="application/json")		
+
+
+def aviso_bienvenida():
+	if request.user.is_authenticated() :
+		ob_userext=UserExt.objects.get(user=request.user)
+		ob_userext.welcome_message=True
+		ob_userext.save()
+					
+		retorno = {'error':0}
+	else:
+		retorno = {'error':1,'msj':'Usuario no autentificado'}
+	return HttpResponse(json.dumps(retorno),content_type="application/json")			
 
 
 # -------------------------------------------- API V1 ---------------------------------------------

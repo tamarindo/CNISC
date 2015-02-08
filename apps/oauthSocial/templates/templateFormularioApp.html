@@ -1,0 +1,22 @@
+{% extends "base_admin.html" %}
+{% load wysiwyg %}
+{% block title %}
+ 
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block body %}  
+<h1> aplicacion </h1>
+<form method="POST">{% csrf_token %}
+	<ul>
+		{{formulario.as_ul}}
+		<input type="submit">
+	</ul> 
+</form>
+
+{% endblock %}
+
+{% block js %}{% endblock %}

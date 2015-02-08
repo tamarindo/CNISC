@@ -12,8 +12,8 @@ Provedores = (
 
 # Messages
 class App(baseModel):
-	consumer_key = models.CharField(max_length=400, verbose_name=_("consumer_key"), null=True, blank=True)
-	consumer_secret= models.CharField(max_length=400, verbose_name=_("consumer_secret"), null=True, blank=True)
+	consumer_key = models.CharField(max_length=400, verbose_name=_("consumer key"), null=True, blank=True)
+	consumer_secret= models.CharField(max_length=400, verbose_name=_("consumer secret"), null=True, blank=True)
 	nombre = models.CharField(max_length=30, verbose_name=_("nombre"))
 	provedor =  models.CharField(max_length=10, choices=Provedores, verbose_name=_("Provedores"))
 	callback_url = models.CharField(max_length=500, verbose_name=_("callback url"))

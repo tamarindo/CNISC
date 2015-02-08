@@ -36,7 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'django_wysiwyg', 
+    'django_wysiwyg',
+    'django_facebook', 
 ) + tuple(APPS)
 
 
@@ -100,3 +101,8 @@ MEDIA_URL = '/media/'
 
 DJANGO_WYSIWYG_FLAVOR = 'ckeditor' 
 DJANGO_WYSIWYG_MEDIA_URL = STATIC_URL + "libs/ckeditor/" 
+
+
+
+FACEBOOK_APP_ID = '367234420120488'
+FACEBOOK_APP_SECRET =  'b809dcbd4b3aa24008e73a87626020e3'

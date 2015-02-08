@@ -64,6 +64,7 @@ class UserExt(baseModel):
 	province = models.CharField(max_length=60, verbose_name=_("estado"), null=True,  blank=True)
 	country = models.CharField(max_length=60, verbose_name=_("pais"), null=True,  blank=True)
 	date_born = models.DateField(null=True, verbose_name=_("Fecha de nacimiento"),  blank=True)
+	welcome_message = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.user.username

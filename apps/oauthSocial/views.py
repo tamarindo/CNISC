@@ -1,17 +1,44 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
+from django.template import RequestContext  # para hacer funcionar {% csrf_token %}
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login , logout
 from apps.oauthSocial.models import App , CuentaSocial , TokenSocial
-
+from apps.oauthSocial.forms import editApp
 from twython import Twython
 
-import pprint
+import pprint,json
 
+ # configurar las aplicaciones externas
 
+def configura_app(request, *args):
+	provedor= args[0]
+	pprint.pprint(provedor)
+	if provedor == "Facebook" or provedor == "Twitter": 
+		if request.method == 'POST':
+	 		modelsfrom = editApp(request.POST)
+	 		if modelsfrom.is_valid():
+	 			modelsfrom.save()
+	 			mensaje=" Aplicacion Guardada "	
+	 			error=1
+	 		else :
+	 			mensaje=" Error al guardar "
+	 			error=0
+	 		return render_to_response('templateFormularioApp.html',{'formulario':modelsfrom,'error':error,'mensaje':mensaje},context_instance=RequestContext(request))
+		else:
+			ob_app= App.objects.get_or_none(provedor=provedor)
+			pprint.pprint(ob_app)
+			if ob_app:
+				modelsfrom = editApp(instance=ob_app)
+				return render_to_response('templateFormularioApp.html',{'formulario':modelsfrom},context_instance=RequestContext(request))				
+			else:
+	 			return HttpResponseRedirect(reverse("preferences"))	
+	else:
+		return HttpResponseRedirect(reverse("preferences"))	
+	
 
- # metodos para tw
+# metodos para tw
 def callbacktwitter(request):
 	ob_app=App.objects.get_or_none(provedor="Twitter")
 
