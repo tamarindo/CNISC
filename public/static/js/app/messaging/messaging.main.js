@@ -7,7 +7,7 @@
 
 	var messaging = angular.module('Messaging', ['messageDirectives']);
 
-	messaging.controller('messages', ['$scope', 'ApiMarkMessageAsSeen', function($scope, ApiMarkMessageAsSeen){
+	messaging.controller('messages', ['$scope', 'ApiMessages', function($scope, ApiMessages){
 
 		// Initiate
 		var lastActiveIndex = [0, 0]; // last active index, last active list
@@ -36,19 +36,17 @@
 			}
 
 			// Marcar el mensaje como leido
-			markAsRead(index, list);
+			markAsRead( this.mensaje );
 		}
 
-		var markAsRead = function( index, list) {
-			var response;
-			var message = $scope.list[list][index];
+		var markAsRead = function( message ) {
 
-			if( ! $scope.list[list][index].esvisto ) {
-				message.esvisto = true;
-
-				// Solicitud a la API
-				ApiMarkMessageAsSeen.save( $.param({ id: message.id.toString() }) );
+			if( message.esvisto ) {
+				return ;
 			}
+
+			message.esvisto = true;
+			ApiMessages.read( { id: message.id } );
 		}
 
 	}]);
