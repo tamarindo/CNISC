@@ -57,29 +57,16 @@ class Usuario(View):
 		# traer Usuario
 		if args == () :
 			#Enviar Varios Mensajes en base a los parametros
-			ob_user=User.objects.get(id=request.user.id)
 			lim_inf=request.POST.get('lim_inf')
 			lim_sup=lim_inf+50
-			private=request.POST.get('private')	
 
-			if lim_inf and lim_sup and private:
-
-				if private:
-					vector_view_message_private  = []			
-					list_view_message_private = View_Messages_User.objects.filter(user=ob_user, message__id__gte = lim_inf,message__id__lte = lim_sup,private = True ).order_by('date_added')
-
-					for item_view_message in list_view_message_private:
-						vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+			if lim_inf:
+					vector_usuarios  = []			
+					list_users = User.objects.all()
+					for ob_user in list_users:
+						vector_view_message_private.append(dict([('username',ob_user.username),('fist_name',ob_user.fist_name),("last_name",ob_user.last_name),("email",ob_user.email),("phone",ob_user.userext.phone),("mobile",ob_user.userext.mobile),("address",ob_user.userext.address),("city",ob_user.userext.mobile),("province",ob_user.userext.province),("country",ob_user.userext.country),('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d "))]))
 					retorno = vector_view_message_private
 				
-				else:
-					vector_view_message_no_private = []
-					list_view_message_no_private = View_Messages_User.objects.filter(user=ob_user, message__id__gte = lim_inf,message__id__lte = lim_sup,private = False).order_by('date_added')
-
-					for item_view_message in list_view_message_no_private:
-						vector_view_message_no_private.append(
-						dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
-					retorno = vector_view_message_no_private   
 			else:
 				retorno = {'error':1,'msj':'Faltan parametros'}
 		else:
