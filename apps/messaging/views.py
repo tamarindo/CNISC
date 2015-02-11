@@ -21,33 +21,31 @@ class Mensajes(View):
 
 	def get(self,request,*args,**kwargs):
 		if args == () :
-			#Enviar Varios Mensajes en base a los parametros
-			ob_user=User.objects.get(id=request.user.id)
-			lim_inf=request.POST.get('lim_inf')
-			lim_sup=lim_inf+50
-			private=request.POST.get('private')	
+			if type(args[0]) != int : 
+				#Enviar Varios Mensajes en base a los parametros
+				ob_user=User.objects.get(id=request.user.id)
+				lim_inf=request.POST.get('lim_inf')
+				lim_sup=lim_inf+50
+				private=request.POST.get('private')	
 
-			if lim_inf and lim_sup and private:
-
-				if private:
-					vector_view_message_private  = []			
-					list_view_message_private = View_Messages_User.objects.filter(user=ob_user, message__id__gte = lim_inf,message__id__lte = lim_sup,private = True ).order_by('date_added')
-
-					for item_view_message in list_view_message_private:
-						vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
-					retorno = vector_view_message_private
-				
+				if lim_inf and lim_sup and private:
+					if private:
+						vector_view_message_private  = []			
+						list_view_message_private = View_Messages_User.objects.filter(user=ob_user,private = True ).order_by('date_added')[lim_inf:lim_sup] 
+						for item_view_message in list_view_message_private:
+							vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+						retorno = vector_view_message_private
+					else:
+						vector_view_message_no_private = []
+						list_view_message_no_private = View_Messages_User.objects.filter(user=ob_user ,private = False).order_by('date_added')[lim_inf:lim_sup]
+						for item_view_message in list_view_message_no_private:
+							vector_view_message_no_private.append(
+							dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+						retorno = vector_view_message_no_private   
 				else:
-					vector_view_message_no_private = []
-					list_view_message_no_private = View_Messages_User.objects.filter(user=ob_user, message__id__gte = lim_inf,message__id__lte = lim_sup,private = False).order_by('date_added')
-
-					for item_view_message in list_view_message_no_private:
-						vector_view_message_no_private.append(
-						dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
-					retorno = vector_view_message_no_private   
+					retorno = {'error':1,'msj':'Faltan parametros'}
 			else:
-				retorno = {'error':1,'msj':'Faltan parametros'}
-			
+				retorno = {'error':1,'msj':'peticion erronea'}				
 			return HttpResponse(json.dumps(retorno),content_type="application/json")
 
 		else:
@@ -66,25 +64,29 @@ class Mensajes(View):
 
 		#Pasar a estado leido un mensaje
 
-		if args != () :								
-   			id_viewmessage=args[0]
-			ob_viewmessage=View_Messages_User.objects.get_or_none(id=id_viewmessage)
+		if args != () :
+			if type(args[0]) != int :								
+	   			id_viewmessage=args[0]
+				ob_viewmessage=View_Messages_User.objects.get_or_none(id=id_viewmessage)
 
-			if ob_viewmessage:
-				if ob_viewmessage.seen != True:
-					ob_viewmessage.seen = True
-					try:
-						ob_viewmessage.save()
-						retorno = {'error':0}
-					except:
-						retorno = {'error':1,'msj':'error al guardar'}
+				if ob_viewmessage:
+					if ob_viewmessage.seen != True:
+						ob_viewmessage.seen = True
+						try:
+							ob_viewmessage.save()
+							retorno = {'error':0}
+						except:
+							retorno = {'error':1,'msj':'error al guardar'}
+					else:
+						retorno = {'error':0}	
 				else:
-					retorno = {'error':0}	
+					retorno = {'error':1,'msj':'Mensaje inexistente'}
 			else:
-				retorno = {'error':1,'msj':'Mensaje inexistente'}
+				retorno = {'error':1,'msj':'peticion erronea'}
 
 			return HttpResponse(json.dumps(retorno),content_type="application/json")
 		else :
+
 			id_user = request.user.id
 			ob_viewmessage = View_Messages_User.objects.filter(user=id_user).update(seen=True)
 			retorno = {'error':0}

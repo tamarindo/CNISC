@@ -8,7 +8,7 @@ admin.autodiscover()
 
 messaging_urls = patterns('apps.messaging.views',
 
-	url(r'^mensajes/(\d+)', Mensajes.as_view()),
+	url(r'^mensajes/(\w+)', Mensajes.as_view()),
 	url(r'^mensajes', Mensajes.as_view()),
 
 #  estos metodos se les tiene que dejar de dar soporte

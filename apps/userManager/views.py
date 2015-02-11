@@ -62,7 +62,7 @@ class Usuario(View):
 
 			if lim_inf:
 					vector_usuarios  = []			
-					list_users = User.objects.all()
+					list_users = User.objects.all()[lim_inf:lim_sup] 
 					for ob_user in list_users:
 						vector_view_message_private.append(dict([('username',ob_user.username),('fist_name',ob_user.fist_name),("last_name",ob_user.last_name),("email",ob_user.email),("phone",ob_user.userext.phone),("mobile",ob_user.userext.mobile),("address",ob_user.userext.address),("city",ob_user.userext.mobile),("province",ob_user.userext.province),("country",ob_user.userext.country),('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d "))]))
 					retorno = vector_view_message_private
