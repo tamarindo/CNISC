@@ -186,8 +186,11 @@ button.flat
 	.close
 		absolute top 1rem right 1rem
 		font-size 14px
+	// Predefiniendo clase ng hide para acelerar
+	// el ocultamiento de elementos y no esperar
+	// que Angular inyecte su css
 	&.ng-hide
-		opacity 0
+		display none !important
 	&.ng-hide-remove
 		animation 150ms slideIn linear
 	&.ng-hide-add

@@ -15,7 +15,7 @@
     {% block style %}
     {% endblock %}
 </head>
-<body ng-app="user" class="user" ng-controller="mainController">
+<body class="user" {% block bodyAttrs %}{% endblock %}>
     <header class="main-header">
         <div class="container clearfix">
             <figure class="logo-user pull-left">
@@ -67,7 +67,7 @@
         </div>
     </header>
     
-    <div id="opciones" ng-show="showMenu" class="">
+    <div id="opciones" ng-show="showMenu" class="ng-hide">
         <h2 class="title-option center-text main-title">Opciones</h2>
         <ul class="list">
             <li><button class="flat" ng-click="markAll()"><i class="icon-checkmark"> </i>Marcar todo como leido</button></li>

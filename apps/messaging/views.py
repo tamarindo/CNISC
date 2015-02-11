@@ -17,7 +17,7 @@ import json
 
 class Mensajes(View):
 
-	http_method_names = ['get','pull','post']
+	http_method_names = ['get','put','post']
 
 	def get(self,request,*args,**kwargs):
 		if args == () :
@@ -62,7 +62,7 @@ class Mensajes(View):
 			return HttpResponse(json.dumps(retorno),content_type="application/json")	
 
 
-	def pull(self,request,*args,**kwargs):
+	def put(self,request,*args,**kwargs):
 
 		#Pasar a estado leido un mensaje
 
@@ -83,12 +83,12 @@ class Mensajes(View):
 			else:
 				retorno = {'error':1,'msj':'Mensaje inexistente'}
 
-			return Response(retorno)
+			return HttpResponse(json.dumps(retorno),content_type="application/json")
 		else :
 			id_user = request.user.id
 			ob_viewmessage = View_Messages_User.objects.filter(user=id_user).update(seen=True)
 			retorno = {'error':0}
-			return Response(retorno)
+			return HttpResponse(json.dumps(retorno),content_type="application/json")
 
 
 	def post(self,request,*args,**kwargs):

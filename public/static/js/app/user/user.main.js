@@ -6,7 +6,7 @@
 (function(){
 	'use strict';
 
-	var app = angular.module('user', ['shareComponents', 'Messaging', , 'ngCookies', 'Api'])
+	var app = angular.module('user', ['shareComponents', 'Messaging', 'ngCookies', 'Api'])
 
 		// Cambiar el control de expresiones para prevenir 
 		// inconvenientes con las de Django.
@@ -18,10 +18,11 @@
 		// Configurar cada solicitud AJAX para que incluya la cookie CSRF
 		.run(['$http', '$cookies', function($http, $cookies) {
 			$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+			$http.defaults.headers.put['X-CSRFToken'] = $cookies.csrftoken;
 			$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 		}]);
 
-	app.controller('mainController', [ '$scope', '$timeout', 'ApiMarkAllMessagesAsSeen' ,function($scope, $timeout, ApiMarkAllMessagesAsSeen){
+	app.controller('mainController', [ '$scope', '$timeout', 'ApiMessages' ,function($scope, $timeout, ApiMessages){
 		
 		$scope.list = [
 			vector_messages['mensajes-privados'],
@@ -39,8 +40,8 @@
 				$scope.list[1][i].esvisto = true;
 			}
 
-			// Enviar petición a la API
-			ApiMarkAllMessagesAsSeen.save();
+			// Enviar petición de marcar todo como leído a la API
+			ApiMessages.read();
 
 			// Ocultar menú lateral
 			$scope.showMenu = false;
@@ -60,10 +61,12 @@
 			// Si hay algun request efectúandose, cancélese y 
 			// genere uno nuevo.
 			if( $timeout.cancel($scope.toggleMessageExcerptRequest) ) {
+				// @TODO enviar solicitud API
 				console.log('Cancelando solicitud');
 			}
 			console.log('Enviando solicitud');
 			$scope.toggleMessageExcerptRequest = $timeout(function(){
+				// @TODO enviar solicitud API
 				console.log('Solicitud enviada: ' + $scope.showMessageExcerpt);
 			}, 3500);
 		};
