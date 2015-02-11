@@ -7,6 +7,10 @@
 
 {% endblock %}
 
+{% block bodyAttrs %}
+	ng-app="user" ng-controller="mainController"
+{% endblock %}
+
 {% block body %}
 
 <div cn-alert class="alert" ng-hide="hide">
