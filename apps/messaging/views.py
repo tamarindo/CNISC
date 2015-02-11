@@ -24,9 +24,9 @@ class Mensajes(View):
 			if type(args[0]) != int : 
 				#Enviar Varios Mensajes en base a los parametros
 				ob_user=User.objects.get(id=request.user.id)
-				lim_inf=request.POST.get('lim_inf')
-				lim_sup=lim_inf+50
-				private=request.POST.get('private')	
+				lim_inf = request.POST.get('offset') + 1
+				lim_sup = lim_inf + 10
+				private=request.POST.get('private')
 
 				if lim_inf and lim_sup and private:
 					if private:
