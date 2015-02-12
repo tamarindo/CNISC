@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django_wysiwyg',
-    'django_facebook', 
 ) + tuple(APPS)
 
 

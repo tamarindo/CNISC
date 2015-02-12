@@ -19,7 +19,7 @@
     <header class="main-header">
         <div class="container clearfix">
             <figure class="logo-user pull-left">
-                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/soffes/73.jpg" alt="Foto de {{ob_user.get_full_name}}" />
+                <img src="{{ MEDIA_URL }}{{ ob_user.userext.foto }}" alt="Foto de {{ob_user.get_full_name}}" />
                 <figcaption class="inline">
                     <h3 class="name">{{ob_user.get_full_name}}</h3>
                 </figcaption>

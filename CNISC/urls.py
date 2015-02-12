@@ -5,7 +5,7 @@ from apps.parceadores.urls import parceadores_urls
 from apps.tags.urls import tags_urls
 from apps.userManager.urls import userManager_urls
 from apps.oauthSocial.urls import oauthSocial_urls
-
+from django.conf import settings
 
 from django.contrib import admin
 
@@ -20,3 +20,5 @@ urlpatterns = patterns('',
     url(r'^api/', include(tags_urls)),
     url(r'^api/', include(parceadores_urls)),
 )
+
+urlpatterns += patterns('',(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),)

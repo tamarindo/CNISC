@@ -13,6 +13,25 @@
 	<div>
 		<h1> Preferencias </h1>
 	</div>
+	<div class="panel-imagen">
+		<img src="{{ MEDIA_URL }}{{ ob_user.userext.foto }}">
+		<form action="{%url 'change_foto'%} " enctype="multipart/form-data" method="POST" >
+			{% csrf_token %}
+		{{from_foto}}	
+			<botton id="cambiarFoto" type="submit" > Cambiar Foto</botton>		 
+		</form>
+		
+	
+	</div>
+	<h2> notificaciones </h2>
+
+	<h3> Email Principal </h3>
+	<form>
+		<input type='email'>
+	</form>
+
+	<h3> Redes Sociales</h3>
+	<p class="info-vincular-rs"> Ingresa con tu red social para recibir las <span>notificaciones importantes</span> al instante.</p>
 	<div> 
 	{% if estado_twitter %}
 		Twitter conectado 

@@ -8,6 +8,7 @@ from django.template import RequestContext  # para hacer funcionar {% csrf_token
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
 from django.views.generic import View
+from apps.userManager.forms import from_foto
 
 import pprint
 import json
@@ -151,7 +152,36 @@ def aviso_bienvenida():
 	return HttpResponse(json.dumps(retorno),content_type="application/json")			
 
 
-# -------------------------------------------- API V1 ---------------------------------------------
+
+
+
+'''def eliminar_foto_perfil(request):
+
+    login=restringir_login(request,False)
+    if  not login :
+        return  HttpResponseRedirect(reverse_lazy("home"))
+
+    else :
+        ob_perfil=Perfil.objects.get(usuario=request.user)  
+        if ob_perfil:
+            ob_perfil.foto.delete(save=True) 
+            data ={'error':0,'msj':''}
+        else:
+            data ={'error':1,'msj':'usuario inexistente'} 
+        
+        return HttpResponse(json.dumps(data), content_type="application/json")'''
+
+def change_foto(request):	
+	if request.user.is_authenticated() :
+		ob_userext=UserExt.objects.get(user=request.user)
+		form = from_foto(request.POST, request.FILES,instance=ob_userext)
+        if form.is_valid():
+        	form.save()
+        else:
+		retorno = {'error':1,'msj':'Usuario no autentificado'}
+	return  HttpResponseRedirect(reverse_lazy("preferences"))
+
+
 def changeemail(request):
 	email=request.POST.get('email')
 	if email:
