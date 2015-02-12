@@ -54,15 +54,12 @@ class Mensajes(View):
 
 		else:
 			#Enviar un solo Mensaje
-			if type(args[0]) != int :
-				pprint.pprint(args[0])
-				ob_user=User.objects.get(id=request.user.id)
+			mensaje_id = int( args[0] )
+			ob_user=User.objects.get(id=request.user.id)
 
-				vector_view_messag= []
-				ob_view_message = View_Messages_User.objects.get(pk=args[0])
-				retorno = dict([('id',ob_view_message.id),('asunto',ob_view_message.message.subject),('mensaje',ob_view_message.message.content), ('esvisto',ob_view_message.seen), ('fecha',ob_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))])
-			else:
-				retorno = {'error':1,'msj':'peticion erronea'}
+			vector_view_messag= []
+			ob_view_message = View_Messages_User.objects.get( pk = mensaje_id )
+			retorno = dict([('id',ob_view_message.id),('asunto',ob_view_message.message.subject),('mensaje',ob_view_message.message.content), ('esvisto',ob_view_message.seen), ('fecha',ob_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))])
 
 			return HttpResponse(json.dumps(retorno),content_type="application/json")
 
