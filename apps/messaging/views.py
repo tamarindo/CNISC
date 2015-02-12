@@ -20,44 +20,50 @@ class Mensajes(View):
 	http_method_names = ['get','put','post']
 
 	def get(self,request,*args,**kwargs):
-		if args == () :
-			if type(args[0]) != int : 
-				#Enviar Varios Mensajes en base a los parametros
-				ob_user=User.objects.get(id=request.user.id)
-				lim_inf = request.POST.get('offset') + 1
-				lim_sup = lim_inf + 10
-				private=request.POST.get('private')
+		if args == () :	 
+			#Enviar Varios Mensajes en base a los parametros
+			ob_user=User.objects.get(id=request.user.id)
+			lim_inf = int( request.GET.get('offset') ) + 1
+			private=request.GET.get('private')
+			lim_sup = lim_inf + 10
 
-				if lim_inf and lim_sup and private:
-					if private:
-						vector_view_message_private  = []			
-						list_view_message_private = View_Messages_User.objects.filter(user=ob_user,private = True ).order_by('date_added')[lim_inf:lim_sup] 
-						for item_view_message in list_view_message_private:
-							vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
-						retorno = vector_view_message_private
-					else:
-						vector_view_message_no_private = []
-						list_view_message_no_private = View_Messages_User.objects.filter(user=ob_user ,private = False).order_by('date_added')[lim_inf:lim_sup]
-						for item_view_message in list_view_message_no_private:
-							vector_view_message_no_private.append(
-							dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
-						retorno = vector_view_message_no_private   
+			if lim_inf and lim_sup and private:
+				if private:
+					vector_view_message_private  = []
+					list_view_message_private = View_Messages_User.objects.filter(user=ob_user,private = True ).order_by('date_added')[lim_inf:lim_sup]
+					
+					for item_view_message in list_view_message_private:
+						vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+					
+					retorno = vector_view_message_private
+
 				else:
-					retorno = {'error':1,'msj':'Faltan parametros'}
+					vector_view_message_no_private = []
+					list_view_message_no_private = View_Messages_User.objects.filter(user=ob_user ,private = False).order_by('date_added')[lim_inf:lim_sup]
+					
+					for item_view_message in list_view_message_no_private:
+						vector_view_message_no_private.append(
+						dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+					
+					retorno = vector_view_message_no_private
 			else:
-				retorno = {'error':1,'msj':'peticion erronea'}				
+				retorno = {'error':1,'msj':'Faltan parametros'}
+
 			return HttpResponse(json.dumps(retorno),content_type="application/json")
 
 		else:
 			#Enviar un solo Mensaje
-			pprint.pprint(args[0]) 
-			ob_user=User.objects.get(id=request.user.id)
+			if type(args[0]) != int :
+				pprint.pprint(args[0])
+				ob_user=User.objects.get(id=request.user.id)
 
-			vector_view_messag= []
-			ob_view_message = View_Messages_User.objects.get(pk=args[0])
-			retorno = dict([('id',ob_view_message.id),('asunto',ob_view_message.message.subject),('mensaje',ob_view_message.message.content), ('esvisto',ob_view_message.seen), ('fecha',ob_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))])   
-			 
-			return HttpResponse(json.dumps(retorno),content_type="application/json")	
+				vector_view_messag= []
+				ob_view_message = View_Messages_User.objects.get(pk=args[0])
+				retorno = dict([('id',ob_view_message.id),('asunto',ob_view_message.message.subject),('mensaje',ob_view_message.message.content), ('esvisto',ob_view_message.seen), ('fecha',ob_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))])
+			else:
+				retorno = {'error':1,'msj':'peticion erronea'}
+
+			return HttpResponse(json.dumps(retorno),content_type="application/json")
 
 
 	def put(self,request,*args,**kwargs):
