@@ -75,6 +75,19 @@ def preferences(request):
 	else:
 		return HttpResponseRedirect(reverse("login"))
 
+
+def panelUser(request):
+	if request.user.is_authenticated():
+		ob_user=User.objects.get(id=request.user.id)	
+		if ob_user.userext.profile.is_admin == 1:		
+			template="userAdminTemplate.html"	
+		else:
+			estado_twitter=verificar_conexion_twitter(request.user)
+			template="userTemplate.html"	
+		return render_to_response(template,locals(),context_instance=RequestContext(request))					
+	else:
+		return HttpResponseRedirect(reverse("login"))
+
 # vistas usuario final
 
 # vistas de usuario gestor

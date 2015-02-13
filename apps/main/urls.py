@@ -6,8 +6,8 @@ admin.autodiscover()
 main_urls = patterns('apps.main.views',
 	
 	url(r'^api/main/configuracion_visualizacion$', 'changeTypeVisualization', name="changeTypeVisualization"),
-	url(r'^preferencias$','preferences',name="preferences"),
-
 		# url Templates
     url(r'^$','home', name="home"),
+	url(r'^preferencias$','preferences',name="preferences"),
+	url(r'^user$','panelUser',name="panelUser"),
 )

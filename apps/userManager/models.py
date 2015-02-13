@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from apps.main.models import *
 
+import hashlib
 # Create your models here.
 
 
@@ -66,9 +67,15 @@ class UserExt(baseModel):
 	date_born = models.DateField(null=True, verbose_name=_("Fecha de nacimiento"),  blank=True)
 	welcome_message = models.BooleanField(default=False)
 	foto = models.ImageField(upload_to='perfil', verbose_name='foto de perfil',blank=True)
-	
+
 	def __unicode__(self):
 		return self.user.username
+		
+	def profile_image_url(self):
+		if self.foto == None or self.foto == "":
+			return "http://www.gravatar.com/avatar/{}?s=55".format(hashlib.md5(self.user.email).hexdigest())
+		else:
+			return settings.MEDIA_URL+"/"+str(self.foto) 
 
 class Graduate(baseModel):
 	UserExt = models.OneToOneField(UserExt, verbose_name=_("UserExt"))
