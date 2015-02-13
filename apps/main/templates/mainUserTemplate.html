@@ -35,6 +35,9 @@
 			<ul class="list message-list" >
 				<li ng-repeat="mensaje in list[1] | filter: buscar" ng-init="list=1" message-item></li>
 			</ul>
+			<div class="">
+				<button ng-click="loadMessages()" class="flat load-more">Mensajes anteriores</button>
+			</div>
 		</section>
 	</aside>
 	<article class="two-thirds column message-content">

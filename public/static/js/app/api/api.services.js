@@ -28,7 +28,7 @@
 				isArray: true,
 				params: {
 					offset		: 10,
-					isprivate	: 0
+					private		: 0
 				},
 			},
 

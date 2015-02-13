@@ -227,9 +227,22 @@ button.flat
 	border-right 2px solid lighten-gray
 	
 	.list-header
+	.load-more
 		background-color lighten-gray
+
+	.list-header
 		padding .5rem 1rem
-		font-size 1.2rem
+		font-size 1rem
+		
+	.load-more
+		padding .6rem 1rem
+		font-weight 700
+		// text-align left
+		width 100%
+		position relative
+		&:hover
+			background-color lighten(lighten-gray, 15%)
+		
 
 .message-list
 	margin 0
@@ -249,13 +262,6 @@ button.flat
 		&:after
 			font-family 'cnisc'
 			speak none
-			font-style normal
-			font-weight normal
-			font-variant normal
-			text-transform none
-			line-height 1
-			-webkit-font-smoothing antialiased
-			-moz-osx-font-smoothing grayscale
 			content '\e62e'
 			absolute right 1rem top 50%
 			font-size 20px
