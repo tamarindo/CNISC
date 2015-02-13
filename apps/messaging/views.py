@@ -49,7 +49,6 @@ class Mensajes(View):
 			else:
 				retorno = {'error':1,'msj':'Faltan parametros'}
 
-			pprint.pprint(retorno)
 			return HttpResponse(json.dumps(retorno),content_type="application/json")
 
 		else:
