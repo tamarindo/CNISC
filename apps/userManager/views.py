@@ -151,25 +151,12 @@ def aviso_bienvenida():
 		retorno = {'error':1,'msj':'Usuario no autentificado'}
 	return HttpResponse(json.dumps(retorno),content_type="application/json")			
 
-
-
-
-
-'''def eliminar_foto_perfil(request):
-
-    login=restringir_login(request,False)
-    if  not login :
-        return  HttpResponseRedirect(reverse_lazy("home"))
-
-    else :
-        ob_perfil=Perfil.objects.get(usuario=request.user)  
-        if ob_perfil:
-            ob_perfil.foto.delete(save=True) 
-            data ={'error':0,'msj':''}
-        else:
-            data ={'error':1,'msj':'usuario inexistente'} 
-        
-        return HttpResponse(json.dumps(data), content_type="application/json")'''
+def eliminar_foto(request):
+	if request.user.is_authenticated() :
+		ob_UserExt=UserExt.objects.get(user=request.user)  
+        if ob_UserExt:
+            ob_UserExt.foto.delete(save=True) 
+	return  HttpResponseRedirect(reverse_lazy("preferences"))
 
 def change_foto(request):	
 	if request.user.is_authenticated() :

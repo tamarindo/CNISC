@@ -14,14 +14,21 @@
 		<h1> Preferencias </h1>
 	</div>
 	<div class="panel-imagen">
+		<div class="marco_imagen">
+		<form id="eliminar_foto" action="{%url 'eliminar_foto'%} " method="POST" >
+			{% csrf_token %}
+			<input class="sumit-eliminar-foto hidden"  type="submit" />	
+			<div id="eliminar_imagen_user"></div>
+		</form>	
 		<img src="{{ request.user.userext.profile_image_url }}">
+		</div>
 		<form id="from_cambiar_imagen" action="{%url 'change_foto'%} " enctype="multipart/form-data" method="POST" >
 			{% csrf_token %}
 		<div class="marco-cambair-foto">
 		<div class="bnt-hide-foto" > Cambiar Foto</div>
 		{{fromfoto.foto}}
 		</div>	
-			<input class="sumit-cambiar-foto"  class="btn hidden" type="submit" />		 
+			<input class="sumit-cambiar-foto"  class=" hidden" type="submit" />		 
 		</form>
 		
 	
@@ -56,6 +63,13 @@
 	function(x){ 
 		$('.sumit-cambiar-foto').click()
 	}
-)
+);
+	$('#eliminar_imagen_user').on("click",
+	function(x){ 
+		$('.sumit-eliminar-foto').click()
+	}
+);
+
+
 </script>
 {% endblock %}

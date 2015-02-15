@@ -19,7 +19,7 @@ userManager_urls = patterns('apps.userManager.views',
     url(r'^usuario/(\d+)', Usuario.as_view()),
     url(r'^usuario/filtro/','autocomplete'),
     url(r'^api/userManager/cambiar_foto$', 'change_foto', name="change_foto"),
-
+    url(r'^api/userManager/eliminar_foto$', 'eliminar_foto', name="eliminar_foto"),
     url(r'^api/userManager/cambiar_correo$', 'changeemail', name="changeemail"),
 
 
