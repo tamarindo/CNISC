@@ -7,6 +7,7 @@ from django.contrib.auth import login as auth_login , logout
 from apps.oauthSocial.models import App , CuentaSocial , TokenSocial
 from apps.oauthSocial.forms import editApp
 from twython import Twython
+from django.contrib.auth.models import User
 
 import pprint,json
 
@@ -41,8 +42,8 @@ def configura_app(request, *args):
 # metodos para tw
 def callbacktwitter(request):
 	ob_app=App.objects.get_or_none(provedor="Twitter")
-
-	ob_cuenta_twitter=CuentaSocial.objects.get(user=request.user)
+	ob_user = User.objects.get(pk=request.user.pk)
+	ob_cuenta_twitter=CuentaSocial.objects.get(user=ob_user)
 
 	pprint.pprint(ob_cuenta_twitter)
 	if ob_cuenta_twitter != None:
@@ -52,7 +53,7 @@ def callbacktwitter(request):
 
 	if  ob_app and ob_cuenta_twitter and ob_token and oauth_verifier:
 	
-		pprint.pprint(oauth_verifier)			
+					
 
 		twitter = Twython(ob_app.consumer_key, ob_app.consumer_secret,ob_token.token, ob_token.token_secreto)
 		final_step = twitter.get_authorized_tokens(oauth_verifier)
