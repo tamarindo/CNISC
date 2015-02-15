@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.core.validators import validate_email
 from django.views.generic import View
 from apps.userManager.forms import from_foto
-
+from apps.userManager.models import UserExt
 import pprint
 import json
 import re
@@ -173,6 +173,7 @@ def aviso_bienvenida():
 
 def change_foto(request):	
 	if request.user.is_authenticated() :
+		pprint.pprint(request.user)
 		ob_userext=UserExt.objects.get(user=request.user)
 		form = from_foto(request.POST, request.FILES,instance=ob_userext)
         if form.is_valid():

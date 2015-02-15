@@ -73,7 +73,7 @@ class UserExt(baseModel):
 		
 	def profile_image_url(self):
 		if self.foto == None or self.foto == "":
-			return "http://www.gravatar.com/avatar/{}?s=55".format(hashlib.md5(self.user.email).hexdigest())
+			return "http://www.gravatar.com/avatar/{}?s=300".format(hashlib.md5(self.user.email).hexdigest())
 		else:
 			return settings.MEDIA_URL+"/"+str(self.foto) 
 

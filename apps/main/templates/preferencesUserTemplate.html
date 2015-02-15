@@ -9,16 +9,19 @@
 
 {% block body %}
 
-<div>
+<div id="panelPreferencias">
 	<div>
 		<h1> Preferencias </h1>
 	</div>
 	<div class="panel-imagen">
-		<img src="{{ MEDIA_URL }}{{ ob_user.userext.foto }}">
-		<form action="{%url 'change_foto'%} " enctype="multipart/form-data" method="POST" >
+		<img src="{{ request.user.userext.profile_image_url }}">
+		<form id="from_cambiar_imagen" action="{%url 'change_foto'%} " enctype="multipart/form-data" method="POST" >
 			{% csrf_token %}
-		{{from_foto}}	
-			<botton id="cambiarFoto" type="submit" > Cambiar Foto</botton>		 
+		<div class="marco-cambair-foto">
+		<div class="bnt-hide-foto" > Cambiar Foto</div>
+		{{fromfoto.foto}}
+		</div>	
+			<input class="sumit-cambiar-foto"  class="btn hidden" type="submit" />		 
 		</form>
 		
 	
@@ -47,4 +50,12 @@
 
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+<script type="text/javascript">
+	$('#id_foto').on("change",
+	function(x){ 
+		$('.sumit-cambiar-foto').click()
+	}
+)
+</script>
+{% endblock %}
