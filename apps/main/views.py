@@ -61,7 +61,7 @@ def home(request):
 			template="mainUserTemplate.html"
 			return render_to_response(template,locals(),context_instance=RequestContext(request))		
 	else:
-		return HttpResponseRedirect(reverse("login"))
+		return HttpResponseRedirect(reverse("home"))
 
 def preferences(request):
 	if request.user.is_authenticated():
@@ -74,24 +74,31 @@ def preferences(request):
 			template="preferencesUserTemplate.html"	
 		return render_to_response(template,locals(),context_instance=RequestContext(request))					
 	else:
-		return HttpResponseRedirect(reverse("login"))
+		return HttpResponseRedirect(reverse("home"))
 
 
 def panelUser(request):
 	if request.user.is_authenticated():
 		ob_user=User.objects.get(id=request.user.id)	
-		if ob_user.userext.profile.is_admin == 1:		
-			template="userAdminTemplate.html"	
-		else:
+		if ob_user.userext.profile.is_admin == 0:		
 			estado_twitter=verificar_conexion_twitter(request.user)
-			template="userTemplate.html"	
+			template="userTemplate.html"
+		else:
+			return HttpResponseRedirect(reverse("home"))
+
 		return render_to_response(template,locals(),context_instance=RequestContext(request))					
 	else:
-		return HttpResponseRedirect(reverse("login"))
+		return HttpResponseRedirect(reverse("home"))
 
-# vistas usuario final
 
-# vistas de usuario gestor
+def panelUseradmin(request):
+	ob_user=User.objects.get(id=request.user.id)
+	if ob_user.userext.profile.is_admin == 1:		
+		list_usuarios=User.objects.all()
+		template="userAdminTemplate.html"	
+		return render_to_response(template,locals(),context_instance=RequestContext(request))	
+	else:
+		return HttpResponseRedirect(reverse("home"))
 
 
 

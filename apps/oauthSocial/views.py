@@ -50,11 +50,7 @@ def callbacktwitter(request):
 		ob_token = TokenSocial.objects.get_or_none(cuenta=ob_cuenta_twitter)		
 		oauth_verifier=request.GET.get('oauth_verifier')
 
-
 	if  ob_app and ob_cuenta_twitter and ob_token and oauth_verifier:
-	
-					
-
 		twitter = Twython(ob_app.consumer_key, ob_app.consumer_secret,ob_token.token, ob_token.token_secreto)
 		final_step = twitter.get_authorized_tokens(oauth_verifier)
 		pprint.pprint(final_step)

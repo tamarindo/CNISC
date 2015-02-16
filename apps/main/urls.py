@@ -10,4 +10,5 @@ main_urls = patterns('apps.main.views',
     url(r'^$','home', name="home"),
 	url(r'^preferencias$','preferences',name="preferences"),
 	url(r'^user$','panelUser',name="panelUser"),
+	url(r'^users$','panelUseradmin',name="panelUseradmin"),
 )
