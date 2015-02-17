@@ -62,7 +62,7 @@ def home(request):
 			template="mainUserTemplate.html"
 			return render_to_response(template,locals(),context_instance=RequestContext(request))		
 	else:
-		return HttpResponseRedirect(reverse("home"))
+		return HttpResponseRedirect(reverse("login"))
 
 def preferences(request):
 	if request.user.is_authenticated():
