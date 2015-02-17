@@ -16,6 +16,7 @@ from apps.userManager.models import *
 from apps.userManager.forms import from_foto
 from apps.userManager.urls import userManager_urls
 from apps.messaging.models import View_Messages_User
+from django.views.generic import View
 
 from django.views.decorators.csrf import ensure_csrf_cookie
 
@@ -76,7 +77,7 @@ def preferences(request):
 	else:
 		return HttpResponseRedirect(reverse("home"))
 
-
+''''
 def panelUser(request):
 	if request.user.is_authenticated():
 		ob_user=User.objects.get(id=request.user.id)	
@@ -88,18 +89,44 @@ def panelUser(request):
 
 		return render_to_response(template,locals(),context_instance=RequestContext(request))					
 	else:
-		return HttpResponseRedirect(reverse("home"))
+		return HttpResponseRedirect(reverse("home"))'''
 
 
 def panelUseradmin(request):
 	ob_user=User.objects.get(id=request.user.id)
 	if ob_user.userext.profile.is_admin == 1:		
-		list_usuarios=User.objects.all()
+		list_usuarios=User.objects.filter(is_staff=0)
 		template="userAdminTemplate.html"	
 		return render_to_response(template,locals(),context_instance=RequestContext(request))	
 	else:
 		return HttpResponseRedirect(reverse("home"))
 
+class Usuario(View):
+
+	http_method_names = ['get','pull','post','delete']
+
+	def get(self,request,*args,**kwargs):
+		# traer Usuario	
+		ob_user=User.objects.get(id=request.user.id)
+		if ob_user.userext.profile.is_admin == 1:		
+			usuario=User.objects.get(pk=args[0])
+			template="userEditTemplate.html"	
+			return render_to_response(template,locals(),context_instance=RequestContext(request))	
+		else:
+			return HttpResponseRedirect(reverse("home"))
+
+
+	def post(self,request,*args,**kwargs):
+		pass
+		# Crear Usuario
+
+	def pull(self,request,*args,**kwargs):
+		pass 
+		# Modificar Usuario
+
+	def delete(self,request,*args,**kwargs):
+		pass
+		# Eliminar Usaurio
 
 
 # API
@@ -118,3 +145,5 @@ def changeTypeVisualization(request):
 	else:
 		retorno = {'error':1,'msj':'Faltan Parametros'}
 	return HttpResponse(json.dumps(retorno),content_type="application/json")
+
+

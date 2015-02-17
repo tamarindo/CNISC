@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 from django.contrib import admin
 
 
-from .views import  Usuario , Email 
+from .views import  Email 
 
 
 admin.autodiscover()
@@ -16,7 +16,6 @@ userManager_urls = patterns('apps.userManager.views',
     # url api V2 
     url(r'^api/avisos/bienvenida/', 'aviso_bienvenida',name='aviso_bienvenida'),
     url(r'^api/usuario/correo/', Email.as_view()),
-    url(r'^usuario/(\d+)', Usuario.as_view()),
     url(r'^usuario/filtro/','autocomplete'),
     url(r'^api/userManager/cambiar_foto$', 'change_foto', name="change_foto"),
     url(r'^api/userManager/eliminar_foto$', 'eliminar_foto', name="eliminar_foto"),

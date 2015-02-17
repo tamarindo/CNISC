@@ -9,10 +9,7 @@
 
 {% block body %}
 
-<div id="panelPreferencias">
-	<div>
-		<h1> Preferencias </h1>
-	</div>
+<div><a href="">Volver a usuarios </a></div>
 	<div class="panel-imagen">
 		<div class="marco_imagen">
 		<form id="eliminar_foto" action="{%url 'eliminar_foto'%} " method="POST" >
@@ -25,31 +22,31 @@
 		<form id="from_cambiar_imagen" action="{%url 'change_foto'%} " enctype="multipart/form-data" method="POST" >
 			{% csrf_token %}
 		<div class="marco-cambair-foto">
-		<div class="bnt-hide-foto" > Cambiar Foto</div>
-		{{fromfoto.foto}}
-		</div>	
-			<input class="sumit-cambiar-foto"  class=" hidden" type="submit" />		 
+
+			<input class="sumit-cambiar-foto"  class=" hidden" type="submit" />	
+		</div>	 
 		</form>
+		<h1></h1>
+	 	<p>cod.: </p>
+	 	<p>Semestre :  </p>
 	</div>
-	<h2> notificaciones </h2>
-
-	<h3> Email Principal </h3>
-	<form>
-		<input type='email'>
-	</form>
-
-	<h3> Redes Sociales</h3>
-	<p class="info-vincular-rs"> Ingresa con tu red social para recibir las <span>notificaciones importantes</span> al instante.</p>
-	<div> 
-	{% if estado_twitter %}
-		Twitter conectado 
-	{% else %}
-		<a href= '{%url 'autentificar_twitter'%}' > Twitter </a>
-	{% endif%}
-		</div>
+<ul>
+<form>
+	<li><label>Activo </label><input></li>
+	<li><label>Email  </label><input></li>
+	<li><label>Móvil  </label><input></li>
+	<li><label>Dirrecion </label><input></li>
+	<li><input></li>
+	<li> Enviar Mensaje </li>
+	<li><button>Guardar Cambios</button>  </li>
+</form>
+</ul>	
 	
 	
-</div>
+	
+	
+
+
 
 
 
@@ -57,11 +54,7 @@
 
 {% block js %}
 <script type="text/javascript">
-	$('#id_foto').on("change",
-	function(x){ 
-		$('.sumit-cambiar-foto').click()
-	}
-);
+
 	$('#eliminar_imagen_user').on("click",
 	function(x){ 
 		$('.sumit-eliminar-foto').click()
@@ -71,3 +64,4 @@
 
 </script>
 {% endblock %}
+ 

@@ -49,52 +49,6 @@ def login(request):
 
 
 # -------------------------------------------- API V2 ---------------------------------------------
-class Usuario(View):
-
-	http_method_names = ['get','pull','post','delete']
-
-
-	def get(self,request,*args,**kwargs):
-		# traer Usuario
-		if args == () :
-			#Enviar Varios Mensajes en base a los parametros
-			lim_inf=request.POST.get('lim_inf')
-			lim_sup=lim_inf+50
-
-			if lim_inf:
-					vector_usuarios  = []			
-					list_users = User.objects.all()[lim_inf:lim_sup] 
-					for ob_user in list_users:
-						vector_view_message_private.append(dict([('username',ob_user.username),('fist_name',ob_user.fist_name),("last_name",ob_user.last_name),("email",ob_user.email),("phone",ob_user.userext.phone),("mobile",ob_user.userext.mobile),("address",ob_user.userext.address),("city",ob_user.userext.mobile),("province",ob_user.userext.province),("country",ob_user.userext.country),('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d "))]))
-					retorno = vector_view_message_private
-				
-			else:
-				retorno = {'error':1,'msj':'Faltan parametros'}
-		else:
-			#Enviar un solo Mensaje
-			
-			ob_user=User.objects.get(id=request.user.id)
-			if ob_user != None:
-				retorno = dict([('username',ob_user.username),('fist_name',ob_user.fist_name),("last_name",ob_user.last_name),("email",ob_user.email),("phone",ob_user.userext.phone),("mobile",ob_user.userext.mobile),("address",ob_user.userext.address),("city",ob_user.userext.mobile),("province",ob_user.userext.province),("country",ob_user.userext.country),('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d "))])
-			else:
-				retorno = {'error':1,'msj':'usuario inexistente'}		
-		
-		return HttpResponse(json.dumps(retorno),content_type="application/json")
-
-	def post(self,request,*args,**kwargs):
-		pass
-		# Crear Usuario
-
-	def pull(self,request,*args,**kwargs):
-		pass 
-		# Modificar Usuario
-
-	def delete(self,request,*args,**kwargs):
-		pass
-		# Eliminar Usaurio
-
-
-
 		
 class Email(View):
 

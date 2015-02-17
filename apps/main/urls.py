@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from .views import  Usuario 
 admin.autodiscover()
 
 main_urls = patterns('apps.main.views',
@@ -9,6 +10,9 @@ main_urls = patterns('apps.main.views',
 		# url Templates
     url(r'^$','home', name="home"),
 	url(r'^preferencias$','preferences',name="preferences"),
-	url(r'^user$','panelUser',name="panelUser"),
-	url(r'^users$','panelUseradmin',name="panelUseradmin"),
+
+	url(r'^usuarios$','panelUseradmin',name="panelUseradmin"),
+    url(r'^usuario/editar/(\d+)', Usuario.as_view() ,name="usereditaradmin"),
+
+
 )

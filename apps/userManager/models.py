@@ -26,8 +26,6 @@ class GenericManager(models.Manager):
         except self.model.MultipleObjectsReturned:
             return None
             
-
-            
 class baseModel(models.Model):
     # ------ datos para todas las tablas
 	is_active = models.BooleanField(default=True)

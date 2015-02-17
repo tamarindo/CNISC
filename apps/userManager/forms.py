@@ -7,3 +7,6 @@ class from_foto(forms.ModelForm):
     class Meta:
     	model = UserExt 
     	fields = ['foto']
+
+
+    	
