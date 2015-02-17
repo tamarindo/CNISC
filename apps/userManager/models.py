@@ -86,7 +86,7 @@ class Graduate(baseModel):
 
 class Student(baseModel):
 	UserExt = models.OneToOneField(UserExt, verbose_name=_("UserExt"))
-	semester = models.IntegerField(verbose_name=_("Semestre"), null=True, blank=True)
+	semestre = models.IntegerField(verbose_name=_("Semestre"), null=True, blank=True)
 	academic_state = models.CharField(max_length=50, verbose_name=_("Estado academico"), null=True, blank=True)
 
 	def __unicode__(self):

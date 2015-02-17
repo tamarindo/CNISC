@@ -27,18 +27,22 @@
 		</div>	 
 		</form>
 		<h1></h1>
-	 	<p>cod.: </p>
-	 	<p>Semestre :  </p>
+	 	<p>cod.:{{usuario.username}} </p>
+	 	<p> Semestre :  {% if usuario.userext.student %} {{  usuario.userext.student.semestre }}  {% endif %} </p>
 	</div>
 <ul>
-<form>
-	<li><label>Activo </label><input></li>
-	<li><label>Email  </label><input></li>
-	<li><label>Móvil  </label><input></li>
-	<li><label>Dirrecion </label><input></li>
-	<li><input></li>
+<form id="for" action="{%url 'eliminar_foto'%} " method="POST">
+	{% csrf_token %}
+	<li><label >Activo </label><input name=""  {% if usuario.is_active %} checked {% endif %}  type="checkbox"></li>
+	<li><label>Email  </label><input value="{{usuario.email}}" name="" type="text"></li>
+	<li><label>Móvil  </label><input value="{{usuario.userext.mobile}}" name="" type="text"></li>
+	<li><label>Dirrecion </label><input value="{{usuario.userext.address}}" name="" type="text"></li>
+	<li><label>Ciudad </label><input value="{{usuario.userext.city}}" name="" type="text"></li>
+	<li><label>Estado </label><input value="{{usuario.userext.province}}" name="" type="text"></li>
+	<li><label>Pais </label><input value="{{usuario.userext.country}}" name="" type="text"></li>
+	<li><label>Descripcion </label><textarea> </textarea></li>
 	<li> Enviar Mensaje </li>
-	<li><button>Guardar Cambios</button>  </li>
+	<li><button type="submit">Guardar Cambios</button></li>
 </form>
 </ul>	
 	

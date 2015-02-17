@@ -110,6 +110,7 @@ class Usuario(View):
 		ob_user=User.objects.get(id=request.user.id)
 		if ob_user.userext.profile.is_admin == 1:		
 			usuario=User.objects.get(pk=args[0])
+			pprint.pprint(usuario.userext.student.semestre)
 			template="userEditTemplate.html"	
 			return render_to_response(template,locals(),context_instance=RequestContext(request))	
 		else:
