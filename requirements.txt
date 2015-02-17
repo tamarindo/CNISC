@@ -2,7 +2,6 @@ Django==1.7
 Pillow==2.7.0
 Unidecode==0.04.17
 argparse==1.2.1
-django-facebook==6.0.2
 django-wysiwyg==0.7.0
 djangorestframework==3.0.2
 oauthlib==0.7.1

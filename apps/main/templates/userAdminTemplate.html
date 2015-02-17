@@ -11,11 +11,14 @@
 <div>
 {% for item_usuario in list_usuarios%}
 <div>
-	<div> <img src="{{item_usuario.userext.foto}}"></div><div>
-		<a href="{%url 'usereditaradmin' item_usuario.pk %}"><p>{{item_usuario.get_full_name}}</p></a>
+	<div> <img src="{{item_usuario.userext.foto}}"></div>
+	<div>
+		<a href="{%url 'usereditaradmin' item_usuario.pk %}">
+			<p>{{item_usuario.get_full_name}}</p>
+		</a>
 		<p>Cob:{{item_usuario.username}}</p>
 		<p>Email:{{item_usuario.email}}</p>
-	</div><div></div>
+	</div>
 </div>
 {% endfor %}
 </div>
