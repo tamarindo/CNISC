@@ -19,48 +19,51 @@
     <header class="main-header">
         <div class="container clearfix">
             <figure class="logo-user pull-left">
-                <img src="{{ request.user.userext.profile_image_url }}" alt="Foto de {{ob_user.get_full_name}}" />
-                <figcaption class="inline">
-                    <h3 class="name">{{ob_user.get_full_name}}</h3>
-                </figcaption>
+                {% if request.path == "/" %}
+                    <a href="{% url 'preferences' %}" title="Ir a Preferencias">
+                        <img src="{{ request.user.userext.profile_image_url }}" alt="Foto de {{ob_user.get_full_name}}" />
+                        <figcaption class="inline">
+                            <h3 class="name">{{ob_user.get_full_name}}</h3>
+                        </figcaption>
+                    </a>
+                {% else %}
+                    <a href="{% url 'home' %}" class="Ir a mensajes">
+                        <i class="icon-arrow-left">
+                            <span class="">Volver a mensajes</span>
+                        </i>
+                    </a>
+                {% endif %}
             </figure>
             <hgroup class="pull-right">
                 <nav role="navigation" class="main-navigation">
                     <ul class="list inline-list">
-                        <li class="menu-item"  ng-show="showSearchForm">
-                            <input type="text" ng-model="buscar">
-                        </li>
-                        <li class="menu-item">
-                            <a href="#buscar" class="search-messages" ng-click="showSearchForm=!showSearchForm">
-                                <i class="icon-search">
-                                    <span class="text-hide-m">Buscar</span>
-                                </i>
-                            </a>
-                        </li>
-                        <li class="menu-item" ng-hide="showSearchForm">
-                            <a href="#mensajes" class="messages">
-                                <i class="icon-mail">
-                                    {% if mensajes_no_vistos > 0 %}
-                                        <span class="unread">{{mensajes_no_vistos}}</span>
-                                    {% endif %}
-                                    <span class="text-hide-m">Mensajes</span>
-                                </i>
-                            </a>
-                        </li>
-                        <li class="menu-item" ng-hide="showSearchForm">
-                            <a href="#opciones" ng-click="showMenu=!showMenu" class="options">
-                                <i class="icon-menu">
-                                    <span class="text-hide-m">Visualización</span>
-                                </i>
-                            </a>
-                        </li>
-                        <li class="menu-item" ng-hide="showSearchForm">
-                            <a href="{% url 'preferences' %}" class="preferences">
-                                <i class="icon-cog">
-                                    <span class="text-hide-m">Preferencias</span>
-                                </i>
-                            </a>
-                        </li>
+
+                        {% if request.path == "/" %}
+                            <li class="menu-item"  ng-show="showSearchForm">
+                                <input type="text" ng-model="buscar">
+                            </li>
+                            <li class="menu-item">
+                                <a href="#buscar" class="search-messages" title="Buscar mensajes" ng-click="showSearchForm=!showSearchForm">
+                                    <i class="icon-search">
+                                        <span class="text-hide-m">Buscar</span>
+                                    </i>
+                                </a>
+                            </li>
+                            <li class="menu-item" ng-hide="showSearchForm">
+                                <a href="#opciones" ng-click="showMenu=!showMenu" class="options" title="Ver Opciones">
+                                    <i class="icon-menu">
+                                        <span class="text-hide-m">Visualización</span>
+                                    </i>
+                                </a>
+                            </li>
+                            <li class="menu-item" ng-hide="showSearchForm">
+                                <a href="{% url 'preferences' %}" class="preferences" title="Ir a Preferencias">
+                                    <i class="icon-cog">
+                                        <span class="text-hide-m">Preferencias</span>
+                                    </i>
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </nav>
             </hgroup>
