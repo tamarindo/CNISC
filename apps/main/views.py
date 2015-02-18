@@ -112,7 +112,7 @@ class Usuario(View):
 			usuario=User.objects.get(pk=args[0])
 			engresado = False
 			estudiante = False
-			if User.profiles == 'estudiante'
+			if User.profiles == 'estudiante' :
 				estudiante = True
 				info_estudiante = Students.objects.get_or_none( user = ob_user)
 
