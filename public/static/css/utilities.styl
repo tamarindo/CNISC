@@ -79,10 +79,18 @@ button-color(color, bg = gray)
         button-color(#fff, red)
     &.green
         button-color(#fff, green)
+    &.blue
+        button-color(#fff, primary)
 
 input[type="submit"]
 button
     border none
+    
+button.flat
+    outline none
+    background-color transparent
+    border none
+    font-weight 400        
        
 /*
  * Lists, menus
@@ -128,6 +136,12 @@ button
 
 .main-title
     text-transform uppercase
+    
+.title
+    &.border-bottom
+        padding-bottom 10px
+        border-bottom 1px solid light-gray
+        margin-bottom 2rem
 
 /*
  * Responsive Utilities

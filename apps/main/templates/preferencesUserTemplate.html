@@ -9,45 +9,60 @@
 
 {% block body %}
 
-<div id="panelPreferencias">
-	<div>
-		<h1> Preferencias </h1>
-	</div>
-	<div class="panel-imagen">
-		<div class="marco_imagen">
-		<form id="eliminar_foto" action="{%url 'eliminar_foto'%} " method="POST" >
-			{% csrf_token %}
-			<input class="sumit-eliminar-foto hidden"  type="submit" />	
-			<div id="eliminar_imagen_user"></div>
-		</form>	
-		<img src="{{ request.user.userext.profile_image_url }}">
-		</div>
-		<form id="from_cambiar_imagen" action="{%url 'change_foto'%} " enctype="multipart/form-data" method="POST" >
-			{% csrf_token %}
-		<div class="marco-cambair-foto">
-		<div class="bnt-hide-foto" > Cambiar Foto</div>
-		{{fromfoto.foto}}
-		</div>	
-			<input class="sumit-cambiar-foto"  class=" hidden" type="submit" />		 
-		</form>
-	</div>
-	<h2> notificaciones </h2>
+<div class="container medium" id="preferences">
 
-	<h3> Email Principal </h3>
-	<form>
-		<input type='email'>
-	</form>
+	<section>
+		<h1 class="title">Preferencias</h1>
+		<figure class="user-img entry-content center-text">
+			<div class="user-img-holder">
+				<img src="{{ request.user.userext.profile_image_url }}">
 
-	<h3> Redes Sociales</h3>
-	<p class="info-vincular-rs"> Ingresa con tu red social para recibir las <span>notificaciones importantes</span> al instante.</p>
-	<div> 
-	{% if estado_twitter %}
-		Twitter conectado 
-	{% else %}
-		<a href= '{%url 'autentificar_twitter'%}' > Twitter </a>
-	{% endif%}
-		</div>
+				<form class="user-del-form" action="{%url 'eliminar_foto'%}" method="POST" >
+					{% csrf_token %}
+					<button class="flat remove button" type="submit">
+						<i class="icon-remove"> Eliminar</i>
+					</button>
+				</form>
+			</div>
+			
+
+			<form id="update-image" action="{%url 'change_foto'%} " enctype="multipart/form-data" method="POST" >
+				{% csrf_token %}
+				<button class="flat button blue">Cambiar foto...</button>
+				<div class="visuallyhidden">
+					{{fromfoto.foto}}
+					<input type="submit" class="submit" value="Submit" />
+				</div>
+			</form>
+
+			<figcaption>
+				<p>
+					<span class="text-big">{{ob_user.get_full_name}}</span>
+					<br>
+					<span class="gray-text">Cód.: {{ob_user.id}}</span>
+				</p>
+			</figcaption>
+		</figure>
+	</section>
 	
+	<section>
+		<h2 class="title border-bottom">Notificaciones</h2>
+
+		<h3>Email Principal</h3>
+		<form>
+			<input type='email'>
+		</form>
+
+		<h3>Redes Sociales</h3>
+		<p>Ingresa con tu red social para recibir las <span>notificaciones importantes</span> al instante.</p>
+		<div> 
+			{% if estado_twitter %}
+				Twitter conectado 
+			{% else %}
+				<a href= '{%url 'autentificar_twitter'%}' > Twitter </a>
+			{% endif%}
+		</div>
+	</section>
 	
 </div>
 
@@ -56,18 +71,28 @@
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript">
-	$('#id_foto').on("change",
-	function(x){ 
-		$('.sumit-cambiar-foto').click()
-	}
-);
-	$('#eliminar_imagen_user').on("click",
-	function(x){ 
-		$('.sumit-eliminar-foto').click()
-	}
-);
 
+<script>
+	(function(){
 
+		// Listeners para cambiar la foto y eliminarla.
+		var
+			changeImgButton = document.querySelector('#update-image .button'),
+			changeImgFile = document.querySelector('#id_foto'),
+			changeImgSubmit = document.querySelector('#update-image .submit');
+
+		changeImgButton.addEventListener('click', function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			
+			changeImgFile.click();
+		});
+
+		changeImgFile.addEventListener('change', function(e) {
+			changeImgSubmit.click();
+		});
+
+	})();
 </script>
+
 {% endblock %}

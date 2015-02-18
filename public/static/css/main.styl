@@ -81,12 +81,6 @@ table
 		&:hover
 			background-color #f1f1f1
 
-button.flat
-	outline none
-	background-color transparent
-	border none
-	font-weight 400
-
 // Login Form
 // ----------------------------------
 
@@ -293,63 +287,51 @@ button.flat
 		margin-top 0
 
 
-#panelPreferencias 
-	max-width: 1025px;
-	margin: 0 auto;
+// Usuario: Preferencias
+// ----------------------------------------------------------------------------
+@keyframes fade-up-in
+	from
+		opacity 0
+		transform translate3d(0,-60px,0)
+	to
+		opacity 1
+		transform translate3d(0,0,0)
+        
+#preferences
+	.user-img-holder
+		position relative
+		margin-bottom 1rem
+		
+	.user-img
+		display flex
+		flex-flow column wrap
+		align-items center
 
-
-.panel-imagen 
-	width: 40%;
-	margin: auto;
-	position:relative;
-
-.panel-imagen img
-	width: 100%;
-	
-
-	
-.sumit-cambiar-foto
-	display: none;
-	
-
-.bnt-hide-foto
-	width: 152px;
-	height: 40px;
-	text-align: center;
-	background: #3498db;
-	color: white;
-	line-height: 40px;
-	margin: 0 auto;
-	margin-top: 30px;
-
-.marco-cambair-foto 
-	position: relative;
-
-
-#id_foto 
-	display: block;
-	text-align: center;
-	margin: 14px auto;
-	position: absolute;
-	background: red;
-	left: 50%;
-	top: -14px;
-	margin-left: -76px;
-	width: 153px;
-	height: 39px;
-	opacity: 0;
-	cursor: pointer;
-	
-
-#eliminar_imagen_user
-	width: 80px;
-	height: 80px;
-	position: absolute;
-	left: 50%;
-	margin-left: -40px;
-	top: 39%;
-	&:hover 
-		background: black;
-
-.hidden
-	display: none
+	.user-del-form
+		absolute top 0 bottom 0
+		left 0
+		right 0
+		display flex
+		flex-flow row nowrap
+		align-items center
+		justify-content center
+		transition background-color 250ms ease-in-out
+		
+		&:hover
+			background-color rgba(#fff, .3)
+			.remove.button
+				display block
+				animation-duration 300ms
+				animation-fill-mode both
+				animation-name fade-up-in
+				
+	.remove.button
+		display none
+		background-color rgba(#000, .9)
+		color #fff
+		padding 1rem
+		
+	.text-big
+		font-weight 700
+	.gray-text
+		color light-gray
