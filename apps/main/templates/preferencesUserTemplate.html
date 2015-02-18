@@ -49,8 +49,12 @@
 		<h2 class="title border-bottom">Notificaciones</h2>
 
 		<h3>Email Principal</h3>
-		<form>
-			<input type='email'>
+		<form action="" method="POST">
+			{% csrf_token %}
+			<input type='email' placeholder="Correo alterno para recibir notificaciones">
+			<p>
+				<button class="flat button gray" type="submit">Cambiar correo</button>
+			</p>
 		</form>
 
 		<h3>Redes Sociales</h3>
@@ -59,7 +63,7 @@
 			{% if estado_twitter %}
 				Twitter conectado 
 			{% else %}
-				<a href= '{%url 'autentificar_twitter'%}' > Twitter </a>
+				<a href= '{%url 'autentificar_twitter'%}' class="button twitter block center-text" ><i class="icon-twitter"> </i>Conectar con Twitter</a>
 			{% endif%}
 		</div>
 	</section>
