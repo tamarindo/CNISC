@@ -16,7 +16,7 @@
 		return {
 			restrict : 'A',
 			transclude : true,
-			template : '<div class="suggestion" ng-transclude></div><span class="alert-close"><a href ng-click="hide=true" class="icon icon-close"></a></span>',
+			template : '<div class="suggestion" ng-transclude></div><button ng-click="hide=true" class="flat close icon-close"></button>',
 		};
 
 	});
