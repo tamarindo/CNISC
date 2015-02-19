@@ -39,7 +39,7 @@
 				<p>
 					<span class="text-big">{{ob_user.get_full_name}}</span>
 					<br>
-					<span class="gray-text">Cód.: {{ob_user.id}}</span>
+					<span class="gray-text">Cód.: {{ob_user.username}}</span>
 				</p>
 			</figcaption>
 		</figure>
@@ -49,9 +49,9 @@
 		<h2 class="title border-bottom">Notificaciones</h2>
 
 		<h3>Email Principal</h3>
-		<form action="" method="POST">
+		<form action="{%url 'changeemail'%}" method="POST">
 			{% csrf_token %}
-			<input type='email' placeholder="Correo alterno para recibir notificaciones">
+			<input type='email' name="email" value="{{ob_user.userext.email_alt}}" placeholder="Correo alterno para recibir notificaciones">
 			<p>
 				<button class="flat button gray" type="submit">Cambiar correo</button>
 			</p>

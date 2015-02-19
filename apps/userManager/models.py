@@ -65,6 +65,7 @@ class UserExt(baseModel):
 	date_born = models.DateField(null=True, verbose_name=_("Fecha de nacimiento"),  blank=True)
 	welcome_message = models.BooleanField(default=False)
 	foto = models.ImageField(upload_to='perfil', verbose_name='foto de perfil',blank=True)
+	email_alt = models.CharField(max_length=60, verbose_name=_("email alternativo"), null=True,  blank=True)
 
 	def __unicode__(self):
 		return self.user.username

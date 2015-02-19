@@ -44,10 +44,6 @@ def login(request):
 		return render_to_response('login.html',{'formulario':formularioLogin},context_instance=RequestContext(request))
 #  ----------------------------------------------------------   login  ---------------------------------------------------------------------------- 
 
-
-
-
-
 # -------------------------------------------- API V2 ---------------------------------------------
 		
 class Email(View):
@@ -119,28 +115,21 @@ def change_foto(request):
 		form = from_foto(request.POST, request.FILES,instance=ob_userext)
         if form.is_valid():
         	form.save()
-        else:
-		retorno = {'error':1,'msj':'Usuario no autentificado'}
 	return  HttpResponseRedirect(reverse_lazy("preferences"))
 
 
 def changeemail(request):
-	email=request.POST.get('email')
-	if email:
+	if request.user.is_authenticated() :
+		email=request.POST.get('email')
 		id_user = request.user.id
 		ob_user = User.objects.get(id=id_user)
 		EmailV = re.match("^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,10}$",email)
 		if EmailV != None:
-			ob_user.confuser.email_alt=email
-			try :
-				ob_user.confuser.save()
-				retorno = {'error':0}
-			except :
-				retorno = {'error':1,'msj':'error al guardar'}
+			ob_user.userext.email_alt=email
+			ob_user.userext.save()
+		else:
+			ob_user.userext.email_alt=""
+			ob_user.userext.save()			
 
-		else :
-			retorno = {'error':1,'msj':'error en el formato'}			
-	else:	
-		retorno = {'error':1,'msj':'valores insuficientes'}
-	return HttpResponse(json.dumps(retorno),content_type="application/json")			
+	return  HttpResponseRedirect(reverse_lazy("preferences"))		
 	
