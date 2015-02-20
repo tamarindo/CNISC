@@ -10,28 +10,10 @@
 {% block body %}
 
 <div><a href="">Volver a usuarios </a></div>
-	<div class="panel-imagen">
-		<div class="marco_imagen">
-		<form id="eliminar_foto" action="{%url 'eliminar_foto'%} " method="POST" >
-			{% csrf_token %}
-			<input class="sumit-eliminar-foto hidden"  type="submit" />	
-			<div id="eliminar_imagen_user"></div>
-		</form>	
-		<img src="{{ request.user.userext.profile_image_url }}">
-		</div>
-		<form id="from_cambiar_imagen" action="{%url 'change_foto'%} " enctype="multipart/form-data" method="POST" >
-			{% csrf_token %}
-		<div class="marco-cambair-foto">
 
-			<input class="sumit-cambiar-foto"  class=" hidden" type="submit" />	
-		</div>	 
-		</form>
-		<h1></h1>
-	 	<p>cod.:{{usuario.username}} </p>
-	 	<p> Semestre :  {% if usuario.userext.student %} {{  usuario.userext.student.semestre }}  {% endif %} </p>
-	</div>
+
 <ul>
-<form id="for" action="{%url 'usereditaradmin' usuario.pk %}" method="PUT">
+<form id="for" action="{%url 'usereditaradmin' usuario.pk %}" method="POST">
 	{% csrf_token %}
 	<li><label >Activo </label><input name="is_active"  {% if usuario.is_active %} checked {% endif %}  type="checkbox"></li>
 	<li><label>Email  </label><input name="email" value="{{usuario.email}}"  type="text"></li>

@@ -33,12 +33,6 @@ def home(request):
 		ob_user=User.objects.get(id=request.user.id)
 		if ob_user.userext.profile.is_admin == 1:
 			
-			vector_env_temp_message=[]
-			list_view_message=Message.objects.filter(sender=ob_user)[0:5]
-
-			for item_view_message in list_view_message:
-				vector_env_temp_message.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
-
 			template="mainAdminTemplate.html"
 			return render_to_response(template,locals(),context_instance=RequestContext(request))
 		
@@ -107,40 +101,47 @@ class Usuario(View):
 
 	def get(self,request,*args,**kwargs):
 		# traer Usuario	
-		ob_user=User.objects.get(id=request.user.id)
-		if ob_user.userext.profile.is_admin == 1:		
-			usuario=User.objects.get(pk=args[0])
-			engresado = False
-			estudiante = False
-			if usuario.userext.profile == 'estudiante' :
-				estudiante = True
-				info_estudiante = Students.objects.get_or_none( user = ob_user)
 
-			template="userEditTemplate.html"	
-			return render_to_response(template,locals(),context_instance=RequestContext(request))	
+		ob_user=User.objects.get(id=request.user.id)
+		if ob_user.userext.profile.is_admin == 1:
+			if args[0] != None :		
+				usuario=User.objects.get(pk=args[0])
+				engresado = False
+				estudiante = False
+				if usuario.userext.profile == 'estudiante' :
+					estudiante = True
+					info_estudiante = Students.objects.get_or_none( user = ob_user)
+
+				template="userEditTemplate.html"	
+
+			else :
+				template="userCreateTemplate.html"
+			
+			return render_to_response(template,locals(),context_instance=RequestContext(request))		
 		else:
 			return HttpResponseRedirect(reverse("home"))
 
-
 	def post(self,request,*args,**kwargs):
 		
+
+	def put(self,request,*args,**kwargs):
 		if args[0] != None : 
 
 			usuario=User.objects.get(pk=args[0])
 			ob_userext=UserExt.objects.get(user=usuario) 
-			if request.POST.get('is_active'):
+			if request.PUT.get('is_active'):
 				data = True
 			else :
 				data = False
 			usuario.is_active=data
 			usuario.save()
 
-			ob_userext.email = request.POST.get('email')
-			ob_userext.mobile= request.POST.get('mobile')
-			ob_userext.address= request.POST.get('address')
-			ob_userext.city= request.POST.get('city')
-			ob_userext.province= request.POST.get('province')
-			ob_userext.country= request.POST.get('country')
+			ob_userext.email = request.PUT.get('email')
+			ob_userext.mobile= request.PUT.get('mobile')
+			ob_userext.address= request.PUT.get('address')
+			ob_userext.city= request.PUT.get('city')
+			ob_userext.province= request.PUT.get('province')
+			ob_userext.country= request.PUT.get('country')
 			ob_userext.save()
 
 
@@ -158,12 +159,6 @@ class Usuario(View):
 		else :
 			return HttpResponseRedirect(reverse("home"))
 
-
-
-
-	def pull(self,request,*args,**kwargs):
-		pass 
-		# Modificar Usuario
 
 	def delete(self,request,*args,**kwargs):
 		pass
