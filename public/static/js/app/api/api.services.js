@@ -10,7 +10,8 @@
 
 	api.constant( 'ApiUrl', {
 		messaging : '/api/mensajes/',
-		oauth : '/api/oauth/'
+		oauth : '/api/oauth/',
+		alerts: '/api/avisos/'
 	});
 
 	// Factoria para actuar sobre mensajes
@@ -44,6 +45,17 @@
 				},
 			}
 
+		});
+
+	}]);
+
+	// Factoria para actuar sobre avisos
+	api.factory('ApiAlerts', ['$resource', 'ApiUrl', function($resource, ApiUrl) {
+
+		return $resource( ApiUrl.alerts + ':slug', { slug: "@slug" }, {
+			'update' : {
+				method: 'POST'
+			}
 		});
 
 	}]);

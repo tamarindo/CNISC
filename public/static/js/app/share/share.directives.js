@@ -16,9 +16,22 @@
 		return {
 			restrict : 'A',
 			transclude : true,
-			template : '<div class="suggestion" ng-transclude></div><span class="alert-close"><a href ng-click="hide=true" class="icon icon-close"></a></span>',
+			scope : {
+				'close': '&onClose'
+			},
+			template : '<div class="suggestion" ng-transclude></div><button ng-click="close()" class="flat close icon-close"></button>',
+		};
+	
+	});
+
+	shareComponents.controller('cnAlertController', [ '$scope', 'ApiAlerts', function($scope, ApiAlerts) {
+		
+		$scope.hide = function( ep ) {
+
+			$scope.isHidden = true;
+			ApiAlerts.update({ slug: ep });
 		};
 
-	});
+	}])
 
 })();
