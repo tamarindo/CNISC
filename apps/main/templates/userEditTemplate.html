@@ -31,16 +31,15 @@
 	 	<p> Semestre :  {% if usuario.userext.student %} {{  usuario.userext.student.semestre }}  {% endif %} </p>
 	</div>
 <ul>
-<form id="for" action="{%url 'eliminar_foto'%} " method="POST">
+<form id="for" action="{%url 'usereditaradmin' usuario.pk %}" method="POST">
 	{% csrf_token %}
-	<li><label >Activo </label><input name=""  {% if usuario.is_active %} checked {% endif %}  type="checkbox"></li>
-	<li><label>Email  </label><input value="{{usuario.email}}" name="" type="text"></li>
-	<li><label>Móvil  </label><input value="{{usuario.userext.mobile}}" name="" type="text"></li>
-	<li><label>Dirrecion </label><input value="{{usuario.userext.address}}" name="" type="text"></li>
-	<li><label>Ciudad </label><input value="{{usuario.userext.city}}" name="" type="text"></li>
-	<li><label>Estado </label><input value="{{usuario.userext.province}}" name="" type="text"></li>
-	<li><label>Pais </label><input value="{{usuario.userext.country}}" name="" type="text"></li>
-	<li><label>Descripcion </label><textarea> </textarea></li>
+	<li><label >Activo </label><input name="is_active"  {% if usuario.is_active %} checked {% endif %}  type="checkbox"></li>
+	<li><label>Email  </label><input name="email" value="{{usuario.email}}"  type="text"></li>
+	<li><label>Móvil  </label><input name="mobile" value="{{usuario.userext.mobile}}"  type="text"></li>
+	<li><label>Dirrecion </label><input name="address" value="{{usuario.userext.address}}"  type="text"></li>
+	<li><label>Ciudad </label><input name="city" value="{{usuario.userext.city}}"  type="text"></li>
+	<li><label>Estado </label><input name="province" value="{{usuario.userext.province}}"  type="text"></li>
+	<li><label>Pais </label><input name="country" value="{{usuario.userext.country}}"  type="text"></li>
 	<li> Enviar Mensaje </li>
 	<li><button type="submit">Guardar Cambios</button></li>
 </form>

@@ -112,12 +112,10 @@ class Usuario(View):
 			usuario=User.objects.get(pk=args[0])
 			engresado = False
 			estudiante = False
-			if User.profiles == 'estudiante' :
+			if usuario.userext.profile == 'estudiante' :
 				estudiante = True
 				info_estudiante = Students.objects.get_or_none( user = ob_user)
 
-			
-			pprint.pprint(usuario.userext.student.semestre)
 			template="userEditTemplate.html"	
 			return render_to_response(template,locals(),context_instance=RequestContext(request))	
 		else:
@@ -125,8 +123,43 @@ class Usuario(View):
 
 
 	def post(self,request,*args,**kwargs):
-		pass
-		# Crear Usuario
+		
+		if args[0] != None : 
+
+			usuario=User.objects.get(pk=args[0])
+			ob_userext=UserExt.objects.get(user=usuario) 
+			if request.POST.get('is_active'):
+				data = True
+			else :
+				data = False
+			usuario.is_active=data
+			usuario.save()
+
+			ob_userext.email = request.POST.get('email')
+			ob_userext.mobile= request.POST.get('mobile')
+			ob_userext.address= request.POST.get('address')
+			ob_userext.city= request.POST.get('city')
+			ob_userext.province= request.POST.get('province')
+			ob_userext.country= request.POST.get('country')
+			ob_userext.save()
+
+
+			
+			engresado = False
+			estudiante = False
+			if usuario.userext.profile == 'estudiante' :
+				estudiante = True
+				info_estudiante = Students.objects.get_or_none( user = ob_user)
+
+			template="userEditTemplate.html"	
+			return render_to_response(template,locals(),context_instance=RequestContext(request))	
+
+
+		else :
+			return HttpResponseRedirect(reverse("home"))
+
+
+
 
 	def pull(self,request,*args,**kwargs):
 		pass 
