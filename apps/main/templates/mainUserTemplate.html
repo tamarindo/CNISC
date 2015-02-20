@@ -13,14 +13,18 @@
 
 {% block body %}
 
-<div cn-alert class="alert" ng-hide="hide">
-	<p>
-	Hola {{ob_user.get_full_name}} Bienvenido al nuevo sistema de notificación del programa de Ingenieria de Sistema y Computacion.
-	</p>
-	<p>
-	Recuerda ir a las <a>Configuraciones</a> para que recibas las notificaciones como mejor te parezca. <a href="">Agrega un correo</a> y <a href="">enlaza tus cuentas de Facebook y Twitter</a> para ser notificado alli también.
-	</p>
+{% if not request.user.userext.welcome_message %}
+<div class="" ng-controller="cnAlertController">
+	<div cn-alert class="alert" ng-hide="isHidden" on-close="hide('bienvenida')">
+		<p>
+		Hola {{ob_user.get_full_name}} Bienvenido al nuevo sistema de notificación del programa de Ingenieria de Sistema y Computacion.
+		</p>
+		<p>
+		Puede configurar sus <a href="{% url 'preferences' %}" title="Ir a preferencias">Preferencias</a> para especificar la forma en que desea recibir sus notificaciones, también podrá vincular su red social favorita.
+		</p>
+	</div>
 </div>
+{% endif %}
 
 <section ng-controller="messages" class="full-container clearfix" id="messages">
 	<aside class="third column messages">
