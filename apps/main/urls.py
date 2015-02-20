@@ -13,6 +13,6 @@ main_urls = patterns('apps.main.views',
 
 	url(r'^usuarios$','panelUseradmin',name="panelUseradmin"),
     url(r'^usuario/editar/(\d+)', Usuario.as_view() ,name="usereditaradmin"),
-
+    url(r'^usuario/crear/$', 'panelCrearUsuarios' ,name="panelCrearUsuarios"),
 
 )

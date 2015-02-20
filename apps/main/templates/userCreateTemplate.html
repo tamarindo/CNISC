@@ -9,20 +9,23 @@
 
 {% block body %}
 
-<div><a href="">Volver a usuarios </a></div>
-
-
 <ul>
-<form id="for" action="{%url 'usereditaradmin' usuario.pk %}" method="POST">
+<form id="for" action="{%url 'panelCrearUsuarios'%} " method="POST">
 	{% csrf_token %}
-	<li><label >Activo </label><input name="is_active"  {% if usuario.is_active %} checked {% endif %}  type="checkbox"></li>
-	<li><label>Email  </label><input name="email" value="{{usuario.email}}"  type="text"></li>
-	<li><label>Móvil  </label><input name="mobile" value="{{usuario.userext.mobile}}"  type="text"></li>
-	<li><label>Dirrecion </label><input name="address" value="{{usuario.userext.address}}"  type="text"></li>
-	<li><label>Ciudad </label><input name="city" value="{{usuario.userext.city}}"  type="text"></li>
-	<li><label>Estado </label><input name="province" value="{{usuario.userext.province}}"  type="text"></li>
-	<li><label>Pais </label><input name="country" value="{{usuario.userext.country}}"  type="text"></li>
-	<li> Enviar Mensaje </li>
+	<select>
+		<option value="estudiante" > Estudiante </option>
+		<option value="engresado" > Engresado </option>
+		<option value="otro" > Otro </option>
+	</select>
+	<li><label>Nombre(s)  </label><input name="nombre"   type="text"></li>
+	<li><label>Apellidos  </label><input name="apellidos"   type="text"></li>
+	<li><label>Codigo  </label><input name="codigo"   type="text"></li>
+	<li><label>Email  </label><input name="email"   type="text"></li>
+	<li><label>Móvil  </label><input name="mobile"   type="text"></li>
+	<li><label>Dirrecion </label><input name="address"   type="text"></li>
+	<li><label>Ciudad </label><input name="city"   type="text"></li>
+	<li><label>Estado </label><input name="province"   type="text"></li>
+	<li><label>Pais </label><input name="country"   type="text"></li>
 	<li><button type="submit">Guardar Cambios</button></li>
 </form>
 </ul>	

@@ -31,7 +31,7 @@
 	 	<p> Semestre :  {% if usuario.userext.student %} {{  usuario.userext.student.semestre }}  {% endif %} </p>
 	</div>
 <ul>
-<form id="for" action="{%url 'usereditaradmin' usuario.pk %}" method="PUT">
+<form id="for" action="{%url 'usereditaradmin' usuario.pk %}" method="POST">
 	{% csrf_token %}
 	<li><label >Activo </label><input name="is_active"  {% if usuario.is_active %} checked {% endif %}  type="checkbox"></li>
 	<li><label>Email  </label><input name="email" value="{{usuario.email}}"  type="text"></li>

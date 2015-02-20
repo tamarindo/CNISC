@@ -95,36 +95,56 @@ def panelUseradmin(request):
 	else:
 		return HttpResponseRedirect(reverse("home"))
 
+
+def panelCrearUsuarios(request):
+
+	if ob_user.userext.profile.is_admin == 1:
+	
+		if request.method == 'GET':
+			ob_user=User.objects.get(id=request.user.id)
+			template="userCreateTemplate.html"		
+			return render_to_response(template,locals(),context_instance=RequestContext(request))	
+		elif request.method == 'POST':
+			'''
+			ob_user = User(fistname='',email='')
+			ob_user.save()
+			ob_userext = UserExt(
+				phone =  '',
+				mobile = '',
+				address = '',
+				city = ''   ,
+				province= '',
+				country= '' ,
+				)
+			ob_userext.save()	'''
+		else:
+			return HttpResponseRedirect(reverse("home"))
+
+	else:
+		return HttpResponseRedirect(reverse("home"))
+
 class Usuario(View):
 
 	http_method_names = ['get','pull','post','delete']
 
 	def get(self,request,*args,**kwargs):
 		# traer Usuario	
-
 		ob_user=User.objects.get(id=request.user.id)
-		if ob_user.userext.profile.is_admin == 1:
-			if args[0] != None :		
-				usuario=User.objects.get(pk=args[0])
-				engresado = False
-				estudiante = False
-				if usuario.userext.profile == 'estudiante' :
-					estudiante = True
-					info_estudiante = Students.objects.get_or_none( user = ob_user)
+		if ob_user.userext.profile.is_admin == 1:		
+			usuario=User.objects.get(pk=args[0])
+			engresado = False
+			estudiante = False
+			if usuario.userext.profile == 'estudiante' :
+				estudiante = True
+				info_estudiante = Students.objects.get_or_none( user = ob_user)
 
-				template="userEditTemplate.html"	
-
-			else :
-				template="userCreateTemplate.html"
-			
-			return render_to_response(template,locals(),context_instance=RequestContext(request))		
+			template="userEditTemplate.html"
+			return render_to_response(template,locals(),context_instance=RequestContext(request))	
 		else:
 			return HttpResponseRedirect(reverse("home"))
 
+	
 	def post(self,request,*args,**kwargs):
-		
-
-	def put(self,request,*args,**kwargs):
 		if args[0] != None : 
 
 			usuario=User.objects.get(pk=args[0])
