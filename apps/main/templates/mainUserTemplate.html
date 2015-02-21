@@ -30,13 +30,13 @@
 	<aside class="third column messages">
 		<section>
 			<h2 class="list-header flat">Mensajes Privados</h2>
-			<ul class="list message-list">
+			<ul class="list message-list bar-list">
 				<li ng-repeat="mensaje in list[0] | filter: buscar" ng-init="list=0" message-item></li>
 			</ul>
 		</section>
 		<section>
 			<h2 class="list-header flat">Otros Mensajes</h2>
-			<ul class="list message-list" >
+			<ul class="list message-list bar-list" >
 				<li ng-repeat="mensaje in list[1] | filter: buscar" ng-init="list=1" message-item></li>
 			</ul>
 			<div class="">

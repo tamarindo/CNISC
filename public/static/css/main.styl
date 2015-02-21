@@ -240,47 +240,23 @@ table
 		
 
 .message-list
-	margin 0
 	
 	.message
-		color light-gray
-		display block
-		padding .6rem 2.1rem .6rem 1rem
-		position relative
 		
 		&.active
 			color #fff
 			background-color primary
-			.message-title
+			.title
 				color #fff
-						
-		&:after
-			font-family 'cnisc'
-			speak none
-			content '\e62e'
-			absolute right 1rem top 50%
-			font-size 20px
-			margin-top -10px
 		
 		&.seen
-			.message-title
-				font-weight 400
-			
-		.message-title
-			color gray
-			margin 0
-		
-	li
-		border-bottom 1px solid lighten-gray
-			
-	.meta
-		font-size 15px
+			.title
+				font-weight 400	
 	.excerpt
-		font-size 15px
 		margin-top 5px
 		
 .message-content
-	.message-title
+	.title
 		margin-bottom 0
 	.meta
 		color light-gray

@@ -125,6 +125,33 @@ button.flat
 
 .pull-right
 	float right
+   
+.bar-list
+    margin 0
+    
+    li
+        border-bottom 1px solid lighten-gray
+        
+    .bar-list__item
+        color light-gray
+        display block
+        padding .6rem 2.1rem .6rem 1rem
+        position relative
+        
+        &:after
+            font-family 'cnisc'
+            speak none
+            content '\e62e'
+            absolute right 1rem top 50%
+            font-size 20px
+            margin-top -10px        
+        
+        .title
+            color gray
+            margin 0
+        
+    .small
+        font-size 15px 
 
 /*
  * Text
