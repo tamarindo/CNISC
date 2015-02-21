@@ -8,20 +8,29 @@
 {% endblock %}
 
 {% block body %}
-<div>
-{% for item_usuario in list_usuarios%}
-<div>
-	<div> <img src="{{item_usuario.userext.foto}}"></div>
-	<div>
-		<a href="{%url 'usereditaradmin' item_usuario.pk %}">
-			<p>{{item_usuario.get_full_name}}</p>
-		</a>
-		<p>Cob:{{item_usuario.username}}</p>
-		<p>Email:{{item_usuario.email}}</p>
-	</div>
-</div>
-{% endfor %}
-</div>
+<section>
+	<h1 class="">Todos los usuarios</h1>
+	<ul class="user-list bar-list list fluid-grid">
+		{% for user in list_usuarios%}
+			<li class="">
+				<a href="{%url 'usereditaradmin' user.pk %}" class="bar-list__item">
+					<div class="wrapper fluid-grid static valigned">
+						<div class="user-list__thumb">
+							<img src="{{user.userext.profile_image_url}}">
+						</div>
+						<div class="user-list__desc">
+							<h2 class="title">{{user.get_full_name}}</h2>
+							<p class="small">
+								Cód: {{user.username}}<br>
+								Email: {{user.email}}
+							</p>
+						</div>
+					</div>
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+</section>
 {% endblock %}
 
 {% block js %}{% endblock %}
