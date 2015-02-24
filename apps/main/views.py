@@ -130,15 +130,18 @@ class Usuario(View):
 	def get(self,request,*args,**kwargs):
 		# traer Usuario	
 		ob_user=User.objects.get(id=request.user.id)
+
 		if ob_user.userext.profile.is_admin == 1:		
 			usuario=User.objects.get(pk=args[0])
 			engresado = False
 			estudiante = False
+
 			if usuario.userext.profile == 'estudiante' :
 				estudiante = True
 				info_estudiante = Students.objects.get_or_none( user = ob_user)
 
 			template="userEditTemplate.html"
+			fromfoto = from_foto()
 			return render_to_response(template,locals(),context_instance=RequestContext(request))	
 		else:
 			return HttpResponseRedirect(reverse("home"))
