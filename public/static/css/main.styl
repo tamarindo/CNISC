@@ -132,33 +132,42 @@ table
 
 #content
 	padding-bottom 1.3rem
+	
+// Navegacion
+.main-header
+	border-bottom 5px solid darken(primary, 20%)
+	background-color primary
+	color #fff
+	a
+		color #fff
+		
+	.fluid-grid
+		justify-content space-between
+		align-items center
 
 .main-navigation
 	collapse = 57.38em
 
 	.menu-item
-		padding 0 .5rem
-		line-height 73px // user image photo height
+		a
+			display inline-block
+			padding 0 .5rem
+			line-height 49px // Logo user img {width + padding}
+		&:hover
+			background-color darken(primary, 10%)
+
 		@media (max-width: collapse)
 			[class^="icon-"]
+				vertical-align middle
 				font-size 1.8rem
 
 	@media (max-width: collapse)
 		.text-hide-m
 			screen-reader-text()
-		.menu-item
-			padding 0 .7rem
 
 
 // Usuario
 // ----------------------------------
-.main-header
-	border-bottom 5px solid darken(primary, 20%)
-	padding .5rem 0
-	background-color primary
-	color #fff
-	a
-		color #fff
 
 #opciones
 	absolute top 0 right 0
@@ -209,9 +218,10 @@ table
 		transform translateX(70%)
 
 .logo-user
+	padding 2px 0
 	img
 		border-radius 50%
-		width: 70px;
+		width: 45px;
 	.name
 		padding 0 .5rem
 		margin 0
