@@ -76,27 +76,6 @@
 
 {% block js %}
 
-<script>
-	(function(){
-
-		// Listeners para cambiar la foto y eliminarla.
-		var
-			changeImgButton = document.querySelector('#update-image .button'),
-			changeImgFile = document.querySelector('#id_foto'),
-			changeImgSubmit = document.querySelector('#update-image .submit');
-
-		changeImgButton.addEventListener('click', function(e){
-			e.preventDefault();
-			e.stopPropagation();
-			
-			changeImgFile.click();
-		});
-
-		changeImgFile.addEventListener('change', function(e) {
-			changeImgSubmit.click();
-		});
-
-	})();
-</script>
+	<script src="{{STATIC_URL}}/js/multipart-render.js"></script>
 
 {% endblock %}
