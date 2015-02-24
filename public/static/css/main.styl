@@ -87,13 +87,15 @@ table
 // Alineación vertical del login
 // Javascript necesario. Ver login-extra.js
 .login-page
-	display table
-	width 100%
-	height 100%
+	height 100vh
+	display flex
+	flex-flow row wrap
+	align-items center
+	justify-content center
 	background radial-gradient(#fff, #ddd)
+	
 	>.container
-		display table-cell
-		vertical-align middle
+		padding 2rem 0
 
 // Estilos propios
 .login-header .main-title
