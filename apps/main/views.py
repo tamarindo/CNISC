@@ -97,11 +97,11 @@ def panelUseradmin(request):
 
 
 def panelCrearUsuarios(request):
+	ob_user = User.objects.get(id=request.user.id)
 
-	if ob_user.userext.profile.is_admin == 1:
+	if ob_user.userext.profile.is_admin :
 	
 		if request.method == 'GET':
-			ob_user=User.objects.get(id=request.user.id)
 			template="userCreateTemplate.html"		
 			return render_to_response(template,locals(),context_instance=RequestContext(request))	
 		elif request.method == 'POST':
