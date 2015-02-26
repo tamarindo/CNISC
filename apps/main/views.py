@@ -134,7 +134,7 @@ def panelCrearUsuarios(request):
 				new_ob_userext.save()
 
 				return HttpResponseRedirect("/usuario/editar/"+str(new_ob_user.pk ))
-			
+				return HttpResponse(json.dumps('{error:0,url:'+"/usuario/editar/"+str(new_ob_user.pk )+'}'),content_type="application/json")
 			else :
 				return HttpResponse(json.dumps('{error:1}'),content_type="application/json")
 
