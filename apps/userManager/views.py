@@ -90,7 +90,7 @@ def autocomplete(request):
 	return HttpResponse(json.dumps(retorno),content_type="application/json")		
 
 
-def aviso_bienvenida():
+def aviso_bienvenida(request):
 	if request.user.is_authenticated() :
 		ob_userext=UserExt.objects.get(user=request.user)
 		ob_userext.welcome_message=True
