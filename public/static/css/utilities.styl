@@ -237,10 +237,21 @@ button.flat
 .vform
     display flex
     flex-flow column wrap
-    justify-content flex-start
+    justify-content space-between
     .form-field
         margin-bottom 1rem
-
+        align-items center
+        
+    .distribute
+        justify-content space-between
+        
+    @media (min-width: 31.25em)
+        .select-render
+        input
+            width 78%
+        label
+            width 22%
+            
 // Forma un input con un elemento en una sola linea
 .input-inline-icon
     position relative
@@ -265,3 +276,43 @@ button.flat
     > h1
         margin 0
         
+// Renderiza selects de mejor Forma
+// Style the select box
+.select-render
+    position relative
+    overflow hidden
+    border 1px solid light-gray
+    width 100%
+    select
+        width 100%
+        padding 8px
+        margin 0
+        border-radius 0
+        background transparent
+        color dark-gray
+        border 0
+        outline none
+        display inline-block
+        appearance none
+        cursor pointer
+    option
+        color lighten-gray !important
+        font-size 1rem !important
+    &:after
+        absolute right 7px top 50%
+        content ' '
+        pointer-events none
+        width 14px
+        height 8px
+        margin-top -4px
+        background-repeat no-repeat
+        background-image url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAICAMAAAD+zz7+AAAANlBMVEUAAAD////////////////////////////////////////////////////////////////////xY8b8AAAAEXRSTlMAx/rmkw8Iv66qe3NgWEZAA3QM9SMAAAA5SURBVAjXTcfFAcAwDATBkykxW/03a4Z97UDyk0QWVyIB8TKg5bccRmpKYWW7/rJpPmYyOGkiPaYCPLUEE/PKivAAAAAASUVORK5CYII=")
+    // Hide the dropdown of FF and IE
+    &:before
+        absolute right 0 top 0
+        bottom 0
+        width 30px
+        content ' '
+        display block
+        background-color light-gray
+        pointer-events none
