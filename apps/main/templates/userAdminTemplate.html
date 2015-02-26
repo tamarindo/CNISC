@@ -22,7 +22,7 @@
 		<button class="flat icon-search right" type="submit"></button>		
 	</div>
 	<ul class="user-list bar-list list fluid-grid" ng-controller="searchController">
-		<li class="" ng-repeat="user in users">
+		<li class="" ng-repeat="user in users | filter: search">
 			<a href="{[{ user.id }]}" class="bar-list__item">
 				<div class="wrapper fluid-grid static valigned">
 					<div class="user-list__thumb">
