@@ -40,6 +40,9 @@
 				{% if usuario.userext.student %}
 					<span class="gray-text">Semestre:  {{  usuario.userext.student.semestre }} </span>
 				{% endif %} 
+				<p>
+					<a href="" class="button primary ghost">Enviar Mensaje</a>
+				</p>
 			</p>
 		</figcaption>
 	</figure>
@@ -74,12 +77,9 @@
 			<label for="">Pais</label>
 			<input name="country" value="{{usuario.userext.country}}"  type="text">
 		</div>
-		<div class="form-field">
-		 	<a href="" class="button primary">Enviar Mensaje</a>
-		</div>
-		<div class="form-field">
-			<button type="submit" class="flat button">Guardar Cambios</button>
-		</div>
+		<p class="center-text">
+			<button type="submit" class="flat button gray">Guardar Cambios</button>
+		</p>
 	</form>
 
 </section>
