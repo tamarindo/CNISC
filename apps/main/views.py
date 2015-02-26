@@ -124,9 +124,8 @@ def panelCrearUsuarios(request):
 				country= request.POST.get('country') ,
 				)
 
-			input_perfil = request.POST.get('mobile')
-
-			if input_perfil == 'estudiante'|| input_perfil == 'engresado' || input_perfil == 'otro':
+			input_perfil = request.POST.get('perfil')
+			if input_perfil == 'estudiante' | input_perfil == 'engresado' | input_perfil == 'otro':
 				ob_perfil = Profile.objects.get_or_none(name="input_perfil")		
 				new_ob_userext.perfil=ob_perfil	
 			else : 
