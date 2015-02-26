@@ -22,6 +22,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 import pprint
 import json
+from random import choice
 
 @ensure_csrf_cookie
 
@@ -105,18 +106,38 @@ def panelCrearUsuarios(request):
 			template="userCreateTemplate.html"		
 			return render_to_response(template,locals(),context_instance=RequestContext(request))	
 		elif request.method == 'POST':
-			'''
-			ob_user = User(fistname='',email='')
-			ob_user.save()
-			ob_userext = UserExt(
-				phone =  '',
-				mobile = '',
-				address = '',
-				city = ''   ,
-				province= '',
-				country= '' ,
+			longitud = 6
+			valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<=>@#%&+"
+			 
+			p = ""
+			p = p.join([choice(valores) for i in range(longitud)])
+
+			new_ob_user = User(first_name=request.POST.get('nombre'), email=request.POST.get('email'), password=p, username =request.POST.get('codigo'))
+			
+			new_ob_userext = UserExt(
+				user = new_ob_user,
+				phone =  request.POST.get('mobile'),
+				mobile = request.POST.get('mobile'),
+				address = request.POST.get('address'),
+				city = request.POST.get('city')   ,
+				province= request.POST.get('province'),
+				country= request.POST.get('country') ,
 				)
-			ob_userext.save()	'''
+
+			input_perfil = request.POST.get('mobile')
+
+			if input_perfil == 'estudiante'|| input_perfil == 'engresado' || input_perfil == 'otro':
+				ob_perfil = Profile.objects.get_or_none(name="input_perfil")		
+				new_ob_userext.perfil=ob_perfil	
+			else : 
+				return HttpResponse(json.dumps('{error:1}'),content_type="application/json")
+			
+			new_ob_user.save()
+			new_ob_userext.save()
+
+			
+			return HttpResponse(json.dumps('e'),content_type="application/json")
+			return HttpResponseRedirect("/usuario/editar/"+str(new_ob_user.pk ))
 		else:
 			return HttpResponseRedirect(reverse("home"))
 
