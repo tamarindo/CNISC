@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block body %}
-<section ng-controller="searchController">
+<section >
 	<header class="fluid-grid static inline-header">
 		<h1 class="">Usuarios</h1>
 		<a href="{% url 'panelCrearUsuarios' %}" class="button ghost">
@@ -21,7 +21,7 @@
 		<input type="text" ng-model="search" placeholder="Buscar un usuario...">
 		<button class="flat icon-search right" type="submit"></button>		
 	</div>
-	<ul class="user-list bar-list list fluid-grid">
+	<ul class="user-list bar-list list fluid-grid" ng-controller="searchController">
 		<li class="" ng-repeat="user in users">
 			<a href="{[{ user.id }]}" class="bar-list__item">
 				<div class="wrapper fluid-grid static valigned">
