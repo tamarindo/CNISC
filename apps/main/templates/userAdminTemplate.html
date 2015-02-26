@@ -3,12 +3,14 @@
 
 {% endblock %}
 
-{% block style %}
+{% block style %}{% endblock %}
 
+{% block bodyAttrs %}
+	ng-app="admin"
 {% endblock %}
 
 {% block body %}
-<section>
+<section ng-controller="searchController">
 	<header class="fluid-grid static inline-header">
 		<h1 class="">Usuarios</h1>
 		<a href="{% url 'panelCrearUsuarios' %}" class="button ghost">
@@ -16,31 +18,40 @@
 		</a>
 	</header>
 	<div class="input-inline-icon">
-		<input type="text" name="search" placeholder="Buscar un usuario...">
+		<input type="text" ng-model="search" placeholder="Buscar un usuario...">
 		<button class="flat icon-search right" type="submit"></button>		
 	</div>
 	<ul class="user-list bar-list list fluid-grid">
-		{% for user in list_usuarios%}
-			<li class="">
-				<a href="{%url 'usereditaradmin' user.pk %}" class="bar-list__item">
-					<div class="wrapper fluid-grid static valigned">
-						<div class="user-list__thumb">
-							<img src="{{user.userext.profile_image_url}}">
-						</div>
-						<div class="user-list__desc">
-							<h2 class="title">{{user.get_full_name}}</h2>
-							<p class="small">
-								Cód: {{user.username}}<br>
-								Email: {{user.email}}
-							</p>
-						</div>
+		<li class="" ng-repeat="user in users">
+			<a href="{[{ user.id }]}" class="bar-list__item">
+				<div class="wrapper fluid-grid static valigned">
+					<div class="user-list__thumb">
+						<img ng-src="{[{user.imgUrl}]}">
 					</div>
-				</a>
-			</li>
-		{% endfor %}
+					<div class="user-list__desc">
+						<h2 class="title">{[{user.name}]}</h2>
+						<p class="small">
+							Cód: {[{user.cod}]}<br>
+							Email: {[{user.email}]}
+						</p>
+					</div>
+				</div>
+			</a>
+		</li>
 	</ul>
 </section>
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+
+	<script>
+		var sresu = {{ dic_list_users | safe }}
+	</script>
+	<script src="{{STATIC_URL}}js/lib/angular/angular.min.js"></script>
+	<script src="{{STATIC_URL}}js/lib/angular-resource/angular-resource.min.js"></script>
+    <script src="{{STATIC_URL}}js/lib/angular-cookies/angular-cookies.min.js"></script>
+    <script src="{{STATIC_URL}}js/app/api/api.services.js"></script>
+    <script src="{{STATIC_URL}}js/app/admin/admin.main.js"></script>
+
+{% endblock %}
  
