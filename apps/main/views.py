@@ -90,7 +90,22 @@ def panelUser(request):
 def panelUseradmin(request):
 	ob_user=User.objects.get(id=request.user.id)
 	if ob_user.userext.profile.is_admin == 1:		
-		list_usuarios=User.objects.filter(is_staff=0)
+		list_usuarios = User.objects.filter(is_staff=0)
+
+		v_list_users = []
+
+		for user in list_usuarios :
+			v_list_users.append( dict([
+				('id', user.pk),
+				('cod', user.username),
+				('name', user.get_full_name()),
+				('email', user.email),
+				('imgUrl', '' + user.userext.profile_image_url() ),
+				])
+			)
+
+		dic_list_users = json.dumps(v_list_users)
+
 		template="userAdminTemplate.html"	
 		return render_to_response(template,locals(),context_instance=RequestContext(request))	
 	else:
