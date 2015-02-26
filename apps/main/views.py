@@ -123,7 +123,7 @@ def panelCrearUsuarios(request):
 		elif request.method == 'POST':
 			
 
-			if  request.POST.get('nombre') != "" | request.POST.get('email') != "" | username =request.POST.get('codigo') != "" :
+			if  request.POST.get('nombre') != "" | request.POST.get('email') != "" | request.POST.get('codigo') != "" :
 
 				new_ob_user = User(first_name=request.POST.get('nombre'), email=request.POST.get('email'), password=request.POST.get('codigo'), username =request.POST.get('codigo'))
 				
