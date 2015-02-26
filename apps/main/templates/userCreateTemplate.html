@@ -1,55 +1,74 @@
- {% extends "base_user.html" %}
-{% block title %}
+{% extends "base_admin.html" %}
 
-{% endblock %}
+{% block title %}Crear nuevo usuario - CNISC{% endblock %}
 
-{% block style %}
-
-{% endblock %}
+{% block style %}{% endblock %}
 
 {% block body %}
 
-<ul>
-<form id="for" action="{%url 'panelCrearUsuarios'%} " method="POST">
-	{% csrf_token %}
-	<select>
-		<option value="estudiante" > Estudiante </option>
-		<option value="engresado" > Engresado </option>
-		<option value="otro" > Otro </option>
-	</select>
-	<li><label>Nombre(s)  </label><input name="nombre"   type="text"></li>
-	<li><label>Apellidos  </label><input name="apellidos"   type="text"></li>
-	<li><label>Codigo  </label><input name="codigo"   type="text"></li>
-	<li><label>Email  </label><input name="email"   type="text"></li>
-	<li><label>Móvil  </label><input name="mobile"   type="text"></li>
-	<li><label>Dirrecion </label><input name="address"   type="text"></li>
-	<li><label>Ciudad </label><input name="city"   type="text"></li>
-	<li><label>Estado </label><input name="province"   type="text"></li>
-	<li><label>Pais </label><input name="country"   type="text"></li>
-	<li><button type="submit">Guardar Cambios</button></li>
-</form>
-</ul>	
-	
-	
-	
-	
-
-
-
-
+<section>
+	<header class="fluid-grid static inline-header">
+		<h1 class="">Crear un nuevo usuario</h1>
+		<a href="#" class="button ghost">
+			<i class="icon-plus"> </i>Cargar varios usuarios
+		</a>
+	</header>
+	<form class="vform" action="{%url 'panelCrearUsuarios'%} " method="POST">
+		{% csrf_token %}
+		<div class="form-field fluid-grid static">
+			<label for="nombre" for="nombre">Nombre(s)</label>
+			<input name="nombre" id="nombre" type="text">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="apellidos">Apellidos</label>
+			<input name="apellidos" id="apellidos" type="text">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="codigo">Codigo</label>
+			<input name="codigo" id="codigo" type="text">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="email">Email</label>
+			<input name="email" id="email" type="email">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="mobile">Móvil</label>
+			<input name="mobile" id="mobile" type="number">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="address">Dirección</label>
+			<input name="address" id="address" type="text">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="city">Ciudad</label>
+			<input name="city" id="city" type="text">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="province">Departamento</label>
+			<input name="province" id="province" type="text">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="country">País</label>
+			<input name="country" id="country" type="text">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for=""></label>
+			<select>
+				<option value="-1">Tipo de usuario</option>
+				<option value="estudiante">Estudiante </option>
+				<option value="engresado"> Engresado </option>
+				<option value="otro">Otro</option>
+			</select>
+		</div>
+		<p class="center-text">
+			<button type="submit" class="button flat">Guardar Cambios</button>
+		</p>
+	</form>
+</section>
 
 {% endblock %}
 
 {% block js %}
-<script type="text/javascript">
 
-	$('#eliminar_imagen_user').on("click",
-	function(x){ 
-		$('.sumit-eliminar-foto').click()
-	}
-);
-
-
-</script>
 {% endblock %}
  
