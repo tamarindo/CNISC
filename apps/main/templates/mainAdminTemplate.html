@@ -12,22 +12,22 @@
 <section class="quick-message">
 	<h1 class="">Mensaje Rápido</h1>
 	<form method="POST" action="" class="vform">
-		<div class="form-field">
+		<div class="form-field fluid-grid static">
 			<label for="message__subject">Asunto</label>
 			<input id="message__subject" type="text" autofocus/>
 		</div>
-		<div class="form-field">
+		<div class="form-field fluid-grid static">
 			<label for="message__to">Para</label>
 			<input id="message__to" type="text"/>
 		</div>
 		<div class="form-field">
-		 	<label for="message">Mensaje</label>
+		 	<p><label for="message">Mensaje</label></p>
 			<textarea id="message"></textarea>
 	    	{% wysiwyg_editor "message" %}   
 		</div>
-		<div class="form-field">
-			<button type="submit" class="flat button green block">Previsualizar y enviar...</button>
-		</div>
+		<p class="center-text">
+			<button type="submit" class="flat button green">Previsualizar y enviar...</button>
+		</p>
 	</form>
 </section>
 
