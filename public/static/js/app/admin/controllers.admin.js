@@ -17,6 +17,11 @@
 
 	app.controller('CreateUserController', ['$scope', function($scope){
 
+		// Función con la que se procesa el envío del form
+		$scope.submit = function( user ) {
+			console.log(user);
+		}
+
 	}]);
 
 })();

@@ -1,69 +1,71 @@
 {% extends "base_admin.html" %}
-
 {% block title %}Crear nuevo usuario - CNISC{% endblock %}
 
 {% block style %}{% endblock %}
 
+{% block bodyAttrs %}
+	ng-app="admin"
+{% endblock %}
+
 {% block body %}
 
-<section>
+<section ng-controller="CreateUserController">
 	<header class="fluid-grid static inline-header">
 		<h1 class="">Crear un nuevo usuario</h1>
 		<a href="#" class="button ghost">
 			<i class="icon-plus"> </i>Cargar varios usuarios
 		</a>
 	</header>
-	<form class="vform" action="{%url 'panelCrearUsuarios'%} " method="POST">
-		{% csrf_token %}
+	<form class="vform validate" name="form" novalidate ng-submit="submit(user)">
 		<div class="form-field fluid-grid static">
-			<label for="nombre" for="nombre">Nombre(s)</label>
-			<input name="nombre" id="nombre" type="text">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label for="apellidos">Apellidos</label>
-			<input name="apellidos" id="apellidos" type="text">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label for="codigo">Codigo</label>
-			<input name="codigo" id="codigo" type="text">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label for="email">Email</label>
-			<input name="email" id="email" type="email">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label for="mobile">Móvil</label>
-			<input name="mobile" id="mobile" type="number">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label for="address">Dirección</label>
-			<input name="address" id="address" type="text">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label for="city">Ciudad</label>
-			<input name="city" id="city" type="text">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label for="province">Departamento</label>
-			<input name="province" id="province" type="text">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label for="country">País</label>
-			<input name="country" id="country" type="text">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label></label>
+			<label>Tipo <span class="red">*</span></label>
 			<div class="select-render">
-				<select value="perfil">
-					<option value="-1">Tipo de usuario</option>
+				<select autofocus value="perfil" name="perfil" ng-model="user.perfil" required>
+					<option value="-1" selected>Tipo de usuario</option>
 					<option value="estudiante">Estudiante </option>
 					<option value="egresado">Egresado</option>
 					<option value="otro">Otro</option>
 				</select>
 			</div>
 		</div>
+		<div class="form-field fluid-grid static">
+			<label for="nombre" for="nombre">Nombre(s) <span class="red">*</span></label>
+			<input name="nombre" id="nombre" type="text" ng-model="user.nombre" required ng-minlength="3">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="apellidos">Apellidos <span class="red">*</span></label>
+			<input name="apellidos" id="apellidos" type="text" ng-model="user.apellidos" required ng-minlength="3">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="codigo">Código <span class="red">*</span></label>
+			<input name="codigo" id="codigo" type="text" ng-model="user.codigo" required ng-minlength="3">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="email">Email <span class="red">*</span></label>
+			<input name="email" id="email" type="email" ng-model="user.email" required>
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="mobile">Móvil</label>
+			<input name="mobile" id="mobile" type="number" ng-model="user.mobile">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="address">Dirección</label>
+			<input name="address" id="address" type="text" ng-model="user.address">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="city">Ciudad</label>
+			<input name="city" id="city" type="text" ng-model="user.city">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="province">Departamento</label>
+			<input name="province" id="province" type="text" ng-model="user.province">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="country">País</label>
+			<input name="country" id="country" type="text" ng-model="user.country">
+		</div>
 		<p class="center-text">
-			<button type="submit" class="button flat gray">Guardar Cambios</button>
+			<button type="submit" class="button flat gray" ng-disabled="form.$invalid">Guardar Cambios</button>
 		</p>
 	</form>
 </section>
@@ -71,6 +73,13 @@
 {% endblock %}
 
 {% block js %}
+
+	<script src="{{STATIC_URL}}js/lib/angular/angular.min.js"></script>
+	<script src="{{STATIC_URL}}js/lib/angular-resource/angular-resource.min.js"></script>
+    <script src="{{STATIC_URL}}js/lib/angular-cookies/angular-cookies.min.js"></script>
+    <script src="{{STATIC_URL}}js/app/api/api.services.js"></script>
+    <script src="{{STATIC_URL}}js/app/admin/admin.js"></script>
+    <script src="{{STATIC_URL}}js/app/admin/controllers.admin.js"></script>
 
 {% endblock %}
  

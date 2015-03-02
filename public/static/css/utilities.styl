@@ -110,7 +110,11 @@ button.flat
     outline none
     background-color transparent
     border none
-    font-weight 400        
+    font-weight 400
+
+button[disabled]
+    opacity 0.8
+    cursor not-allowed
        
 /*
  * Lists, menus
@@ -231,6 +235,10 @@ button.flat
     &.ng-hide
         opacity 0
 
+
+// FORMULARIOS
+// ----------------------------------------------------------------------------
+
  /*
  * Form Layouts
  */
@@ -262,6 +270,15 @@ button.flat
         top 50%
         font-size 15px
         margin-top -8px
+        
+// Validaciones de Angular
+input
+    &.ng-touched.ng-invalid
+        border-color #E75245
+
+.validate
+    .red
+        color red
         
 // Utilidades para header
 // ---------------------------------------------------
