@@ -2,7 +2,7 @@
 	'use strict';
 
 	var app = angular.module('admin', 
-		['ngCookies', 'Api', 'admin-controllers'])
+		['ngCookies', 'admin-controllers'])
 
 		// Cambiar el control de expresiones para prevenir 
 		// inconvenientes con las de Django.

@@ -11,7 +11,8 @@
 	api.constant( 'ApiUrl', {
 		messaging : '/api/mensajes/',
 		oauth : '/api/oauth/',
-		alerts: '/api/avisos/'
+		alerts: '/api/avisos/',
+		newUser: '/usuario/crear/'
 	});
 
 	// Factoria para actuar sobre mensajes
@@ -54,6 +55,17 @@
 
 		return $resource( ApiUrl.alerts + ':slug', { slug: "@slug" }, {
 			'update' : {
+				method: 'POST'
+			}
+		});
+
+	}]);
+
+	// Factoria para crear un nuevo usuario
+	api.factory('ApiUser', ['$resource', 'ApiUrl', function($resource, ApiUrl) {
+
+		return $resource( ApiUrl.newUser, {}, {
+			'new' : {
 				method: 'POST'
 			}
 		});
