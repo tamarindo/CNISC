@@ -7,7 +7,7 @@
 
 	'use strict';
 
-	var app = angular.module('admin-controllers', []);
+	var app = angular.module('admin-controllers', ['Api']);
 
 	app.controller('SearchController', ['$scope', function($scope){
 
@@ -15,11 +15,20 @@
 
 	}]);
 
-	app.controller('CreateUserController', ['$scope', function($scope){
+	app.controller('CreateUserController', ['$scope', 'ApiUser', 
+		function($scope, ApiUser){
 
 		// Función con la que se procesa el envío del form
-		$scope.submit = function( user ) {
-			console.log(user);
+		$scope.submit = function() {
+			ApiUser.new(
+				$.param( $scope.user)
+			)
+			.$promise.then(function( response ) {
+
+				console.log(response);
+
+			});
+
 		}
 
 	}]);

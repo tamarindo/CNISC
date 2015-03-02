@@ -117,48 +117,57 @@ def panelCrearUsuarios(request):
 
 	if ob_user.userext.profile.is_admin :
 	
-		if request.method == 'GET':
+		if 'GET' == request.method :
 			template="userCreateTemplate.html"		
 			return render_to_response(template,locals(),context_instance=RequestContext(request))	
-		elif request.method == 'POST':
-			
+		
+		elif 'POST' == request.method :
 
-			if  request.POST.get('nombre') != "" | request.POST.get('email') != "" | request.POST.get('codigo') != "" :
+			if  request.POST.get('nombre') != "" or request.POST.get('email') != "" or request.POST.get('codigo') != "" :
 
-				new_ob_user = User(first_name=request.POST.get('nombre'), email=request.POST.get('email'), password=request.POST.get('codigo'), username =request.POST.get('codigo'))
+				# Creacion del usuario
+				new_ob_user = User(
+					first_name=request.POST.get('nombre'),
+					email=request.POST.get('email'),
+					password=request.POST.get('codigo'),
+					username =request.POST.get('codigo')
+				)
 				
+				# Informacion adicional del usuario
 				new_ob_userext = UserExt(
 					user = new_ob_user,
 					phone =  request.POST.get('mobile'),
 					mobile = request.POST.get('mobile'),
 					address = request.POST.get('address'),
-					city = request.POST.get('city')   ,
+					city = request.POST.get('city'),
 					province= request.POST.get('province'),
-					country= request.POST.get('country') ,
-					)
+					country= request.POST.get('country'),
+				)
 
+				# Agregar perfil
+				# TODO: Parametrizar los tipos de perfiles permitidos
 				input_perfil = request.POST.get('perfil')
 
-				if input_perfil == 'estudiante' | input_perfil == 'engresado' | input_perfil == 'otro':
-					ob_perfil = Profile.objects.get_or_none(name="input_perfil")		
-					new_ob_userext.perfil=ob_perfil	
+				if input_perfil == 'estudiante' or input_perfil == 'egresado' or input_perfil == 'otro':
+					ob_perfil = Profile.objects.get_or_none(name = input_perfil )
+					new_ob_userext.perfil = ob_perfil
+
 				else : 
-					return HttpResponse(json.dumps('{error:1}'),content_type="application/json")
+					return HttpResponse( json.dumps("{error:1, message: 'Debe especificar un perfil'}"), content_type="application/json" )
 				
 				new_ob_user.save()
 				new_ob_userext.save()
 
-				return HttpResponseRedirect("/usuario/editar/"+str(new_ob_user.pk ))
-				return HttpResponse(json.dumps('{error:0,url:'+"/usuario/editar/"+str(new_ob_user.pk )+'}'),content_type="application/json")
-			else :
-				return HttpResponse(json.dumps('{error:1}'),content_type="application/json")
+				return HttpResponse( json.dumps("{error:0, message: /usuario/editar/" + str(new_ob_user.pk ) + "}"), content_type="application/json" )
 
+			else :
+				return HttpResponse( json.dumps('{error:1, message: "Alguno de los campos no es correcto. Por favor verifiquelos"}'), content_type="application/json" )
 
 		else:
-			return HttpResponseRedirect(reverse("home"))
+			return HttpResponseRedirect( reverse("home") )
 
 	else:
-		return HttpResponseRedirect(reverse("home"))
+		return HttpResponseRedirect( reverse("home") )
 
 class Usuario(View):
 
