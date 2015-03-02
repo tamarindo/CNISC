@@ -23,7 +23,7 @@
 	</div>
 	<ul class="user-list bar-list list fluid-grid" ng-controller="SearchController">
 		<li class="" ng-repeat="user in users | filter: search">
-			<a href="{[{ user.id }]}" class="bar-list__item">
+			<a href="/usuario/editar/{[{ user.id }]}" class="bar-list__item">
 				<div class="wrapper fluid-grid static valigned">
 					<div class="user-list__thumb">
 						<img ng-src="{[{user.imgUrl}]}">
