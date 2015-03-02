@@ -2,7 +2,7 @@
 	'use strict';
 
 	var app = angular.module('admin', 
-		['ngCookies', 'Api'])
+		['ngCookies', 'Api', 'admin-controllers'])
 
 		// Cambiar el control de expresiones para prevenir 
 		// inconvenientes con las de Django.
@@ -17,11 +17,5 @@
 			$http.defaults.headers.put['X-CSRFToken'] = $cookies.csrftoken;
 			$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 		}]);
-
-	app.controller('searchController',['$scope', function($scope){
-
-		$scope.users = window.sresu;
-
-	}])
 
 })();
