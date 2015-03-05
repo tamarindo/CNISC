@@ -8,6 +8,7 @@ from django.template import RequestContext  # para hacer funcionar {% csrf_token
 from django.contrib.auth.models import User
 
 from apps.main.models import *
+from apps.main.utilities import *
 from apps.oauthSocial.models import *
 from apps.oauthSocial.utilis import *
 from apps.parceadores.models import *
@@ -123,14 +124,20 @@ def panelCrearUsuarios(request):
 		
 		elif 'POST' == request.method :
 
-			if  request.POST.get('nombre') != "" or request.POST.get('email') != "" or request.POST.get('codigo') != "" :
+			nombre = request.POST.get('nombre')
+			email = request.POST.get('email')
+			codigo = request.POST.get('codigo')
+			error = 0
+			message = ''
+
+			if  nombre != "" and email != "" and ValidateEmail(email) and codigo != "" :
 
 				# Creacion del usuario
 				new_ob_user = User(
-					first_name=request.POST.get('nombre'),
-					email=request.POST.get('email'),
-					password=request.POST.get('codigo'),
-					username =request.POST.get('codigo')
+					first_name= nombre,
+					email = email,
+					password = codigo,
+					username = codigo
 				)
 				
 				# Informacion adicional del usuario
@@ -144,24 +151,28 @@ def panelCrearUsuarios(request):
 					country= request.POST.get('country'),
 				)
 
+				# Validacion si el username o correo ya existen
+				if User.objects.filter(username=codigo).exists() or User.objects.filter(email=email).exists() :
+					return HttpResponse( json.dumps( {'error': 1, 'message': 'El usuario ya existe'} ), content_type="application/json" )
+
 				# Agregar perfil
 				# TODO: Parametrizar los tipos de perfiles permitidos
 				input_perfil = request.POST.get('perfil')
 
 				if input_perfil == 'estudiante' or input_perfil == 'egresado' or input_perfil == 'otro':
-					ob_perfil = Profile.objects.get_or_none(name = input_perfil )
+					ob_perfil = Profile.objects.get_or_none( name = input_perfil )
 					new_ob_userext.perfil = ob_perfil
 
 				else : 
-					return HttpResponse( json.dumps("{error:1, message: 'Debe especificar un perfil'}"), content_type="application/json" )
+					return HttpResponse( json.dumps( {'error': 1, 'message': 'Debe especificar un perfil'} ), content_type="application/json" )
 				
 				new_ob_user.save()
 				new_ob_userext.save()
 
-				return HttpResponse( json.dumps("{error:0, message: /usuario/editar/" + str(new_ob_user.pk ) + "}"), content_type="application/json" )
+				return HttpResponse( json.dumps( {'error': 0, 'message': "/usuario/editar/" + str(new_ob_user.pk )} ), content_type="application/json" )
 
 			else :
-				return HttpResponse( json.dumps('{error:1, message: "Alguno de los campos no es correcto. Por favor verifiquelos"}'), content_type="application/json" )
+				return HttpResponse( json.dumps( {'error': 1, 'message': "Alguno de los campos no es correcto. Por favor verifiquelos"} ), content_type="application/json" )
 
 		else:
 			return HttpResponseRedirect( reverse("home") )
