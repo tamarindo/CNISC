@@ -194,7 +194,7 @@ class Usuario(View):
 			estudiante = False
 
 
-			if usuario.userext.email_alt != None or usuario.userext.email_alt != '' :
+			if ValidateEmail(usuario.userext.email_alt) :
 				pprint.pprint(usuario.userext.email_alt)
 				email_actual = usuario.userext.email_alt
 			else :
@@ -218,12 +218,6 @@ class Usuario(View):
 		if args[0] != None : 
 			usuario=User.objects.get(pk=args[0])
 			ob_userext=UserExt.objects.get(user=usuario)
-
-			if usuario.userext.email_alt != None or usuario.userext.email_alt != "" :
-				pprint.pprint('2')
-				email_actual = usuario.userext.email_alt
-			else :
-				email_actual = usuario.email
 			
 			if request.POST.get('is_active'):
 				data = True
@@ -254,6 +248,11 @@ class Usuario(View):
 			if usuario.userext.profile == 'estudiante' :
 				estudiante = True
 				info_estudiante = Students.objects.get_or_none( user = ob_user)
+				
+			if ValidateEmail(usuario.userext.email_alt) :
+				email_actual = usuario.userext.email_alt
+			else :
+				email_actual = usuario.email
 
 			template="userEditTemplate.html"	
 			return render_to_response(template,locals(),context_instance=RequestContext(request))	

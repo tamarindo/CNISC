@@ -131,5 +131,8 @@ def changeemail(request):
 			ob_user.userext.email_alt=""
 			ob_user.userext.save()			
 
-	return  HttpResponseRedirect(reverse_lazy("preferences"))		
+	return  HttpResponseRedirect(reverse_lazy("preferences"))	
+
+
+
 	

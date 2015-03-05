@@ -55,7 +55,7 @@
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Email</label>
-			<input name="email" value="{{usuario.email}}"  type="text">
+			<input name="email" value="{{email_actual}}"  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Móvil</label>
@@ -76,6 +76,13 @@
 		<div class="form-field fluid-grid static">
 			<label for="">Pais</label>
 			<input name="country" value="{{usuario.userext.country}}"  type="text">
+		</div>
+		<div class="form-field fluid-grid static">	
+			<label for="">Cambiar contraseña</label>
+		</div>
+		<div class="form-field fluid-grid static">		
+			<label for="">Contraseña</label>
+			<input name="pass"  type="password">
 		</div>
 		<p class="center-text">
 			<button type="submit" class="flat button gray">Guardar Cambios</button>
