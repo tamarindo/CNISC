@@ -12,7 +12,7 @@
 		messaging : '/api/mensajes/',
 		oauth : '/api/oauth/',
 		alerts: '/api/avisos/',
-		newUser: '/usuario/crear/'
+		newUser: '/usuarios/crear/'
 	});
 
 	// Factoria para actuar sobre mensajes
