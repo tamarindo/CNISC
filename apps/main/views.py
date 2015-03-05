@@ -182,9 +182,19 @@ class Usuario(View):
 			engresado = False
 			estudiante = False
 
+
+			if usuario.userext.email_alt != None or usuario.userext.email_alt != '' :
+				pprint.pprint(usuario.userext.email_alt)
+				email_actual = usuario.userext.email_alt
+			else :
+				email_actual = usuario.email
+
 			if usuario.userext.profile == 'estudiante' :
 				estudiante = True
 				info_estudiante = Students.objects.get_or_none( user = ob_user)
+			elif usuario.userext.profile == 'engresado' :
+				engresado = True
+				info_engresado = Graduate.objects.get_or_none( user = ob_user)		    	
 
 			template="userEditTemplate.html"
 			fromfoto = from_foto()
@@ -195,26 +205,39 @@ class Usuario(View):
 	
 	def post(self,request,*args,**kwargs):
 		if args[0] != None : 
-
 			usuario=User.objects.get(pk=args[0])
-			ob_userext=UserExt.objects.get(user=usuario) 
-			if request.PUT.get('is_active'):
+			ob_userext=UserExt.objects.get(user=usuario)
+
+			if usuario.userext.email_alt != None or usuario.userext.email_alt != "" :
+				pprint.pprint('2')
+				email_actual = usuario.userext.email_alt
+			else :
+				email_actual = usuario.email
+			
+			if request.POST.get('is_active'):
 				data = True
 			else :
 				data = False
 			usuario.is_active=data
+			if request.POST.get('pass') :
+				usuario.set_password(request.POST.get('pass'))
+			
 			usuario.save()
+			
+			pprint.pprint(usuario.email)
+			pprint.pprint(request.POST.get('email'))
 
-			ob_userext.email = request.PUT.get('email')
-			ob_userext.mobile= request.PUT.get('mobile')
-			ob_userext.address= request.PUT.get('address')
-			ob_userext.city= request.PUT.get('city')
-			ob_userext.province= request.PUT.get('province')
-			ob_userext.country= request.PUT.get('country')
+			if request.POST.get('email') != usuario.email :
+  
+				ob_userext.email_alt = request.POST.get('email')
+			
+			ob_userext.mobile= request.POST.get('mobile')
+			ob_userext.address= request.POST.get('address')
+			ob_userext.city= request.POST.get('city')
+			ob_userext.province= request.POST.get('province')
+			ob_userext.country= request.POST.get('country')
 			ob_userext.save()
 
-
-			
 			engresado = False
 			estudiante = False
 			if usuario.userext.profile == 'estudiante' :
@@ -223,8 +246,6 @@ class Usuario(View):
 
 			template="userEditTemplate.html"	
 			return render_to_response(template,locals(),context_instance=RequestContext(request))	
-
-
 		else :
 			return HttpResponseRedirect(reverse("home"))
 
