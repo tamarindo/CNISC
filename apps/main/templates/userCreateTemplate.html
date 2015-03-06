@@ -4,7 +4,7 @@
 {% block style %}{% endblock %}
 
 {% block bodyAttrs %}
-	ng-app="admin"
+	ng-app="createUser"
 {% endblock %}
 
 {% block body %}
@@ -16,6 +16,11 @@
 			<i class="icon-plus"> </i>Cargar varios usuarios
 		</a>
 	</header>
+
+	<div cn-alert class="alert" ng-hide="isHidden" on-close="hide()">
+		{[{ alert.message }]}
+	</div>
+	
 	<form class="vform validate" name="form" novalidate ng-submit="submit()">
 		<div class="form-field fluid-grid static">
 			<label>Tipo <span class="red">*</span></label>
@@ -76,9 +81,11 @@
 	<script src="{{STATIC_URL}}js/lib/angular/angular.min.js"></script>
 	<script src="{{STATIC_URL}}js/lib/angular-resource/angular-resource.min.js"></script>
     <script src="{{STATIC_URL}}js/lib/angular-cookies/angular-cookies.min.js"></script>
+    <script src="{{STATIC_URL}}js/lib/angular-animate/angular-animate.min.js"></script>
+
     <script src="{{STATIC_URL}}js/app/api/api.services.js"></script>
-    <script src="{{STATIC_URL}}js/app/admin/admin.js"></script>
-    <script src="{{STATIC_URL}}js/app/admin/controllers.admin.js"></script>
+    <script src="{{STATIC_URL}}js/app/share/share.directives.js"></script>
+    <script src="{{STATIC_URL}}js/app/admin/admin.createUser.js"></script>
 
 {% endblock %}
  
