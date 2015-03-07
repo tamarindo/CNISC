@@ -34,7 +34,7 @@
 
 		$scope.alert = {
 			message: '',
-			error: 0
+			type: ''
 		};
 
 		// Función con la que se procesa el envío del form
@@ -44,12 +44,18 @@
 			)
 			.$promise.then(function( response ) {
 
+				// Cree la alerta con el valor de respuesta
 				$scope.alert = {
 					message: response.message,
-					error: response.error
+					type: ( parseInt(response.error, 10) ) ? 'error' : 'success'
 				};
 
+				// Muestre la alerta
 				$scope.isHidden = false;
+
+				// Scroll al top
+				document.body.scrollTop = document.documentElement.scrollTop = 0;
+
 			});
 		}
 
