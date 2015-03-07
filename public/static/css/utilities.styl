@@ -220,10 +220,9 @@ button[disabled]
  */
 .alert
     background-color #FDFBCD
-    border-left 1rem solid #E2B749
     color #9B7106
-    margin 1rem
-    padding 1rem 1rem .5rem
+    margin 1rem 0
+    padding 1rem 1rem 1rem 1.5rem
     position relative
     transition opacity 250ms ease-out
     
@@ -234,6 +233,15 @@ button[disabled]
             
     &.ng-hide
         opacity 0
+        
+    // Alert types
+    &.error
+        background-color red
+        color #fff
+    &.success
+        background-color green
+        color #fff
+        
 
 
 // FORMULARIOS
