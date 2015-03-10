@@ -92,3 +92,10 @@ class Student(baseModel):
 
 	def __unicode__(self):
 		return self.UserExt.user.username
+
+class TempKeys(baseModel):
+	user = models.OneToOneField(User, verbose_name=_("Usuario"))
+	key  = models.CharField(max_length=15, verbose_name=_("key"), null=False, blank=True)
+
+	def __unicode__(self):
+		return self.user+"/"+self.date_added

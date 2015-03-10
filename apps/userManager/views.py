@@ -7,9 +7,11 @@ from django.contrib.auth import login as auth_login , logout
 from django.template import RequestContext  # para hacer funcionar {% csrf_token %}
 from django.contrib.auth.models import User
 from django.core.validators import validate_email
+from django.core.mail.message import EmailMultiAlternatives
 from django.views.generic import View
-from apps.userManager.forms import from_foto
-from apps.userManager.models import UserExt
+from apps.userManager.forms import from_foto , from_recuperar_pass
+from apps.userManager.models import UserExt , TempKeys
+from random import choice
 import pprint
 import json
 import re
@@ -21,7 +23,6 @@ def v_logout(request):
 
 def login(request):
 	mensaje=False
-	print request.method
 	if request.method == 'POST':
 		formularioLogin = AuthenticationForm(request.POST)
 		if formularioLogin.is_valid:
@@ -42,7 +43,55 @@ def login(request):
 		return render_to_response('login.html',{'mensaje':mensaje,'formulario':formularioLogin},context_instance=RequestContext(request))
 	else:
 		return render_to_response('login.html',{'formulario':formularioLogin},context_instance=RequestContext(request))
-#  ----------------------------------------------------------   login  ---------------------------------------------------------------------------- 
+#  ----------------------------------------------------------   Recuperar  ---------------------------------------------------------------------------- 
+def recuperar_pass(request):
+	if request.method == 'POST':
+		email=request.POST.get('email')
+		EmailV = re.match("^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,10}$",email)
+		if EmailV != None:			
+			if ob_user.email == email or ob_user.confuser.email_alt == email:
+				longitud = 18
+				valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<=>@#%&+"
+				p = ""
+				p = p.join([choice(valores) for i in range(longitud)])				
+				Keys = TempKeys(key=p,user=request.user)
+				Keys.save()
+				email_context = {
+					'key'    : p
+			        'titulo' : 'Recupera Contraseña',
+			        'usuario': request.user.get_full_name(),
+			    }
+
+			    email_html = render_to_string('email_keys_send.html', email_context)
+			 
+			    # se quitan las etiquetas html para que quede en texto plano
+			    email_text = strip_tags(email_html)
+			 
+			    correo = EmailMultiAlternatives(
+			        'Asunto del correo',  # Asunto
+			        email_text,  # contenido del correo
+			        'origen@ejemplo.com',  # quien lo envía
+			        ['destino@ejemplo.com]',  # a quien se envía
+			    )
+			 
+			    # se especifica que el contenido es html
+			    correo.attach_alternatives(email_html, 'text/html')
+			    # se envía el correo
+			    correo.send()
+
+	template = 'recupara_pass.html'
+	return render_to_response(template,{'formulario':formularioLogin},context_instance=RequestContext(request))
+
+
+def verificar_keys(request):
+	if request.method == 'POST':
+		fromrp = from_recuperar_pass
+
+		
+	else:
+		pass
+	fromrp = from_recuperar_pass
+	return render_to_response(template,{'formulario':formularioLogin},context_instance=RequestContext(request))
 
 # -------------------------------------------- API V2 ---------------------------------------------
 		
@@ -51,7 +100,7 @@ class Email(View):
 	http_method_names = ['pull']
 
 	def put(self,request,*args,**kwargs):
-		email=request.POST.get('email')
+
 		if email:
 			id_user = request.user.id
 			ob_user = User.objects.get(id=id_user)
