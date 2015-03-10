@@ -3,26 +3,55 @@
 
 {% endblock %}
 
-{% block style %}
+{% block style %}{% endblock %}
 
+{% block bodyAttrs %}
+	ng-app="searchUsers"
 {% endblock %}
 
 {% block body %}
-<div>
-{% for item_usuario in list_usuarios%}
-<div>
-	<div> <img src="{{item_usuario.userext.foto}}"></div>
-	<div>
-		<a href="{%url 'usereditaradmin' item_usuario.pk %}">
-			<p>{{item_usuario.get_full_name}}</p>
+<section >
+	<header class="fluid-grid static inline-header">
+		<h1 class="">Usuarios</h1>
+		<a href="{% url 'panelCrearUsuarios' %}" class="button ghost">
+			<i class="icon-plus"> </i>Crear o cargar usuarios
 		</a>
-		<p>Cob:{{item_usuario.username}}</p>
-		<p>Email:{{item_usuario.email}}</p>
+	</header>
+	<div class="input-inline-icon">
+		<input type="text" ng-model="search" placeholder="Buscar un usuario...">
+		<button class="flat icon-search right" type="submit"></button>		
 	</div>
-</div>
-{% endfor %}
-</div>
+	<ul class="user-list bar-list list fluid-grid" ng-controller="SearchController">
+		<li class="" ng-repeat="user in users | filter: search">
+			<a href="/usuarios/{[{ user.id }]}" class="bar-list__item">
+				<div class="wrapper fluid-grid static valigned">
+					<div class="user-list__thumb">
+						<img ng-src="{[{user.imgUrl}]}">
+					</div>
+					<div class="user-list__desc">
+						<h2 class="title">{[{user.name}]}</h2>
+						<p class="small">
+							Cód: {[{user.cod}]}<br>
+							Email: {[{user.email}]}
+						</p>
+					</div>
+				</div>
+			</a>
+		</li>
+	</ul>
+</section>
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+
+	<script>
+		var sresu = {{ dic_list_users | safe }}
+	</script>
+	<script src="{{STATIC_URL}}js/lib/angular/angular.min.js"></script>
+	<script src="{{STATIC_URL}}js/lib/angular-resource/angular-resource.min.js"></script>
+    <script src="{{STATIC_URL}}js/lib/angular-cookies/angular-cookies.min.js"></script>
+    <script src="{{STATIC_URL}}js/app/api/api.services.js"></script>
+    <script src="{{STATIC_URL}}js/app/admin/admin.searchUsers.js"></script>
+
+{% endblock %}
  

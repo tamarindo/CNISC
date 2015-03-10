@@ -17,8 +17,8 @@
 </head>
 <body class="user" {% block bodyAttrs %}{% endblock %}>
     <header class="main-header">
-        <div class="container clearfix">
-            <figure class="logo-user pull-left">
+        <div class="container fluid-grid static">
+            <figure class="logo-user">
                 {% if request.path == "/" %}
                     <a href="{% url 'preferences' %}" title="Ir a Preferencias">
                         <img src="{{ request.user.userext.profile_image_url }}" alt="Foto de {{ob_user.get_full_name}}" />
@@ -34,47 +34,44 @@
                     </a>
                 {% endif %}
             </figure>
-            <hgroup class="pull-right">
-                <nav role="navigation" class="main-navigation">
-                    <ul class="list inline-list">
+            <nav role="navigation" class="main-navigation">
+                <ul class="list fluid-grid static">
 
-                        {% if request.path == "/" %}
-                            <li class="menu-item"  ng-show="showSearchForm">
-                                <input type="text" ng-model="buscar">
-                            </li>
-                            <li class="menu-item">
-                                <a href="#buscar" class="search-messages" title="Buscar mensajes" ng-click="showSearchForm=!showSearchForm">
-                                    <i class="icon-search">
-                                        <span class="text-hide-m">Buscar</span>
-                                    </i>
-                                </a>
-                            </li>
-                            <li class="menu-item" ng-hide="showSearchForm">
-                                <a href="#opciones" ng-click="showMenu=!showMenu" class="options" title="Ver Opciones">
-                                    <i class="icon-menu">
-                                        <span class="text-hide-m">Visualización</span>
-                                    </i>
-                                </a>
-                            </li>
-                            <li class="menu-item" ng-hide="showSearchForm">
-                                <a href="{% url 'preferences' %}" class="preferences" title="Ir a Preferencias">
-                                    <i class="icon-cog">
-                                        <span class="text-hide-m">Preferencias</span>
-                                    </i>
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </nav>
-            </hgroup>
+                    {% if request.path == "/" %}
+                        <li class="menu-item"  ng-show="showSearchForm">
+                            <input type="text" ng-model="buscar">
+                        </li>
+                        <li class="menu-item">
+                            <a href="#buscar" class="search-messages" title="Buscar mensajes" ng-click="showSearchForm=!showSearchForm">
+                                <i class="icon-search">
+                                    <span class="text-hide-m">Buscar</span>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="menu-item" ng-hide="showSearchForm">
+                            <a href="#opciones" ng-click="showMenu=!showMenu" class="options" title="Ver Opciones">
+                                <i class="icon-menu">
+                                    <span class="text-hide-m">Visualización</span>
+                                </i>
+                            </a>
+                        </li>
+                        <li class="menu-item" ng-hide="showSearchForm">
+                            <a href="{% url 'preferences' %}" class="preferences" title="Ir a Preferencias">
+                                <i class="icon-cog">
+                                    <span class="text-hide-m">Preferencias</span>
+                                </i>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
         </div>
     </header>
     
     <div id="opciones" ng-show="showMenu" class="ng-hide">
         <h2 class="title-option center-text main-title">Opciones</h2>
         <ul class="list">
-            <li><button class="flat" ng-click="markAll()"><i class="icon-checkmark"> </i>Marcar todo como leido</button></li>
-            <li><button class="flat"><i class="icon-spinner"> </i>Cargar nuevas mensajes</button></li>
+            <li><button class="flat" ng-click="markAll()"><i class="icon-checkmark"> </i>Marcar todo como leído</button></li>
         </ul>
         <h3 class="secondary-title">Presentación</h3>
         <ul class="list inline-list">

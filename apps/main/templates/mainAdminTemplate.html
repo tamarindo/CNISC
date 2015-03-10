@@ -9,15 +9,25 @@
 {% endblock %}
 
 {% block body %}  
-<section class="">
-	<form>
-		<div><label>Asunto</label><input/></div>
-		<div><label>Para</label><input/></div>
-		<div>
-		<textarea id="my_text">This is some text. Please edit it</textarea>
-    	{% wysiwyg_editor "my_text" %}
-   
+<section class="quick-message">
+	<h1 class="">Mensaje Rápido</h1>
+	<form method="POST" action="" class="vform">
+		<div class="form-field fluid-grid static">
+			<label for="message__subject">Asunto</label>
+			<input id="message__subject" type="text" autofocus/>
 		</div>
+		<div class="form-field fluid-grid static">
+			<label for="message__to">Para</label>
+			<input id="message__to" type="text"/>
+		</div>
+		<div class="form-field">
+		 	<p><label for="message">Mensaje</label></p>
+			<textarea id="message"></textarea>
+	    	{% wysiwyg_editor "message" %}   
+		</div>
+		<p class="center-text">
+			<button type="submit" class="flat button green">Previsualizar y enviar...</button>
+		</p>
 	</form>
 </section>
 

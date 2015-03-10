@@ -89,6 +89,18 @@ button-color(color, bg = gray)
         margin 8px auto
         width 100%
         max-width 30em
+        
+    // Ghost buttons
+    // renderizan como enlace normal, pero en hover
+    // se ve como boton
+    &.ghost
+        padding 5px 15px
+        text-transform uppercase
+        font-size 15px
+        &:hover
+            background-color primary
+            color #fff
+        
 
 input[type="submit"]
 button
@@ -98,7 +110,11 @@ button.flat
     outline none
     background-color transparent
     border none
-    font-weight 400        
+    font-weight 400
+
+button[disabled]
+    opacity 0.8
+    cursor not-allowed
        
 /*
  * Lists, menus
@@ -125,6 +141,33 @@ button.flat
 
 .pull-right
 	float right
+   
+.bar-list
+    margin 0
+    
+    li
+        border-bottom 1px solid lighten-gray
+        
+    .bar-list__item
+        color light-gray
+        display block
+        padding .6rem 2.1rem .6rem 1rem
+        position relative
+        
+        &:after
+            font-family 'cnisc'
+            speak none
+            content '\e62e'
+            absolute right 1rem top 50%
+            font-size 20px
+            margin-top -10px        
+        
+        .title
+            color gray
+            margin 0
+        
+    .small
+        font-size 15px 
 
 /*
  * Text
@@ -177,10 +220,9 @@ button.flat
  */
 .alert
     background-color #FDFBCD
-    border-left 1rem solid #E2B749
     color #9B7106
-    margin 1rem
-    padding 1rem 1rem .5rem
+    margin 1rem 0
+    padding 1rem 1rem 1rem 1.5rem
     position relative
     transition opacity 250ms ease-out
     
@@ -191,3 +233,111 @@ button.flat
             
     &.ng-hide
         opacity 0
+        
+    // Alert types
+    &.error
+        background-color red
+        color #fff
+    &.success
+        background-color green
+        color #fff
+        
+
+
+// FORMULARIOS
+// ----------------------------------------------------------------------------
+
+ /*
+ * Form Layouts
+ */
+.vform
+    display flex
+    flex-flow column wrap
+    justify-content space-between
+    .form-field
+        margin-bottom 1rem
+        align-items center
+        
+    .distribute
+        justify-content space-between
+        
+    @media (min-width: 31.25em)
+        .select-render
+        input
+            width 78%
+        label
+            width 22%
+            
+// Forma un input con un elemento en una sola linea
+.input-inline-icon
+    position relative
+    input
+        padding-right 36px
+    .right
+        absolute right 10px
+        top 50%
+        font-size 15px
+        margin-top -8px
+        
+// Validaciones de Angular
+input
+    &.ng-touched.ng-invalid
+        border-color #E75245
+
+.validate
+    .red
+        color red
+        
+// Utilidades para header
+// ---------------------------------------------------
+
+// Inline header
+// Crea elementos inline especial para headers
+// Requiere de .fluid-grid y .fluid-grid.static
+.inline-header
+    align-items center
+    justify-content space-between
+    margin 2rem 0 1.5rem
+    > h1
+        margin 0
+        
+// Renderiza selects de mejor Forma
+// Style the select box
+.select-render
+    position relative
+    overflow hidden
+    border 1px solid light-gray
+    width 100%
+    select
+        width 100%
+        padding 8px
+        margin 0
+        border-radius 0
+        background transparent
+        color dark-gray
+        border 0
+        outline none
+        display inline-block
+        appearance none
+        cursor pointer
+    option
+        color lighten-gray !important
+        font-size 1rem !important
+    &:after
+        absolute right 7px top 50%
+        content ' '
+        pointer-events none
+        width 14px
+        height 8px
+        margin-top -4px
+        background-repeat no-repeat
+        background-image url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAICAMAAAD+zz7+AAAANlBMVEUAAAD////////////////////////////////////////////////////////////////////xY8b8AAAAEXRSTlMAx/rmkw8Iv66qe3NgWEZAA3QM9SMAAAA5SURBVAjXTcfFAcAwDATBkykxW/03a4Z97UDyk0QWVyIB8TKg5bccRmpKYWW7/rJpPmYyOGkiPaYCPLUEE/PKivAAAAAASUVORK5CYII=")
+    // Hide the dropdown of FF and IE
+    &:before
+        absolute right 0 top 0
+        bottom 0
+        width 30px
+        content ' '
+        display block
+        background-color light-gray
+        pointer-events none
