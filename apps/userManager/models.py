@@ -98,4 +98,4 @@ class TempKeys(baseModel):
 	key  = models.CharField(max_length=15, verbose_name=_("key"), null=False, blank=True)
 
 	def __unicode__(self):
-		return self.user+"/"+self.date_added
+		return str(self.user)+"/"+str(self.date_added)

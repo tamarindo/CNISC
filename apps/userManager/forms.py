@@ -1,5 +1,5 @@
 from django import forms
-from apps.userManager.models import UserExt
+from apps.userManager.models import UserExt , TempKeys
 
 class from_foto(forms.ModelForm):
     
