@@ -142,7 +142,6 @@ def panelCrearUsuarios(request):
 				
 				# Informacion adicional del usuario
 				new_ob_userext = UserExt(
-					user = new_ob_user,
 					phone =  request.POST.get('mobile'),
 					mobile = request.POST.get('mobile'),
 					address = request.POST.get('address'),
@@ -161,12 +160,15 @@ def panelCrearUsuarios(request):
 
 				if input_perfil == 'estudiante' or input_perfil == 'egresado' or input_perfil == 'otro':
 					ob_perfil = Profile.objects.get_or_none( name = input_perfil )
-					new_ob_userext.perfil = ob_perfil
+					new_ob_userext.profile = ob_perfil
 
 				else : 
 					return HttpResponse( json.dumps( {'error': 1, 'message': 'Debe especificar un perfil'} ), content_type="application/json" )
 				
+				# Save
 				new_ob_user.save()
+
+				new_ob_userext.user = new_ob_user
 				new_ob_userext.save()
 
 				return HttpResponse( json.dumps( {'error': 0, 'message': "/usuario/editar/" + str(new_ob_user.pk )} ), content_type="application/json" )
