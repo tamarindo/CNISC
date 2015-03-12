@@ -171,7 +171,7 @@ def panelCrearUsuarios(request):
 				new_ob_userext.user = new_ob_user
 				new_ob_userext.save()
 
-				return HttpResponse( json.dumps( {'error': 0, 'message': "/usuario/editar/" + str(new_ob_user.pk )} ), content_type="application/json" )
+				return HttpResponse( json.dumps( {'error': 0, 'message': "/usuarios/" + str(new_ob_user.pk )} ), content_type="application/json" )
 
 			else :
 				return HttpResponse( json.dumps( {'error': 1, 'message': "Alguno de los campos no es correcto. Por favor verifiquelos"} ), content_type="application/json" )
