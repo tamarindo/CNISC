@@ -57,6 +57,8 @@
 
 				// Limpiar el form
 				$scope.user = {};
+				$scope.form.$setPristine(true);
+				$scope.form.$setUntouched(true);
 			}
 
 			// Muestre la alerta
