@@ -94,7 +94,7 @@ class Student(baseModel):
 		return self.UserExt.user.username
 
 class TempKeys(baseModel):
-	user = models.OneToOneField(User, verbose_name=_("Usuario"))
+	user = models.ForeignKey(User, verbose_name=_("Usuario"))
 	key  = models.CharField(max_length=15, verbose_name=_("key"), null=False, blank=True)
 
 	def __unicode__(self):

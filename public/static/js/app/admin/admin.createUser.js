@@ -37,31 +37,58 @@
 			type: ''
 		};
 
+
+		// Muestra una alerta con un mensaje
+		var setAlert = function( message, isError ) {
+			var link = '';
+
+			$scope.alert = {
+				message: message,
+				type: isError ? 'error' : 'success'
+			};
+
+			// Si no hay error cree un enlace para editar el usuario
+			if( !isError ) {
+
+				link = 'Usuario creado. <a href="' + message + '">Editar usuario</a>';
+
+				// Reemplazar contenido
+				document.querySelector('.alert .suggestion span').innerHTML = link;
+
+				// Limpiar el form
+				$scope.user = {};
+				$scope.form.$setPristine(true);
+				$scope.form.$setUntouched(true);
+			}
+
+			// Muestre la alerta
+			$scope.isHidden = false;
+
+		};
+
+
 		// Función con la que se procesa el envío del form
 		$scope.submit = function() {
+
 			ApiUser.new(
 				$.param( $scope.user)
 			)
-			.$promise.then(function( response ) {
-
-				// Cree la alerta con el valor de respuesta
-				$scope.alert = {
-					message: response.message,
-					type: ( parseInt(response.error, 10) ) ? 'error' : 'success'
-				};
-
-				// Muestre la alerta
-				$scope.isHidden = false;
+			.$promise.then( function(response) {
+				// Cree una nueva alerta
+				setAlert( response.message, parseInt(response.error, 10) );
 
 				// Scroll al top
 				document.body.scrollTop = document.documentElement.scrollTop = 0;
-
 			});
+
 		}
+
 
 		// Funcion que esconde el alert
 		$scope.hide = function() {
+
 			$scope.isHidden = true;
+
 		}
 
 	}]);
