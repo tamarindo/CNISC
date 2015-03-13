@@ -11,6 +11,13 @@
       Centro de Notificaciones ISC - UTPereira
     </h1>
   </header>
+  {% if mensaje %}
+    <div class="block-menssage" >
+      <p class="item-mensaje" >
+        {{mensaje}}
+      </p>
+    <div>  
+  {% endif %}
 
   <form name="login" method="post" action="{%url 'recuperar_pass' %}" class="main-login-form form-validate">
     {% csrf_token %}

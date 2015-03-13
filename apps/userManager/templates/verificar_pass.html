@@ -1,1 +1,39 @@
-verificar_pass.html
+{% extends "base.html" %}
+{% block title %}
+ Recuperar / Centro de Notificaciones ISC - UTP
+{% endblock %}
+
+{% block body %} 
+
+  <header class="login-header center-text">
+    <img src="{{STATIC_URL}}img/logo-isc.png" alt="Logotipo programa Ingeniería en Sistemas y Computación (ISC) - UTP">
+    <h1 class="main-title">
+      Centro de Notificaciones ISC - UTPereira
+    </h1>
+  </header>
+
+    <h1 class="main-title">
+      Cambiar Contraseña
+    </h1>
+  <form name="login" method="post" action="{%url 'verificar_pass' %}" class="main-login-form form-validate">
+    {% csrf_token %}
+
+    <fieldset class="input-icon">
+      <input name="password1" type="text" minlength="4" placeholder="Contraseña">
+      <span class="icon-lock"><i class="screen-reader-text">Contraseña</i></span>
+    </fieldset>
+    <fieldset class="input-icon">
+      <input name="password2" type="text" minlength="4" placeholder="repetir Contraseña">
+      <span class="icon-lock"><i class="screen-reader-text"> repetir Contraseña</i></span>
+    </fieldset>
+    <fieldset class="hide"><input name="key" type="text"  ></fieldset>
+    <fieldset>
+      <input class="button green" type="submit" value="Enviar" />
+    </fieldset>
+  </form>
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
