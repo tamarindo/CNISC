@@ -200,7 +200,6 @@ class Usuario(View):
 
 
 			if ValidateEmail(usuario.userext.email_alt) :
-				pprint.pprint(usuario.userext.email_alt)
 				email_actual = usuario.userext.email_alt
 			else :
 				email_actual = usuario.email
