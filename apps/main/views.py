@@ -125,20 +125,23 @@ def panelCrearUsuarios(request):
 		elif 'POST' == request.method :
 
 			nombre = request.POST.get('nombre')
+			apellidos = request.POST.get('apellidos')
 			email = request.POST.get('email')
 			codigo = request.POST.get('codigo')
 			error = 0
 			message = ''
 
-			if  nombre != "" and email != "" and ValidateEmail(email) and codigo != "" :
+			if  nombre != "" and apellidos != "" and email != "" and ValidateEmail(email) and codigo != "" :
 
 				# Creacion del usuario
 				new_ob_user = User(
-					first_name= nombre,
+					first_name = nombre,
+					last_name = apellidos,
 					email = email,
-					password = codigo,
 					username = codigo
 				)
+
+				new_ob_user.set_password(codigo)
 				
 				# Informacion adicional del usuario
 				new_ob_userext = UserExt(
