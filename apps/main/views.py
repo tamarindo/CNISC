@@ -228,8 +228,11 @@ class Usuario(View):
 			else :
 				data = False
 			usuario.is_active=data
-			if request.POST.get('pass') :
-				usuario.set_password(request.POST.get('pass'))
+
+			# Cambio de password ?
+			password = request.POST.get('pass')
+			if password and password != "":
+				usuario.set_password(password)
 			
 			usuario.save()
 			
