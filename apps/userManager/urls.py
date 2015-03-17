@@ -13,7 +13,7 @@ userManager_urls = patterns('apps.userManager.views',
     url(r'^logout$', 'v_logout', name="v_logout"),
     url(r'^login/$','login', name="login"),
     url(r'^recuperar_contrasena/$','recuperar_pass', name="recuperar_pass"),
-    url(r'^verificar_keys/?P<key>(\w+)','verificar_keys', name="verificar_keys"),
+    url(r'^verificar_keys/(\w+)','verificar_keys', name="verificar_keys"),
     # url api V2 
     url(r'^api/avisos/bienvenida$', 'aviso_bienvenida',name='aviso_bienvenida'),
     url(r'^api/usuario/correo/', Email.as_view()),

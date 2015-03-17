@@ -1,7 +1,8 @@
 # coding=utf-8
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse 
+from django.shortcuts import redirect
 from django.contrib.auth.forms import *
 from django.core.urlresolvers import *
 from django.contrib.auth.decorators import login_required
@@ -13,11 +14,13 @@ from django.core.mail.message import EmailMultiAlternatives
 from django.views.generic import View
 from apps.userManager.forms import from_foto , from_recuperar_pass
 from apps.userManager.models import UserExt , TempKeys
+from apps.main.utilities import *
 from random import choice
 import pprint
 import json
 import re
-
+from datetime import datetime
+from datetime import timedelta
 #  ----------------------------------------------------------   login  ---------------------------------------------------------------------------- 
 def v_logout(request):
     logout(request)
@@ -36,7 +39,7 @@ def login(request):
 					auth_login(request,acceso)
 					return HttpResponseRedirect(reverse("home"))
 				else:
-					mensaje="Su Usuario No esta Activo"
+					mensaje="Su Usuario no esta Activo"
 			else:
 				mensaje="Su username o password estan incorrentos, vuelvelo a intentar"
 
@@ -58,36 +61,22 @@ def recuperar_pass(request):
 			if ob_user:
 
 				longitud = 18
-				valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<=>@#%&+"
+				valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 				p = ""
 				p = p.join([choice(valores) for i in range(longitud)])				
 				Keys = TempKeys(key=p,user=ob_user[0])
 				Keys.save()
+
 				email_context = {
 					'key'    : p,
 			        'titulo' : 'Recupera Password',
-			        'url'    : 'localhost:8000/verificarKeys', 
+			        'url'    : 'localhost:8000/verificar_keys', 
 			        'usuario': ob_user[0].get_full_name(),
 			    }
-				email_html = render_to_string('email_keys_send.html', email_context)
 
-			    # se quitan las etiquetas html para que quede en texto plano
-				# email_text = strip_tags(email_html)
-			 	
-				correo = EmailMultiAlternatives(
-			        'Recupera Password CNISC',  # Asunto
-			        email_html,  # contenido del correo
-			        'no-reply@isc.edu.co',  # quien lo envía
-			        [email],  # a quien se envía
-			    )
-			 
-			    # se especifica que el contenido es html
-				correo.attach_alternative(email_html, 'text/html')
-			    # se envía el correo
-				correo.send()
-
+				send_email(email_context,'email_keys_send.html','Recupera Password CNISC','no-reply@isc.edu.co',[email]);
 				mensaje = 'Se ha enviado un correo con las istruciones para recuperar su contraseña'
-
+				
 			else :
 				mensaje = 'No existe este algun usuario con este correo'
 		else :
@@ -98,21 +87,22 @@ def recuperar_pass(request):
 	return render_to_response(template,{'mensaje':mensaje},context_instance=RequestContext(request))
 
 
-def verificar_keys(request,key):
+def verificar_keys(request,args):
 	if request.method == 'POST':
-
-		ob_key = TempKeys.objects.get_or_none(key=key)
+		pprint.pprint(args)
+		ob_key = TempKeys.objects.get_or_none(key=args)
 		if ob_key :
 			hora_actual = datetime.now()	
 			delta = timedelta(hours=-24)
-			if key.date_added + delta <= hora_actual :
-				email=request.POST.get('password1')
-				email=request.POST.get('password2')
+			if ob_key.date_added.replace(tzinfo=None) + delta <= hora_actual :
+				password1=request.POST.get('password1')
+				password2=request.POST.get('password2')
 				if password1 == password2:
-					ob_user = User.objects.get(pk=key.user.pk)
+					ob_user = User.objects.get(pk=ob_key.user.pk)
 					ob_user.set_password("password1")
 					ob_user.save()
-					return HttpResponseRedirect(reverse("login", kwargs={'msj': 'contraseña actulizada'}))
+
+					return redirect(reverse('login'))
 				else :
 					mensaje = " Las password no coinciden "
 			else :
@@ -121,7 +111,7 @@ def verificar_keys(request,key):
 			mensaje = " key no valida"		
 	
 	template = 'verificar_pass.html'
-	return render_to_response(template,{},context_instance=RequestContext(request))
+	return render_to_response(template,{'key':args},context_instance=RequestContext(request))
 
 # -------------------------------------------- API V2 ---------------------------------------------
 		

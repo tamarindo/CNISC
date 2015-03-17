@@ -17,6 +17,7 @@ from apps.userManager.models import *
 from apps.userManager.forms import from_foto
 from apps.userManager.urls import userManager_urls
 from apps.messaging.models import View_Messages_User
+from apps.parceadores.froms import ImportXLSForm
 from django.views.generic import View
 
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -73,19 +74,16 @@ def preferences(request):
 	else:
 		return HttpResponseRedirect(reverse("home"))
 
-''''
-def panelUser(request):
-	if request.user.is_authenticated():
-		ob_user=User.objects.get(id=request.user.id)	
-		if ob_user.userext.profile.is_admin == 0:		
-			estado_twitter=verificar_conexion_twitter(request.user)
-			template="userTemplate.html"
-		else:
-			return HttpResponseRedirect(reverse("home"))
 
-		return render_to_response(template,locals(),context_instance=RequestContext(request))					
+def panelCargaMasiva(request):
+	if request.user.id :
+		ob_user=User.objects.get(id=request.user.id)
+		if ob_user.userext.profile.is_admin == 1 :		
+			template="cargaMasivaTemplate.html"	
+			xls_form = ImportXLSForm()
+			return render_to_response(template,locals(),context_instance=RequestContext(request))	
 	else:
-		return HttpResponseRedirect(reverse("home"))'''
+		return HttpResponseRedirect(reverse("home"))
 
 
 def panelUseradmin(request):

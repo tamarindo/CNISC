@@ -1,0 +1,31 @@
+{% extends "base_admin.html" %}
+{% block title %}
+ Carga Masiva de Usuario
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block body %}
+
+<div>
+	<h1>Agregar usuario(s)</h1>
+	<p>
+		Puede agregar usuarios simultániamente importando desde un archivo CSV de Excel. <br>
+		Presione el Siguiente botón para hacerlo.	
+	</p>
+	<form action="{%url 'parcear_xls' %} " enctype="multipart/form-data" method="POST">
+		{% csrf_token %}
+		{{xls_form }}
+		<input type="submit"> 
+
+	</form>
+	  
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}{% endblock %}

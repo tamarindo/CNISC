@@ -10,7 +10,7 @@ main_urls = patterns('apps.main.views',
 		# url Templates
     url(r'^$','home', name="home"),
 	url(r'^preferencias$','preferences',name="preferences"),
-
+	url(r'^cargarUsuarios$','panelCargaMasiva',name="panelCargaMasiva"),
 	url(r'^usuarios$','panelUseradmin',name="panelUseradmin"),
     url(r'^usuarios/crear$', 'panelCrearUsuarios' ,name="panelCrearUsuarios"),
     url(r'^usuarios/crear/$', 'panelCrearUsuarios' ,name="panelCrearUsuarios"),

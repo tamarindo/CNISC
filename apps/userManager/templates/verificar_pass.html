@@ -15,7 +15,7 @@
     <h1 class="main-title">
       Cambiar Contraseña
     </h1>
-  <form name="login" method="post" action="{%url 'verificar_pass' %}" class="main-login-form form-validate">
+  <form  method="post" action="{%url 'verificar_keys' key %}" class="main-login-form form-validate">
     {% csrf_token %}
 
     <fieldset class="input-icon">
@@ -26,7 +26,7 @@
       <input name="password2" type="text" minlength="4" placeholder="repetir Contraseña">
       <span class="icon-lock"><i class="screen-reader-text"> repetir Contraseña</i></span>
     </fieldset>
-    <fieldset class="hide"><input name="key" type="text"  ></fieldset>
+    <fieldset class="hide"><input name="key" type="text" value="{{key}}"  ></fieldset>
     <fieldset>
       <input class="button green" type="submit" value="Enviar" />
     </fieldset>
