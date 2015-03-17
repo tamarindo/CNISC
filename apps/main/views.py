@@ -123,20 +123,23 @@ def panelCrearUsuarios(request):
 		elif 'POST' == request.method :
 
 			nombre = request.POST.get('nombre')
+			apellidos = request.POST.get('apellidos')
 			email = request.POST.get('email')
 			codigo = request.POST.get('codigo')
 			error = 0
 			message = ''
 
-			if  nombre != "" and email != "" and ValidateEmail(email) and codigo != "" :
+			if  nombre != "" and apellidos != "" and email != "" and ValidateEmail(email) and codigo != "" :
 
 				# Creacion del usuario
 				new_ob_user = User(
-					first_name= nombre,
+					first_name = nombre,
+					last_name = apellidos,
 					email = email,
-					password = codigo,
 					username = codigo
 				)
+
+				new_ob_user.set_password(codigo)
 				
 				# Informacion adicional del usuario
 				new_ob_userext = UserExt(
@@ -169,7 +172,7 @@ def panelCrearUsuarios(request):
 				new_ob_userext.user = new_ob_user
 				new_ob_userext.save()
 
-				return HttpResponse( json.dumps( {'error': 0, 'message': "/usuario/editar/" + str(new_ob_user.pk )} ), content_type="application/json" )
+				return HttpResponse( json.dumps( {'error': 0, 'message': "/usuarios/" + str(new_ob_user.pk )} ), content_type="application/json" )
 
 			else :
 				return HttpResponse( json.dumps( {'error': 1, 'message': "Alguno de los campos no es correcto. Por favor verifiquelos"} ), content_type="application/json" )
@@ -195,7 +198,6 @@ class Usuario(View):
 
 
 			if ValidateEmail(usuario.userext.email_alt) :
-				pprint.pprint(usuario.userext.email_alt)
 				email_actual = usuario.userext.email_alt
 			else :
 				email_actual = usuario.email
@@ -224,8 +226,11 @@ class Usuario(View):
 			else :
 				data = False
 			usuario.is_active=data
-			if request.POST.get('pass') :
-				usuario.set_password(request.POST.get('pass'))
+
+			# Cambio de password ?
+			password = request.POST.get('pass')
+			if password and password != "":
+				usuario.set_password(password)
 			
 			usuario.save()
 			

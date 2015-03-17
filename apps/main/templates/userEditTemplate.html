@@ -1,7 +1,6 @@
- {% extends "base_admin.html" %}
-{% block title %}
+{% extends "base_admin.html" %}
 
-{% endblock %}
+{% block title %} Editar usuario - CNISC{% endblock %}
 
 {% block style %}
 
@@ -77,16 +76,14 @@
 			<label for="">Pais</label>
 			<input name="country" value="{{usuario.userext.country}}"  type="text">
 		</div>
-		<div class="form-field fluid-grid static">	
-			<label for="">Cambiar contraseña</label>
-		</div>
-		<div class="form-field fluid-grid static">		
+		<div class="form-field fluid-grid static password" >
 			<label for="">Contraseña</label>
 			<input name="pass"  type="password">
 		</div>
-		<p class="center-text">
-			<button type="submit" class="flat button gray">Guardar Cambios</button>
-		</p>
+		<div class="form-field fluid-grid static expand">
+			<p><button type="submit" class="flat button blue">Guardar Cambios</button></p>
+			<p><button type="button" id="changePassword" class="flat button primay ghost">Cambiar Contraseña</button></p>
+		</div>
 	</form>
 
 </section>
@@ -97,6 +94,25 @@
 {% block js %}
 
 	<script src="{{STATIC_URL}}/js/multipart-render.js"></script>
+	<script>
+	(function(){
+
+		// Función para mostrar el input de cambio de contraseña
+		'use strict';
+
+		var passButton = document.querySelector('#changePassword'),
+			passContent = document.querySelector('.form-field.password');
+
+		passButton.addEventListener('click', function(e){
+			e.preventDefault();
+			e.stopPropagation();
+
+
+			passContent.classList.remove('password');
+			this.parentNode.remove( this );
+		});
+	})();
+	</script>
 
 {% endblock %}
  
