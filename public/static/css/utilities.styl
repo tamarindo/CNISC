@@ -346,3 +346,28 @@ input
         display block
         background-color light-gray
         pointer-events none
+        
+// Muestra de mejor forma un checkbox
+// Markup Requerido.
+// 
+// <input id="check" type="checkbox" class="checkbox-render__fire">
+// <label for="check" id="checkbox-render" class="icon-checkmark"></label> 
+//
+// El span es quién 'muestra' un nuevo checkbox
+
+#checkbox-render
+    width 30px
+    height 30px
+    border 2px solid lighten-gray
+    padding 4px
+    color transparent
+    background-color transparent
+    cursor pointer
+    
+.checkbox-render__fire
+    display none
+    
+    &:checked + #checkbox-render
+        color #fff
+        background-color green
+        border-color green
