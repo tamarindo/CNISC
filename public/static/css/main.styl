@@ -85,14 +85,15 @@ table
 // ----------------------------------
 
 // Alineación vertical del login
-// Javascript necesario. Ver login-extra.js
-.login-page
+.full-vp
 	height 100vh
 	display flex
 	flex-flow row wrap
 	align-items center
 	justify-content center
-	background radial-gradient(#fff, #ddd)
+	
+	&.gradient
+		background radial-gradient(#fff, #ddd)
 	
 	>.container
 		padding 2rem 0
