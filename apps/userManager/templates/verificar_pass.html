@@ -1,32 +1,32 @@
 {% extends "base.html" %}
-{% block title %}
- Recuperar / Centro de Notificaciones ISC - UTP
-{% endblock %}
+
+{% block title %}Recuperar contraseña | Centro de Notificaciones ISC - UTP{% endblock %}
+
+{% block bodyattrs %}class="full-vp"{% endblock %}
 
 {% block body %} 
 
   <header class="login-header center-text">
-    <img src="{{STATIC_URL}}img/logo-isc.png" alt="Logotipo programa Ingeniería en Sistemas y Computación (ISC) - UTP">
+    <a href="/" title="Ir al inicio">
+      <img src="{{STATIC_URL}}img/logo-isc.png" alt="Logotipo programa Ingeniería en Sistemas y Computación (ISC) - UTP">
+    </a>
     <h1 class="main-title">
-      Centro de Notificaciones ISC - UTPereira
+      Crear una nueva Contraseña
     </h1>
   </header>
 
-    <h1 class="main-title">
-      Cambiar Contraseña
-    </h1>
   <form  method="post" action="{%url 'verificar_keys' key %}" class="main-login-form form-validate">
     {% csrf_token %}
+    <input name="key" type="hidden" value="{{key}}">
 
     <fieldset class="input-icon">
-      <input name="password1" type="text" minlength="4" placeholder="Contraseña">
-      <span class="icon-lock"><i class="screen-reader-text">Contraseña</i></span>
+      <input name="password1" type="password" minlength="4" placeholder="Nueva contraseña">
+      <span class="icon-lock"></span>
     </fieldset>
     <fieldset class="input-icon">
-      <input name="password2" type="text" minlength="4" placeholder="repetir Contraseña">
-      <span class="icon-lock"><i class="screen-reader-text"> repetir Contraseña</i></span>
+      <input name="password2" type="password" minlength="4" placeholder="Repetir nueva contraseña">
+      <span class="icon-lock"></span>
     </fieldset>
-    <fieldset class="hide"><input name="key" type="text" value="{{key}}"  ></fieldset>
     <fieldset>
       <input class="button green" type="submit" value="Enviar" />
     </fieldset>
