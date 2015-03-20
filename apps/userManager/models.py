@@ -80,7 +80,7 @@ class Graduate(baseModel):
 	UserExt = models.OneToOneField(UserExt, verbose_name=_("UserExt"))
 	program = models.CharField(max_length=50, verbose_name=_("Egresado del programa de"), null=True, blank=True)
 	job = models.CharField(max_length=50, verbose_name=_("Empleo"), null=True, blank=True)
-	scope = models.CharField(max_length=20, verbose_name=_("Ambito laboral"), null=True, blank=True)
+	scope = models.CharField(max_length=20, verbose_name=_("Cargo laboral"), null=True, blank=True)
 
 	def __unicode__(self):
 		return self.UserExt.user.username
