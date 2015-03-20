@@ -2,6 +2,7 @@ Django==1.7
 Pillow==2.7.0
 Unidecode==0.04.17
 argparse==1.2.1
+django-facebook==6.0.2
 django-wysiwyg==0.7.0
 djangorestframework==3.0.2
 oauthlib==0.7.1
@@ -9,3 +10,4 @@ requests==2.4.3
 requests-oauthlib==0.4.2
 twython==3.2.0
 wsgiref==0.1.2
+xlrd==0.9.3
