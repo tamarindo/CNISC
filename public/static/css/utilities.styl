@@ -100,6 +100,9 @@ button-color(color, bg = gray)
         &:hover
             background-color primary
             color #fff
+            
+    &.small
+        font-size 13px
         
 
 input[type="submit"]
@@ -221,7 +224,7 @@ button[disabled]
 .alert
     background-color #FDFBCD
     color #9B7106
-    margin 1rem 0
+    margin 1rem auto
     padding 1rem 1rem 1rem 1.5rem
     position relative
     transition opacity 250ms ease-out
@@ -267,12 +270,11 @@ button[disabled]
     .distribute
         justify-content space-between
         
-    @media (min-width: 31.25em)
-        .select-render
-        input
-            width 78%
-        label
-            width 22%
+@media (min-width: 31.25em)
+    .form-field .push-right
+        width 78%
+    .form-field > label
+        width 22%
             
 // Forma un input con un elemento en una sola linea
 .input-inline-icon
@@ -347,3 +349,28 @@ input
         display block
         background-color light-gray
         pointer-events none
+        
+// Muestra de mejor forma un checkbox
+// Markup Requerido.
+// 
+// <input id="check" type="checkbox" class="checkbox-render__fire">
+// <label for="check" id="checkbox-render" class="icon-checkmark"></label> 
+//
+// El span es quién 'muestra' un nuevo checkbox
+
+#checkbox-render
+    width 30px
+    height 30px
+    border 2px solid lighten-gray
+    padding 4px
+    color transparent
+    background-color transparent
+    cursor pointer
+    
+.checkbox-render__fire
+    display none
+    
+    &:checked + #checkbox-render
+        color #fff
+        background-color green
+        border-color green

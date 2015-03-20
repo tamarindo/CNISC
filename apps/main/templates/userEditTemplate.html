@@ -50,35 +50,38 @@
 		{% csrf_token %}
 		<div class="form-field fluid-grid static">
 			<label for="activo">Activo</label>
-			<input name="is_active" id="activo" {% if usuario.is_active %} checked {% endif %}  type="checkbox">
+			<div class="push-right">
+				<input name="is_active" id="activo" {% if usuario.is_active %} checked {% endif %}  type="checkbox"  class="checkbox-render__fire">
+				<label for="activo" id="checkbox-render" class="icon-checkmark"></label>
+			</div>
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Email</label>
-			<input name="email" value="{{email_actual}}"  type="text">
+			<input class="push-right" name="email" value="{{email_actual}}"  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Móvil</label>
-			<input name="mobile" value="{{usuario.userext.mobile}}"  type="text">
+			<input class="push-right" name="mobile" value="{{usuario.userext.mobile}}"  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Dirección</label>
-			<input name="address" value="{{usuario.userext.address}}"  type="text">
+			<input class="push-right" name="address" value="{{usuario.userext.address}}"  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Ciudad</label>
-			<input name="city" value="{{usuario.userext.city}}"  type="text">
+			<input class="push-right" name="city" value="{{usuario.userext.city}}"  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Estado</label>
-			<input name="province" value="{{usuario.userext.province}}"  type="text">
+			<input class="push-right" name="province" value="{{usuario.userext.province}}"  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Pais</label>
-			<input name="country" value="{{usuario.userext.country}}"  type="text">
+			<input class="push-right" name="country" value="{{usuario.userext.country}}"  type="text">
 		</div>
 		<div class="form-field fluid-grid static password" >
 			<label for="">Contraseña</label>
-			<input name="pass"  type="password">
+			<input class="push-right" name="pass"  type="password">
 		</div>
 		<div class="form-field fluid-grid static expand">
 			<p><button type="submit" class="flat button blue">Guardar Cambios</button></p>

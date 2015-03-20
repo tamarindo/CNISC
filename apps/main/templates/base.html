@@ -15,7 +15,7 @@
 	{% block style %}
 	{% endblock %}
 </head>
-<body ng-app="cnisc" {% block bodyattrs %}{% endblock %}>
+<body {% block bodyattrs %}{% endblock %}>
 
 	<div class="container">
 
@@ -24,7 +24,6 @@
 	
 	</div>
 	
-	<script src="{% static "js/lib/angular/angular.min.js" %}"></script>
 	{% block js %}
 	{% endblock %}
 

@@ -69,16 +69,16 @@ def recuperar_pass(request):
 
 				email_context = {
 					'key'    : p,
-			        'titulo' : 'Recupera Password',
+			        'titulo' : 'Recuperación de password',
 			        'url'    : 'localhost:8000/verificar_keys', 
 			        'usuario': ob_user[0].get_full_name(),
 			    }
 
 				send_email(email_context,'email_keys_send.html','Recupera Password CNISC','no-reply@isc.edu.co',[email]);
-				mensaje = 'Se ha enviado un correo con las istruciones para recuperar su contraseña'
+				mensaje = 'Se ha enviado un correo con las instruciones para recuperar su contraseña'
 				
 			else :
-				mensaje = 'No existe este algun usuario con este correo'
+				mensaje = 'No existe este algún usuario con este correo'
 		else :
 			mensaje = 'El correo no tiene el formato correcto'
 	else :
