@@ -87,9 +87,12 @@ def recuperar_pass(request):
 	return render_to_response(template,{'mensaje':mensaje},context_instance=RequestContext(request))
 
 
-def verificar_keys(request,args):
+def verificar_keys(request, args):
+
+	if not args :
+		return HttpResponseRedirect(reverse("login"))
+
 	if request.method == 'POST':
-		pprint.pprint(args)
 		ob_key = TempKeys.objects.get_or_none(key=args)
 		if ob_key :
 			hora_actual = datetime.now()	
