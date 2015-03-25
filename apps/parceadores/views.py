@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login , logout
-from apps.parceadores.parcer import verificarIntegridad
+from apps.parceadores.parcer import verificarIntegridad , CargarMatriz
 from apps.parceadores.froms import ImportXLSForm
 import os
 import xlrd
@@ -26,10 +26,10 @@ def parcear_xls(request):
 				for col in range(hoja.ncols):
 					fila.append(hoja.cell(row, col).value)
 				matriz.append(fila)
-				json_error=verificarIntegridad(matriz)
-				pprint.pprint(json_error)
-
-
-
-	data={'s':'ss'}
-	return HttpResponse(json.dumps(data), content_type="application/json")
+			json_error = verificarIntegridad(matriz)
+			if json_error["error"] == False :
+				logs  = CargarMatriz(matriz) 
+				retorno = {'json_error':json_error,'logs':logs}
+			else :
+				retorno = {'json_error':json_error,'logs':''}
+	return HttpResponse(json.dumps(retorno), content_type="application/json")

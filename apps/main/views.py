@@ -233,9 +233,6 @@ class Usuario(View):
 				usuario.set_password(password)
 			
 			usuario.save()
-			
-			pprint.pprint(usuario.email)
-			pprint.pprint(request.POST.get('email'))
 
 			if request.POST.get('email') != usuario.email :
   
