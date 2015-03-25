@@ -87,7 +87,7 @@ def CargarMatriz(matriz):
 
 			p_ob_user.userext.save()
 
-			if p_ob_user.userext.tipo == row[10]
+			if p_ob_user.userext.tipo == row[10]:
 				pass
 
 		else :
