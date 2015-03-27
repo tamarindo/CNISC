@@ -23,14 +23,12 @@
 	
 	<form class="vform validate" name="form" novalidate ng-submit="submit()">
 		<div class="form-field fluid-grid static">
-			<label>Tipo <span class="red">*</span></label>
-			<div class="push-right select-render">
-				<select autofocus name="perfil" ng-model="user.perfil" required>
-					<option value="estudiante">Estudiante </option>
-					<option value="egresado">Egresado</option>
-					<option value="otro">Otro</option>
-				</select>
-			</div>
+			<label for="codigo">Código <span class="red">*</span></label>
+			<input class="push-right" name="codigo" id="codigo" type="text" ng-model="user.codigo" required ng-minlength="3">
+		</div>
+		<div class="form-field fluid-grid static">
+			<label for="email">Email <span class="red">*</span></label>
+			<input class="push-right" name="email" id="email" type="email" ng-model="user.email" required>
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="nombre" for="nombre">Nombre(s) <span class="red">*</span></label>
@@ -41,12 +39,22 @@
 			<input class="push-right" name="apellidos" id="apellidos" type="text" ng-model="user.apellidos" required ng-minlength="3">
 		</div>
 		<div class="form-field fluid-grid static">
-			<label for="codigo">Código <span class="red">*</span></label>
-			<input class="push-right" name="codigo" id="codigo" type="text" ng-model="user.codigo" required ng-minlength="3">
+			<label>Tipo <span class="red">*</span></label>
+			<div class="push-right select-render">
+				<select autofocus name="perfil" ng-model="user.perfil" required>
+					<option value="estudiante">Estudiante </option>
+					<option value="egresado">Egresado</option>
+					<option value="otro">Otro</option>
+				</select>
+			</div>
 		</div>
-		<div class="form-field fluid-grid static">
-			<label for="email">Email <span class="red">*</span></label>
-			<input class="push-right" name="email" id="email" type="email" ng-model="user.email" required>
+		<div class="form-field fluid-grid static" ng-hide="user.perfil != 'estudiante'">
+			<label for="semestre" for="semestre">Semestre</label>
+			<input class="push-right" name="semestre" id="semestre" type="number" ng-model="user.semestre">
+		</div>
+		<div class="form-field fluid-grid static" ng-hide="user.perfil != 'egresado'">
+			<label for="cargo" for="cargo">Cargo Laboral</label>
+			<input class="push-right" name="cargo" id="cargo" type="text" ng-model="user.cargo" >
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="mobile">Móvil</label>
