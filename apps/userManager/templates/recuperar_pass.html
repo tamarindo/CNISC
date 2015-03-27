@@ -1,34 +1,37 @@
 {% extends "base.html" %}
-{% block title %}
- Recuperar / Centro de Notificaciones ISC - UTP
-{% endblock %}
+
+{% block title %}Recuperar Contraseña | Centro de Notificaciones ISC - UTP{% endblock %}
+
+{% block bodyattrs %}class="full-vp gradient"{% endblock %}
 
 {% block body %} 
 
   <header class="login-header center-text">
-    <img src="{{STATIC_URL}}img/logo-isc.png" alt="Logotipo programa Ingeniería en Sistemas y Computación (ISC) - UTP">
+    <a href="/" title="Ir al inicio">
+      <img src="{{STATIC_URL}}img/logo-isc.png" alt="Logotipo programa Ingeniería en Sistemas y Computación (ISC) - UTP">
+    </a>
     <h1 class="main-title">
-      Centro de Notificaciones ISC - UTPereira
+      Recuperar Contraseña
     </h1>
+    <p>Por favor ingrese su email a continuación.</p>
   </header>
   {% if mensaje %}
-    <div class="block-menssage" >
-      <p class="item-mensaje" >
-        {{mensaje}}
-      </p>
-    <div>  
+    <div class="alert container medium">
+      <p>{{mensaje}}</p>
+    </div>
   {% endif %}
 
   <form name="login" method="post" action="{%url 'recuperar_pass' %}" class="main-login-form form-validate">
-    {% csrf_token %}
 
+    {% csrf_token %}
     <fieldset class="input-icon">
-      <input name="email" type="text" minlength="4" placeholder="Email">
+      <input name="email" type="text" minlength="4" placeholder="Email" autofocus>
       <span class="icon-lock"><i class="screen-reader-text">Email</i></span>
     </fieldset>
     <fieldset>
       <input class="button green" type="submit" value="Enviar" />
     </fieldset>
+
   </form>
 
 {% endblock %}
