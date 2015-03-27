@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from apps.userManager.models import *
+
 import pprint
 
 
@@ -68,7 +70,6 @@ def verificarIntegridad(matriz):
 		
 
 def CargarMatriz(matriz):
-	pprint.pprint(matriz)
 	for row in matriz:
 		ob_user= User.objects.filter(username = row[0])
 		if len(ob_user) > 0 :
@@ -77,7 +78,7 @@ def CargarMatriz(matriz):
 			p_ob_user.first_name = row[1]
 			p_ob_user.last_name = row[2]
 			p_ob_user.email = row[4]
-			p_ob_user.save()
+			#p_ob_user.save()
 			
 			p_ob_user.userext.mobile= row[5]
 			p_ob_user.userext.address= row[6]
@@ -85,30 +86,58 @@ def CargarMatriz(matriz):
 			p_ob_user.userext.province= row[8]
 			p_ob_user.userext.country= row[9]
 
-			p_ob_user.userext.save()
+			#p_ob_user.userext.save()
 
-			if p_ob_user.userext.tipo == row[10]:
+			if row[10] == 'estudiante':
+				pass
+			elif row[10] == 'engresado':
 				pass
 
 		else :
+			
 			new_ob_user = User(
 					first_name = row[1],
 					last_name = row[2],
 					email = row[4],
-					username = ob_user[0]
+					username = int(row[0])
 				)
+			new_ob_user.set_password(row[0])
+			
 
-			new_ob_user.set_password(ob_user[0])
-				
+			new_ob_user.save()
+
+
+			perfil = Profile.objects.get_or_none(name=row[10])
+
+
 				# Informacion adicional del usuario
 			new_ob_userext = UserExt(
-					phone =  row[3],
-					mobile = row[5],
+					user  = new_ob_user,
+					phone =  int(row[3]),
+					mobile = int(row[5]),
 					address = row[6],
 					city = row[7],
-					province= row[8],
-					country= row[9],
+					province = row[8],
+					country = row[9],
+					profile = perfil
 				)
 
+			new_ob_userext.save()
 
+			if row[10] == 'estudiante':
+				new_ob_student = Student(
+					UserExt = new_ob_userext,
+					semestre = row[11] ,
+					academic_state = "",
+					)
+				new_ob_student.save()
+
+			elif row[10] == 'engresado':
+				new_ob_gratudat = Graduate(
+					UserExt = new_ob_userext,
+					program = 'ISC',
+					job = row[13],
+					scope = row[14],
+					)
+				new_ob_student.save()
 	

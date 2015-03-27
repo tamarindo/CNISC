@@ -21,11 +21,14 @@ def parcear_xls(request):
 			wb = open_workbook(file_contents=import_file.read())
 			hoja = wb.sheets()[0]
 			matriz = []
+			ban = 0
 			for row in range(hoja.nrows):
-				fila = []
-				for col in range(hoja.ncols):
-					fila.append(hoja.cell(row, col).value)
-				matriz.append(fila)
+				if ban :
+					fila = []
+					for col in range(hoja.ncols):
+						fila.append(hoja.cell(row, col).value)
+					matriz.append(fila)
+				ban = 1
 			json_error = verificarIntegridad(matriz)
 			if json_error["error"] == False :
 				logs  = CargarMatriz(matriz) 
