@@ -70,7 +70,8 @@ def recuperar_pass(request):
 				email_context = {
 					'key'    : p,
 			        'titulo' : 'Recuperación de password',
-			        'url'    : 'localhost:8000/verificar_keys', 
+			        # FIXME costruir tambien el nombre del dominio (host)
+			        'url'    : 'localhost:8000' + reverse('verificar_keys'), 
 			        'usuario': ob_user[0].get_full_name(),
 			    }
 
