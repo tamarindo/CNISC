@@ -71,27 +71,33 @@ def verificarIntegridad(matriz):
 
 def CargarMatriz(matriz):
 	for row in matriz:
-		ob_user= User.objects.filter(username = row[0])
+		ob_user= User.objects.filter(username = int(row[0]))
+		pprint.pprint( row[0])
 		if len(ob_user) > 0 :
 			p_ob_user=ob_user[0]
-			p_ob_user.username =row[0]
+			p_ob_user.username =int(row[0])
 			p_ob_user.first_name = row[1]
 			p_ob_user.last_name = row[2]
 			p_ob_user.email = row[4]
-			#p_ob_user.save()
+			p_ob_user.save()
 			
-			p_ob_user.userext.mobile= row[5]
+			p_ob_user.userext.mobile= int(row[5])
 			p_ob_user.userext.address= row[6]
 			p_ob_user.userext.city= row[7]
 			p_ob_user.userext.province= row[8]
 			p_ob_user.userext.country= row[9]
 
-			#p_ob_user.userext.save()
-
-			if row[10] == 'estudiante':
-				pass
-			elif row[10] == 'engresado':
-				pass
+			p_ob_user.userext.save()
+			ob_st = Student.objects.get_or_none( UserExt = p_ob_user.userext )
+			ob_gt = Graduate.objects.get_or_none( UserExt = p_ob_user.userext )
+			if ob_st :
+				ob_st.semestre = row[11] 
+				ob_st.save()
+			elif ob_gt :
+				ob_gt.program = 'ISC'
+				ob_gt.job = row[13]
+				ob_gt.scope = row[14]
+				ob_gt.save()
 
 		else :
 			
@@ -101,7 +107,7 @@ def CargarMatriz(matriz):
 					email = row[4],
 					username = int(row[0])
 				)
-			new_ob_user.set_password(row[0])
+			new_ob_user.set_password(int(row[0]))
 			
 
 			new_ob_user.save()
