@@ -74,18 +74,6 @@ def preferences(request):
 	else:
 		return HttpResponseRedirect(reverse("home"))
 
-
-def panelCargaMasiva(request):
-	if request.user.id :
-		ob_user=User.objects.get(id=request.user.id)
-		if ob_user.userext.profile.is_admin == 1 :		
-			template="cargaMasivaTemplate.html"	
-			xls_form = ImportXLSForm()
-			return render_to_response(template,locals(),context_instance=RequestContext(request))	
-	else:
-		return HttpResponseRedirect(reverse("home"))
-
-
 def panelUseradmin(request):
 	ob_user=User.objects.get(id=request.user.id)
 	if ob_user.userext.profile.is_admin == 1:		

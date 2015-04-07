@@ -17,7 +17,6 @@ userManager_urls = patterns('apps.userManager.views',
     # url api V2 
     url(r'^api/avisos/bienvenida$', 'aviso_bienvenida',name='aviso_bienvenida'),
     url(r'^api/usuario/correo/', Email.as_view()),
-    url(r'^usuario/filtro/','autocomplete'),
     url(r'^api/userManager/cambiar_foto$', 'change_foto', name="change_foto"),
     url(r'^api/userManager/eliminar_foto$', 'eliminar_foto', name="eliminar_foto"),
     url(r'^api/userManager/cambiar_correo$', 'changeemail', name="changeemail"),

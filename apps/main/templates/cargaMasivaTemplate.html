@@ -1,5 +1,5 @@
 {% extends "base_admin.html" %}
-{% block title %}
+{% block title %}0
  Carga Masiva de Usuario
 {% endblock %}
 
@@ -15,17 +15,35 @@
 		Puede agregar usuarios simultániamente importando desde un archivo CSV de Excel. <br>
 		Presione el Siguiente botón para hacerlo.	
 	</p>
-	<form action="{%url 'parcear_xls' %} " enctype="multipart/form-data" method="POST">
+	<form id="from_cm" action="{%url 'panelCargaMasiva' %} " enctype="multipart/form-data" method="POST">
 		{% csrf_token %}
 		{{xls_form }}
 		<input type="submit"> 
 
 	</form>
-	  
+	 <div id="result">
+	 	{% if retorno %}
+	 		{% if retorno.json_error.error %}
+		 		<ul>
+		 		{% for item_error in retorno.json_error.data %}
+		 		<li>{{ item_error.msj }} en la fila {{ item_error.fila }} columna {{item_error.columna}} </li>
+		 		{% endfor %}
+		 		</ul>
+	 		{% else %}
+	 			Datos Cargados
+	 			numero de usuarios actualizados : {{retorno.logs.u_cam}}
+	 			numero de usuarios nuevos : {{retorno.logs.u_new}}
+	 		{% endif %}
+	 	{% else %}
+	 	{% endif %}
+	 </div>
 </div>
 
 
 
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+
+
+{% endblock %}

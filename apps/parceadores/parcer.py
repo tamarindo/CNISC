@@ -70,9 +70,11 @@ def verificarIntegridad(matriz):
 		
 
 def CargarMatriz(matriz):
+	cont_new=0
+	cont_cam=0 
 	for row in matriz:
 		ob_user= User.objects.filter(username = int(row[0]))
-		pprint.pprint( row[0])
+		pprint.pprint(len(ob_user))
 		if len(ob_user) > 0 :
 			p_ob_user=ob_user[0]
 			p_ob_user.username =int(row[0])
@@ -98,9 +100,10 @@ def CargarMatriz(matriz):
 				ob_gt.job = row[13]
 				ob_gt.scope = row[14]
 				ob_gt.save()
+			cont_cam = cont_cam + 1
 
 		else :
-			
+			pprint.pprint('ww')
 			new_ob_user = User(
 					first_name = row[1],
 					last_name = row[2],
@@ -108,15 +111,9 @@ def CargarMatriz(matriz):
 					username = int(row[0])
 				)
 			new_ob_user.set_password(int(row[0]))
-			
-
 			new_ob_user.save()
-
-
 			perfil = Profile.objects.get_or_none(name=row[10])
-
-
-				# Informacion adicional del usuario
+			# Informacion adicional del usuario
 			new_ob_userext = UserExt(
 					user  = new_ob_user,
 					phone =  int(row[3]),
@@ -127,9 +124,7 @@ def CargarMatriz(matriz):
 					country = row[9],
 					profile = perfil
 				)
-
 			new_ob_userext.save()
-
 			if row[10] == 'estudiante':
 				new_ob_student = Student(
 					UserExt = new_ob_userext,
@@ -137,7 +132,6 @@ def CargarMatriz(matriz):
 					academic_state = "",
 					)
 				new_ob_student.save()
-
 			elif row[10] == 'engresado':
 				new_ob_gratudat = Graduate(
 					UserExt = new_ob_userext,
@@ -146,4 +140,7 @@ def CargarMatriz(matriz):
 					scope = row[14],
 					)
 				new_ob_student.save()
-	
+			cont_new = cont_new + 1			
+	json={'u_new': cont_new,'u_cam': cont_cam}
+
+	return json
