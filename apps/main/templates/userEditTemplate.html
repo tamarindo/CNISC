@@ -57,27 +57,27 @@
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Email</label>
-			<input class="push-right" name="email" value="{{email_actual}}"  type="text">
+			<input class="push-right" name="email" {% if email_actual != None  %} value="{{email_actual}}" {% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Móvil</label>
-			<input class="push-right" name="mobile" value="{{usuario.userext.mobile}}"  type="text">
+			<input class="push-right" name="mobile" {% if usuario.userext.mobile != None  %}value="{{usuario.userext.mobile}}"{% endif %}   type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Dirección</label>
-			<input class="push-right" name="address" value="{{usuario.userext.address}}"  type="text">
+			<input class="push-right" name="address" {% if usuario.userext.address != None  %}value="{{usuario.userext.address}}"{% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Ciudad</label>
-			<input class="push-right" name="city" value="{{usuario.userext.city}}"  type="text">
+			<input class="push-right" name="city" {% if usuario.userext.city != None  %}value="{{usuario.userext.city}}"{% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Estado</label>
-			<input class="push-right" name="province" value="{{usuario.userext.province}}"  type="text">
+			<input class="push-right" name="province" {% if usuario.userext.province != None  %}value="{{usuario.userext.province}}"{% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
 			<label for="">Pais</label>
-			<input class="push-right" name="country" value="{{usuario.userext.country}}"  type="text">
+			<input class="push-right" name="country" {% if usuario.userext.country != None  %}value="{{usuario.userext.country}}"{% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static password" >
 			<label for="">Contraseña</label>
