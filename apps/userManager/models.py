@@ -51,6 +51,31 @@ class Profile(baseModel):
 	def __unicode__(self):
 		return self.name
 
+
+class ProfileMeta(baseModel):
+	"""
+	Esta clase es una auxiliar de Profile, con el fin de extender los campos
+	para uno o varios atributos. ej:
+
+	@key cargo, @value 'Dev Ops'
+	@key grado, @value '1998'
+
+	Para mantenet la integridad debe guardarse siempre con update_or_create()
+	asi se previene un mismo usuarios con varias keys iguales.
+	
+	"""
+	user = models.ForeignKey(User, verbose_name=_("Usuario"), null=True)
+	key = models.CharField(max_length=20, verbose_name=_("Key"), null=True, blank=True)
+	value = models.CharField(max_length=20, verbose_name=_("Value"), null=True, blank=True)
+
+	# FIXME
+	# Sobre escibir el save() para controlar que no se guarde cuando la key para 
+	# el usuario ya existe
+
+	def __unicode__(self):
+		return self.key
+
+
 class UserExt(baseModel):
 	"""Extended to Django User model"""
 	user = models.OneToOneField(User, verbose_name=_("Usuario"))
@@ -76,22 +101,6 @@ class UserExt(baseModel):
 		else:
 			return settings.MEDIA_URL+"/"+str(self.foto) 
 
-class Graduate(baseModel):
-	UserExt = models.OneToOneField(UserExt, verbose_name=_("UserExt"))
-	program = models.CharField(max_length=50, verbose_name=_("Egresado del programa de"), null=True, blank=True)
-	job = models.CharField(max_length=50, verbose_name=_("Empleo"), null=True, blank=True)
-	scope = models.CharField(max_length=20, verbose_name=_("Cargo laboral"), null=True, blank=True)
-
-	def __unicode__(self):
-		return self.UserExt.user.username
-
-class Student(baseModel):
-	UserExt = models.OneToOneField(UserExt, verbose_name=_("UserExt"))
-	semestre = models.IntegerField(verbose_name=_("Semestre"), null=True, blank=True)
-	academic_state = models.CharField(max_length=50, verbose_name=_("Estado academico"), null=True, blank=True)
-
-	def __unicode__(self):
-		return self.UserExt.user.username
 
 class TempKeys(baseModel):
 	user = models.ForeignKey(User, verbose_name=_("Usuario"))
