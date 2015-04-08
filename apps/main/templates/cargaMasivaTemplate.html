@@ -21,22 +21,25 @@
 		<input type="submit"> 
 
 	</form>
-	 <div id="result">
-	 	{% if retorno %}
+	
+	{% if retorno %}
+		<div id="result">
 	 		{% if retorno.json_error.error %}
 		 		<ul>
 		 		{% for item_error in retorno.json_error.data %}
-		 		<li>{{ item_error.msj }} en la fila {{ item_error.fila }} columna {{item_error.columna}} </li>
+		 		<li> <span class="color_error"> [Error]</span>  {{ item_error.msj }} en la fila {{ item_error.fila }} columna {{item_error.columna}} </li>
 		 		{% endfor %}
 		 		</ul>
 	 		{% else %}
-	 			Datos Cargados
-	 			numero de usuarios actualizados : {{retorno.logs.u_cam}}
-	 			numero de usuarios nuevos : {{retorno.logs.u_new}}
+	 			Datos Cargados Satisfactoriamente
+	 			<br>
+	 			# de usuarios actualizados : {{retorno.logs.u_cam}}
+	 			<br>
+	 			# de usuarios nuevos : {{retorno.logs.u_new}}
 	 		{% endif %}
 	 	{% else %}
-	 	{% endif %}
-	 </div>
+	 	</div>
+	 {% endif %}
 </div>
 
 
