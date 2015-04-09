@@ -154,11 +154,21 @@ def panelCrearUsuarios(request):
 				else : 
 					return HttpResponse( json.dumps( {'error': 1, 'message': 'Debe especificar un perfil'} ), content_type="application/json" )
 				
-				# Save
+				# Save user
 				new_ob_user.save()
 
+				# Save userExt
 				new_ob_userext.user = new_ob_user
 				new_ob_userext.save()
+
+				# Save profileMeta
+				if input_perfil == 'estudiante':
+					ProfileMeta.objects.update_or_create(user=new_ob_user, key="semestre", defaults={'value': request.POST.get('semestre')})
+					ProfileMeta.objects.update_or_create(user=new_ob_user, key="estado", defaults={'value': request.POST.get('estado')})
+
+				elif input_perfil == 'egresado':
+					ProfileMeta.objects.update_or_create(user=new_ob_user, key="cargo", defaults={'value': request.POST.get('cargo')})
+					ProfileMeta.objects.update_or_create(user=new_ob_user, key="empresa", defaults={'value': request.POST.get('empresa')})
 
 				return HttpResponse( json.dumps( {'error': 0, 'message': "/usuarios/" + str(new_ob_user.pk )} ), content_type="application/json" )
 
