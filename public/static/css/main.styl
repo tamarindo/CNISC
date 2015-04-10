@@ -228,10 +228,28 @@ table
 	figcaption
 		@media (max-width: 34.25em)
 			screen-reader-text()
-			
-.messages
-	padding 0
+
+
+// Mensajes
+// ----------------------------------------------------------------------------
+.user-messages #content
+	padding-bottom 0
+	
+#messages
+	bp = 740px
+	fluid-grid(bp)
+
+	@media (min-width: bp)
+		.messages-list
+			width 33.33%
+		.message-content
+			width 66.66%
+	
+
+.messages-list
 	border-right 2px solid lighten-gray
+	display flex
+	flex-direction column
 	
 	.list-header
 	.load-more
@@ -240,6 +258,11 @@ table
 	.list-header
 		padding .5rem 1rem
 		font-size 1rem
+	
+	.load-more-container
+		display flex
+		flex-direction column-reverse
+		flex 1 0 auto
 		
 	.load-more
 		padding .6rem 1rem
@@ -252,9 +275,7 @@ table
 		
 
 .message-list
-	
 	.message
-		
 		&.active
 			color #fff
 			background-color primary
@@ -269,6 +290,8 @@ table
 		
 .message-content
 	position relative
+	padding 10px 1.5rem 1rem
+	height calc(100vh - 54px) // Tamaño del viewport - (tamaño navbar + border-bottom)
 	.title
 		margin-bottom 0
 	.meta
