@@ -14,7 +14,7 @@
 {% block body %}
 
 {% if not request.user.userext.welcome_message %}
-<div class="" ng-controller="cnAlertController">
+<div class="container" ng-controller="cnAlertController">
 	<div cn-alert class="alert" ng-hide="isHidden" on-close="hide('bienvenida')">
 		<p>
 		Hola {{ob_user.get_full_name}} Bienvenido al nuevo sistema de notificación del programa de Ingenieria de Sistema y Computacion.

@@ -9,12 +9,12 @@
 
   <header class="login-header center-text">
     <img src="{{STATIC_URL}}img/logo-isc.png" alt="Logotipo programa Ingeniería en Sistemas y Computación (ISC) - UTP">
-    <h1 class="main-title">
+    <h1 class="main-title small-block">
       Centro de Notificaciones ISC - UTPereira
     </h1>
   </header>
 
-  <form name="login" method="post" action="/login/" class="main-login-form form-validate">
+  <form name="login" method="post" action="/login/" class="main-login-form small-block form-validate">
     {% csrf_token %}
     <fieldset class="input-icon">
       <input name="username" type="text" autofocus placeholder="Código">
