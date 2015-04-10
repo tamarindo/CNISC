@@ -90,6 +90,17 @@ def CargarMatriz(matriz):
 			p_ob_user.userext.country= row[9]
 
 			p_ob_user.userext.save()
+
+			ProfileMeta.objects.update_or_create(user=user, key='same_key', defaults={'value' : 'A value'})
+			ProfileMeta.objects.update_or_create(user=user, key='same_key', defaults={'value' : 'A value'})
+			
+			if p_ob_user.userext.perfil.nombre ==  'estudiante' :
+				ProfileMeta.objects.update_or_create(user=user, key='semestre', defaults={'value' : row[11] })
+			elif p_ob_user.userext.perfil.nombre ==  'engresado' :
+				ProfileMeta.objects.update_or_create(user=user, key='job', defaults={'value' : row[13]})
+				ProfileMeta.objects.update_or_create(user=user, key='scope', defaults={'value' :  row[14]})
+
+			'''
 			ob_st = Student.objects.get_or_none( UserExt = p_ob_user.userext )
 			ob_gt = Graduate.objects.get_or_none( UserExt = p_ob_user.userext )
 			if ob_st :
@@ -100,10 +111,10 @@ def CargarMatriz(matriz):
 				ob_gt.job = row[13]
 				ob_gt.scope = row[14]
 				ob_gt.save()
+			'''
 			cont_cam = cont_cam + 1
 
 		else :
-			pprint.pprint('ww')
 			new_ob_user = User(
 					first_name = row[1],
 					last_name = row[2],
@@ -125,6 +136,14 @@ def CargarMatriz(matriz):
 					profile = perfil
 				)
 			new_ob_userext.save()
+
+
+			if row[10] == 'estudiante':
+				ProfileMeta.objects.update_or_create(user=user, key='semestre', defaults={'value' : row[11] })
+			elif row[10] == 'engresado':
+				ProfileMeta.objects.update_or_create(user=user, key='job', defaults={'value' : row[13]})
+				ProfileMeta.objects.update_or_create(user=user, key='scope', defaults={'value' :  row[14]})
+			'''
 			if row[10] == 'estudiante':
 				new_ob_student = Student(
 					UserExt = new_ob_userext,
@@ -140,6 +159,8 @@ def CargarMatriz(matriz):
 					scope = row[14],
 					)
 				new_ob_student.save()
+			'''
+
 			cont_new = cont_new + 1			
 	json={'u_new': cont_new,'u_cam': cont_cam}
 
