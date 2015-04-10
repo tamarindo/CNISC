@@ -24,6 +24,21 @@
 
 	app.controller('mainController', [ '$scope', '$timeout', 'ApiMessages' ,function($scope, $timeout, ApiMessages){
 		
+		$scope.list = [];
+
+		$scope.is_vector_messages_empty = function() {
+			if(vector_messages['mensajes-privados'].length > 0 || vector_messages['mensajes'].length > 0) {
+				return false;
+			}
+
+			return true;
+		}
+
+		// Si no hay mensajes, no continue.
+		if( $scope.is_vector_messages_empty() ) {
+			return;
+		}
+
 		$scope.list = [
 			vector_messages['mensajes-privados'],
 			vector_messages['mensajes']

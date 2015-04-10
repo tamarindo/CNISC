@@ -27,7 +27,11 @@
 {% endif %}
 
 <section ng-controller="messages" class="full-container clearfix" id="messages">
-	<aside class="third column messages">
+	<div class="alert info container" ng-show="is_vector_messages_empty()">
+		<p>Vaya, no tienes ningún mensaje aún :(</p>
+		<p>Puedes ir a las <a href="{% url 'preferences' %}" title="Ir a preferencias">Preferencias</a> y jugar un poco</p>
+	</div>
+	<aside class="third column messages" ng-hide="is_vector_messages_empty()">
 		<section>
 			<h2 class="list-header flat">Mensajes Privados</h2>
 			<ul class="list message-list bar-list">

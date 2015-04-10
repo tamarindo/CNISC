@@ -9,14 +9,14 @@
 
 	messaging.controller('messages', ['$scope', 'ApiMessages', function($scope, ApiMessages){
 
+		if( $scope.is_vector_messages_empty() ) {
+			return;
+		}
+
 		// Initiate
 		var lastActiveIndex = [0, 0]; // last active index, last active list
-
+		console.table($scope.list);
 		$scope.activeMessage = $scope.list[0][0]; // First message of mensajes array
-
-		if( !$scope.activeMessage )
-			return;
-
 		$scope.activeMessage.isActive = true;
 
 		// Mostrar el mensaje seleccionado
