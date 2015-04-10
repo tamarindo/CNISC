@@ -15,7 +15,6 @@
 
 		// Initiate
 		var lastActiveIndex = [0, 0]; // last active index, last active list
-		console.table($scope.list);
 		$scope.activeMessage = $scope.list[0][0]; // First message of mensajes array
 		$scope.activeMessage.isActive = true;
 
