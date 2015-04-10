@@ -268,11 +268,34 @@ table
 		margin-top 5px
 		
 .message-content
+	position relative
 	.title
 		margin-bottom 0
 	.meta
 		color light-gray
 		margin-top 0
+		
+	.nomessage
+		absolute left 0 right 0
+		top 0 bottom 0
+		display flex
+		flex-flow row wrap
+		justify-content center
+		align-items center
+		color lighten-gray
+		
+		.iscbw
+			margin-top 2rem
+			&:before
+				width 149px
+				margin-left auto
+				margin-right auto
+				height 141px
+				content ""
+				background url(../../img/logo-bw.jpg) 0 0 no-repeat
+				display block
+				margin-bottom 10px
+			
 
 
 // Usuario: Preferencias
