@@ -15,12 +15,7 @@
 
 		// Initiate
 		var lastActiveIndex = [0, 0]; // last active index, last active list
-		$scope.activeMessage = $scope.list[0][0]; // First message of mensajes array
 		
-		if($scope.activeMessage) {
-			$scope.activeMessage.isActive = true;
-		}
-
 		// Mostrar el mensaje seleccionado
 		$scope.show = function( index, list ) {
 			var lastIndex = lastActiveIndex[0];
