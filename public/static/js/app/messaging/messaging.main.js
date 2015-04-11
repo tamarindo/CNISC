@@ -9,16 +9,13 @@
 
 	messaging.controller('messages', ['$scope', 'ApiMessages', function($scope, ApiMessages){
 
+		if( $scope.is_vector_messages_empty() ) {
+			return;
+		}
+
 		// Initiate
 		var lastActiveIndex = [0, 0]; // last active index, last active list
-
-		$scope.activeMessage = $scope.list[0][0]; // First message of mensajes array
-
-		if( !$scope.activeMessage )
-			return;
-
-		$scope.activeMessage.isActive = true;
-
+		
 		// Mostrar el mensaje seleccionado
 		$scope.show = function( index, list ) {
 			var lastIndex = lastActiveIndex[0];
@@ -26,8 +23,10 @@
 			
 			if( lastIndex != index || lastList != list ) {
 
-				// Update the last active item
-				$scope.list[lastList][lastIndex].isActive = false;
+				// Update the last active item if such
+				if($scope.activeMessage) {
+					$scope.list[lastList][lastIndex].isActive = false;
+				}
 				lastActiveIndex = [index, list];
 
 				// Update new active item

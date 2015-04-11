@@ -14,7 +14,7 @@
 {% block body %}
 
 {% if not request.user.userext.welcome_message %}
-<div class="" ng-controller="cnAlertController">
+<div class="container" ng-controller="cnAlertController">
 	<div cn-alert class="alert" ng-hide="isHidden" on-close="hide('bienvenida')">
 		<p>
 		Hola {{ob_user.get_full_name}} Bienvenido al nuevo sistema de notificación del programa de Ingenieria de Sistema y Computacion.
@@ -27,7 +27,11 @@
 {% endif %}
 
 <section ng-controller="messages" class="full-container clearfix" id="messages">
-	<aside class="third column messages">
+	<div class="alert info container" ng-show="is_vector_messages_empty()">
+		<p>Vaya, no tienes ningún mensaje aún :(</p>
+		<p>Puedes ir a las <a href="{% url 'preferences' %}" title="Ir a preferencias">Preferencias</a> y jugar un poco</p>
+	</div>
+	<aside class="third column messages" ng-hide="is_vector_messages_empty()">
 		<section>
 			<h2 class="list-header flat">Mensajes Privados</h2>
 			<ul class="list message-list bar-list">
@@ -52,6 +56,7 @@
 			</p>
 		</header>
 		<div class="entry-content">
+			<div class="nomessage" ng-hide="activeMessage"><div class="iscbw center-text">Selecciona un mensaje</div></div>
 			{[{activeMessage.mensaje}]}
 		</div>
 	</article>
