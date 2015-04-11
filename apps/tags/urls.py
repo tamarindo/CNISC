@@ -4,5 +4,5 @@ from django.contrib import admin
 admin.autodiscover()
 
 tags_urls = patterns('apps.tags.views',
-	    url(r'^api/tags/','autocomplete'),
+	    url(r'^tags/(\w+)?','autocomplete'),
 )
