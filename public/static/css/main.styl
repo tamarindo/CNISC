@@ -323,7 +323,11 @@ table
 .message-content
 .messages-list
 	height calc(100vh - 54px) // Tamaño del viewport - (tamaño navbar + border-bottom)
-	overflow-y scroll	
+	overflow-y scroll
+	
+// fix para contener los nuevos elementos al cargar más mensajes
+.messages-list .wrapper
+	overflow auto
 
 
 // Usuario: Preferencias
