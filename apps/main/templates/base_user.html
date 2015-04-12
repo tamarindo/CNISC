@@ -15,7 +15,7 @@
     {% block style %}
     {% endblock %}
 </head>
-<body class="user" {% block bodyAttrs %}{% endblock %}>
+<body {% block bodyAttrs %}{% endblock %}>
     <header class="main-header">
         <div class="container fluid-grid static">
             <figure class="logo-user">
@@ -43,23 +43,20 @@
                         </li>
                         <li class="menu-item">
                             <a href="#buscar" class="search-messages" title="Buscar mensajes" ng-click="showSearchForm=!showSearchForm">
-                                <i class="icon-search">
-                                    <span class="text-hide-m">Buscar</span>
-                                </i>
+                                <i class="icon-search"> </i>
+                                <span class="text-hide-m">Buscar</span>
                             </a>
                         </li>
                         <li class="menu-item" ng-hide="showSearchForm">
                             <a href="#opciones" ng-click="showMenu=!showMenu" class="options" title="Ver Opciones">
-                                <i class="icon-menu">
-                                    <span class="text-hide-m">Opciones</span>
-                                </i>
+                                <i class="icon-menu"> </i>
+                                <span class="text-hide-m">Opciones</span>
                             </a>
                         </li>
                         <li class="menu-item" ng-hide="showSearchForm">
                             <a href="{% url 'preferences' %}" class="preferences" title="Ir a Preferencias">
-                                <i class="icon-cog">
-                                    <span class="text-hide-m">Preferencias</span>
-                                </i>
+                                <i class="icon-cog"> </i>
+                                <span class="text-hide-m">Preferencias</span>
                             </a>
                         </li>
                     {% endif %}

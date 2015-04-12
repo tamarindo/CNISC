@@ -135,10 +135,16 @@ table
 	padding-bottom 1.3rem
 	
 // Navegacion
+// ----------------------------------------------------------------------------
+header-w = 55px
+header-border = 5px
 .main-header
-	border-bottom 5px solid darken(primary, 20%)
+	border-bottom header-border solid darken(primary, 20%)
 	background-color primary
 	color #fff
+	height (header-border + header-w)
+	display flex // center vertically
+	
 	a
 		color #fff
 		
@@ -150,10 +156,13 @@ table
 	collapse = 57.38em
 
 	.menu-item
+		// Forza a FF a no duplicar el line-height por haber
+		// dos elementos dentro de .menu-item a
+		max-height (header-border + header-w)
+		
 		a
-			display inline-block
 			padding 0 .5rem
-			line-height 49px // Logo user img {width + padding}
+			line-height header-w
 		&:hover
 			background-color darken(primary, 10%)
 
@@ -221,7 +230,6 @@ table
 		transform translateX(70%)
 
 .logo-user
-	padding 2px 0
 	img
 		border-radius 50%
 		width: 45px;
@@ -231,10 +239,30 @@ table
 	figcaption
 		@media (max-width: 34.25em)
 			screen-reader-text()
-			
-.messages
-	padding 0
+
+
+// Mensajes
+// ----------------------------------------------------------------------------
+.user-messages #content
+	padding-bottom 0
+	
+#messages
+	bp = 740px
+	fluid-grid(bp)
+
+	@media (min-width: bp)
+		.messages-list
+			width 33.33%
+			max-width 420px
+		.message-content
+			width 66.66%
+			flex auto
+	
+
+.messages-list
 	border-right 2px solid lighten-gray
+	display flex
+	flex-direction column
 	
 	.list-header
 	.load-more
@@ -243,6 +271,11 @@ table
 	.list-header
 		padding .5rem 1rem
 		font-size 1rem
+	
+	.load-more-container
+		display flex
+		flex-direction column-reverse
+		flex 1 0 auto
 		
 	.load-more
 		padding .6rem 1rem
@@ -255,9 +288,7 @@ table
 		
 
 .message-list
-	
 	.message
-		
 		&.active
 			color #fff
 			background-color primary
@@ -272,6 +303,7 @@ table
 		
 .message-content
 	position relative
+	padding 10px 1.5rem 1rem
 	.title
 		margin-bottom 0
 	.meta
@@ -299,6 +331,16 @@ table
 				display block
 				margin-bottom 10px
 			
+
+// Fijar altura al mismo de la ventana
+.message-content
+.messages-list
+	height calc( 100vh - 60px ) // Tamaño del viewport - (tamaño navbar + border-bottom)
+	overflow-y scroll
+	
+// fix para contener los nuevos elementos al cargar más mensajes
+.messages-list .wrapper
+	overflow auto
 
 
 // Usuario: Preferencias

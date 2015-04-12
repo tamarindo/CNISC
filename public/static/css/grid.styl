@@ -5,10 +5,16 @@
  * @since CNISC 0.1
  */
  
-.fluid-grid
+fluid-grid(breakpoint)
 	display flex
 	flex-flow column wrap
 	
+	@media (min-width: breakpoint)
+		flex-direction row
+
+.fluid-grid
+	fluid-grid(640px)
+
 	&.static
 		flex-direction row
 		
@@ -17,6 +23,7 @@
 		
 	&.expand
 		justify-content space-between
+		
 		
 
 .container

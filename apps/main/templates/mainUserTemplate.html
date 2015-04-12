@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block bodyAttrs %}
-	ng-app="user" ng-controller="mainController"
+	class="user-messages" ng-app="user" ng-controller="mainController"
 {% endblock %}
 
 {% block body %}
@@ -26,29 +26,31 @@
 </div>
 {% endif %}
 
-<section ng-controller="messages" class="full-container clearfix" id="messages">
+<section ng-controller="messages" id="messages">
 	<div class="alert info container" ng-show="is_vector_messages_empty()">
 		<p>Vaya, no tienes ningún mensaje aún :(</p>
 		<p>Puedes ir a las <a href="{% url 'preferences' %}" title="Ir a preferencias">Preferencias</a> y jugar un poco</p>
 	</div>
-	<aside class="third column messages" ng-hide="is_vector_messages_empty()">
-		<section>
-			<h2 class="list-header flat">Mensajes Privados</h2>
-			<ul class="list message-list bar-list">
-				<li ng-repeat="mensaje in list[0] | filter: buscar" ng-init="list=0" message-item></li>
-			</ul>
-		</section>
-		<section>
-			<h2 class="list-header flat">Otros Mensajes</h2>
-			<ul class="list message-list bar-list" >
-				<li ng-repeat="mensaje in list[1] | filter: buscar" ng-init="list=1" message-item></li>
-			</ul>
-			<div class="">
-				<button ng-click="loadMessages()" class="flat load-more">Mensajes anteriores</button>
-			</div>
-		</section>
+	<aside class="messages-list" ng-hide="is_vector_messages_empty()">
+		<div class="wrapper">
+			<section>
+				<h2 class="list-header flat">Mensajes Privados</h2>
+				<ul class="list message-list bar-list">
+					<li ng-repeat="mensaje in list[0] | filter: buscar" ng-init="list=0" message-item></li>
+				</ul>
+			</section>
+			<section>
+				<h2 class="list-header flat">Otros Mensajes</h2>
+				<ul class="list message-list bar-list" >
+					<li ng-repeat="mensaje in list[1] | filter: buscar" ng-init="list=1" message-item></li>
+				</ul>
+			</section>
+		</div>
+		<div class="load-more-container">
+			<button ng-click="loadMessages()" class="flat load-more">Mensajes anteriores</button>
+		</div>
 	</aside>
-	<article class="two-thirds column message-content">
+	<article class="message-content">
 		<header class="message-header">
 			<h2 class="message-title">{[{activeMessage.asunto}]}</h2>
 			<p class="meta" ng-show="activeMessage">
