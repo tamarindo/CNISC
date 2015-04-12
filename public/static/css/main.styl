@@ -135,10 +135,16 @@ table
 	padding-bottom 1.3rem
 	
 // Navegacion
+// ----------------------------------------------------------------------------
+header-w = 55px
+header-border = 5px
 .main-header
-	border-bottom 5px solid darken(primary, 20%)
+	border-bottom header-border solid darken(primary, 20%)
 	background-color primary
 	color #fff
+	height (header-border + header-w)
+	display flex // center vertically
+	
 	a
 		color #fff
 		
@@ -151,9 +157,8 @@ table
 
 	.menu-item
 		a
-			display inline-block
 			padding 0 .5rem
-			line-height 49px // Logo user img {width + padding}
+			line-height header-w
 		&:hover
 			background-color darken(primary, 10%)
 
@@ -218,7 +223,6 @@ table
 		transform translateX(70%)
 
 .logo-user
-	padding 2px 0
 	img
 		border-radius 50%
 		width: 45px;
@@ -324,7 +328,7 @@ table
 // Fijar altura al mismo de la ventana
 .message-content
 .messages-list
-	height calc(100vh - 54px) // Tamaño del viewport - (tamaño navbar + border-bottom)
+	height calc( 100vh - 60px ) // Tamaño del viewport - (tamaño navbar + border-bottom)
 	overflow-y scroll
 	
 // fix para contener los nuevos elementos al cargar más mensajes
