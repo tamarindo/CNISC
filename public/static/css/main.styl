@@ -291,7 +291,6 @@ table
 .message-content
 	position relative
 	padding 10px 1.5rem 1rem
-	height calc(100vh - 54px) // Tamaño del viewport - (tamaño navbar + border-bottom)
 	.title
 		margin-bottom 0
 	.meta
@@ -319,6 +318,12 @@ table
 				display block
 				margin-bottom 10px
 			
+
+// Fijar altura al mismo de la ventana
+.message-content
+.messages-list
+	height calc(100vh - 54px) // Tamaño del viewport - (tamaño navbar + border-bottom)
+	overflow-y scroll	
 
 
 // Usuario: Preferencias
