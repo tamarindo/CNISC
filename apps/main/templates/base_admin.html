@@ -19,8 +19,8 @@
 <body class="administrator" {% block bodyAttrs %}{% endblock %}>
 
     <header class="main-header">
-        <div class="container clearfix">
-            <figure class="logo-user pull-left">
+       <div class="container fluid-grid static">
+            <figure class="logo-user">
                 <a href="{% url 'home' %}" title="Ir al inicio">
                     <img src="{{STATIC_URL}}img/logo-isc__small.png" />
                     <figcaption class="inline">
@@ -28,28 +28,26 @@
                     </figcaption>
                 </a>
             </figure>
-            <hgroup class="pull-right">
-                <nav role="navigation" class="main-navigation">
-                    <ul class="list inline-list">
+            <nav role="navigation" class="main-navigation">
+                <ul class="list fluid-grid static">
 
-                        <li class="menu-item">
-                            <a href="{% url 'panelUseradmin' %}" title="Usuarios">
-                                <i class="icon-user">
-                                    <span class="text-hide-m">Usuarios</span>
-                                </i>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="{% url 'preferences' %}" title="Preferencias">
-                                <i class="icon-cog">
-                                    <span class="text-hide-m">Preferencias</span>
-                                </i>
-                            </a>
-                        </li>
+                    <li class="menu-item">
+                        <a href="{% url 'panelUseradmin' %}" title="Usuarios">
+                            <i class="icon-user">
+                                <span class="text-hide-m">Usuarios</span>
+                            </i>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{% url 'preferences' %}" title="Preferencias">
+                            <i class="icon-cog">
+                                <span class="text-hide-m">Preferencias</span>
+                            </i>
+                        </a>
+                    </li>
 
-                    </ul>
-                </nav>
-            </hgroup>
+                </ul>
+            </nav>
         </div>
     </header>
 
