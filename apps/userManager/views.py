@@ -39,9 +39,9 @@ def login(request):
 					auth_login(request,acceso)
 					return HttpResponseRedirect(reverse("home"))
 				else:
-					mensaje="Su Usuario no esta Activo"
+					mensaje="El usuario no está activo. Comuníquese con la secretaría del programa"
 			else:
-				mensaje="Su username o password estan incorrentos, vuelvelo a intentar"
+				mensaje="Su código o contraseña estan incorrectos, por favor inténtelo de nuevo"
 
 	formularioLogin = AuthenticationForm(request.POST)
 	if mensaje:
