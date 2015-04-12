@@ -156,6 +156,10 @@ header-border = 5px
 	collapse = 57.38em
 
 	.menu-item
+		// Forza a FF a no duplicar el line-height por haber
+		// dos elementos dentro de .menu-item a
+		max-height (header-border + header-w)
+		
 		a
 			padding 0 .5rem
 			line-height header-w
