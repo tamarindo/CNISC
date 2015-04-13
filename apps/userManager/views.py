@@ -65,13 +65,12 @@ def recuperar_pass(request):
 				p = ""
 				p = p.join([choice(valores) for i in range(longitud)])				
 				Keys = TempKeys(key=p,user=ob_user[0])
-				Keys.save()
-
+				Keys.save()				
 				email_context = {
 					'key'    : p,
 			        'titulo' : 'Recuperación de password',
 			        # FIXME costruir tambien el nombre del dominio (host)
-			        'url'    : 'localhost:8000' + reverse('verificar_keys'), 
+			        'url'    : request.META['HTTP_HOST'] + reverse('verificar_keys'), 
 			        'usuario': ob_user[0].get_full_name(),
 			    }
 
