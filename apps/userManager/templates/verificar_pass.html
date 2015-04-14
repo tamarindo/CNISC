@@ -7,7 +7,7 @@
 
 {% block body %} 
 
-  <header class="login-header center-text">
+  <header class="login-header center-text small-block">
     <a href="/" title="Ir al inicio">
       <img src="{{STATIC_URL}}img/logo-isc.png" alt="Logotipo programa Ingeniería en Sistemas y Computación (ISC) - UTP">
     </a>
@@ -16,12 +16,12 @@
     </h1>
   </header>
 
-  <form  method="post" action="{%url 'verificar_keys' key %}" class="main-login-form form-validate">
+  <form  method="post" action="{%url 'verificar_keys' key %}" class="main-login-form form-validate small-block">
     {% csrf_token %}
     <input name="key" type="hidden" value="{{key}}">
 
     <fieldset class="input-icon">
-      <input name="password1" type="password" minlength="4" placeholder="Nueva contraseña">
+      <input name="password1" type="password" minlength="4" placeholder="Nueva contraseña" autofocus>
       <span class="icon-lock"></span>
     </fieldset>
     <fieldset class="input-icon">
