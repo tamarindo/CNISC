@@ -2,11 +2,11 @@
 
 {% block title %}Recuperar Contraseña | Centro de Notificaciones ISC - UTP{% endblock %}
 
-{% block bodyattrs %}class="full-vp gradient"{% endblock %}
+{% block bodyattrs %}class="full-vp"{% endblock %}
 
 {% block body %} 
 
-  <header class="login-header center-text">
+  <header class="login-header center-text small-block">
     <a href="/" title="Ir al inicio">
       <img src="{{STATIC_URL}}img/logo-isc.png" alt="Logotipo programa Ingeniería en Sistemas y Computación (ISC) - UTP">
     </a>
@@ -16,12 +16,12 @@
     <p>Por favor ingrese su email a continuación.</p>
   </header>
   {% if mensaje %}
-    <div class="alert container medium">
+    <div class="alert container small-block">
       <p>{{mensaje}}</p>
     </div>
   {% endif %}
 
-  <form name="login" method="post" action="{%url 'recuperar_pass' %}" class="main-login-form form-validate">
+  <form name="login" method="post" action="{%url 'recuperar_pass' %}" class="main-login-form form-validate small-block">
 
     {% csrf_token %}
     <fieldset class="input-icon">

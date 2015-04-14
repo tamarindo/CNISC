@@ -4,5 +4,5 @@ from django.contrib import admin
 admin.autodiscover()
 
 parceadores_urls = patterns('apps.parceadores.views',
-	url(r'^cargarUsuarios$','panelCargaMasiva',name="panelCargaMasiva"),
+	url(r'^usuarios/cargar/$','panelCargaMasiva',name="panelCargaMasiva"),
 )
