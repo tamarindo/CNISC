@@ -45,6 +45,7 @@
 
                 options.permissions = options.permissions || '';
                 options.fields = options.fields || '';
+                options.xfbml = options.xfbml || false;
                 options.success = options.success || function(){};
                 options.error = options.error || function(){};
 
@@ -71,7 +72,7 @@
                     window.FB.init({
                         appId      : options.fbId,
                         cookie     : true,
-                        xfbml      : false,
+                        xfbml      : options.xfbml,
                         version    : 'v2.2'
                     });
 
