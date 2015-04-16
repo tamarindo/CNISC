@@ -9,21 +9,36 @@
 {% endblock %}
 
 {% block body %}  
-<section class="quick-message">
-	<h1 class="">Mensaje Rápido</h1>
-	<form method="POST" action="" class="vform">
+
+<section id="show-quick" > Crear Mensaje </section>
+
+<section id="quick-message" class=" block-hide" >
+	<h1 class="">Crear Mensaje</h1>
+	<form method="POST" action="{%url 'message'%}" class="vform">
+	{% csrf_token %}
 		<div class="form-field fluid-grid static">
 			<label for="message__subject">Asunto</label>
-			<input id="message__subject" type="text" autofocus/>
+			<input id="message__subject" name="subject" type="text" autofocus/>
 		</div>
 		<div class="form-field fluid-grid static">
-			<label for="message__to">Para</label>
+			<label for="message__to" >Para</label>
 			<input id="message__to" type="text"/>
 		</div>
+		<div id="selected" name="selected">
+			
+		</div>
+		<input id="json_recipients" name="json_recipients" class="hide"
+		 value='{"users":["1014440646","1018440645","100000000"]}' />
 		<div class="form-field">
 		 	<p><label for="message">Mensaje</label></p>
-			<textarea id="message"></textarea>
+			<textarea id="message" name="content_men" > </textarea>
 	    	{% wysiwyg_editor "message" %}   
+		</div>
+		<div class="form-field">
+			<p>
+				<label for="message" >Privado</label>
+				<input id="nature" name="private" type="checkbox"></input>
+			</p>
 		</div>
 		<p class="center-text">
 			<button type="submit" class="flat button green">Previsualizar y enviar...</button>
@@ -31,9 +46,47 @@
 	</form>
 </section>
 
-<section class=""></section>
+<!--
+<section id="messages">
+	<aside class="messages-list">
+		<div class="wrapper">
+			<section>
+				<h2 class="list-header flat">Mensajes Enviados</h2>
+				<ul class="list message-list bar-list">
+					<li ></li>
+				</ul>
+			</section>
 
-
+		</div>
+		<div class="load-more-container">
+			<button  class="flat load-more">Mensajes anteriores</button>
+		</div>
+	</aside>
+	<article class="message-content">
+		<header class="message-header">
+			<h2 class="message-title"></h2>
+			<p class="meta" ng-show="activeMessage">
+				
+			</p>
+		</header>
+		<div class="entry-content">
+			<div class="nomessage"><div class="iscbw center-text">
+		</div>
+	</article>
+	
+</section>
+-->
 {% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('#show-quick').on('click',function(){
+	$('#quick-message').toggle();
+	});
+})
+
+</script>
+{% endblock %}

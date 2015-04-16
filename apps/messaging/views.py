@@ -99,26 +99,23 @@ class Mensajes(View):
 	def post(self,request,*args,**kwargs):
 
 		#Crear Mensaje
-
-		#prueba
-		#subject="importante "
-		#json_recipients='{2,1}'
-		#content_men='<div> <h1> Manzanarez RENACE del INFIERNO "CALDAS DEL DEMONIO" </h1> <p> este es una articulo de la comunidad zatanica de manzanares</p> </div>'
-		#private=False
 		
 		subject=request.POST.get('subject')
 		json_recipients=request.POST.get('json_recipients')
 		content_men=request.POST.get('content_men')
-		private=request.POST.get('private')
+		private=request.POST.get('private') 
+		
+		if private == None :
+			private = False 
 
-		if subject and json_recipients and content_men and private != None:
+		if subject and json_recipients and content_men:
 
 			new_mensaje= Message(sender=request.user,subject=subject,content=content_men)
 			new_mensaje.save()
 			recipients=json.loads(json_recipients)
-
-			for receiver in recipients:
-				ob_user = User.objects.get(pk=receiver)
+			for receiver in recipients['users']:
+				pprint.pprint(receiver)
+				ob_user = User.objects.get(username=int(receiver))
 				if ob_user:
 					newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
 					newView.save()

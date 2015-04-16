@@ -19,7 +19,6 @@ def autocomplete(request,*args):
 		
 		if table == 'usuarios' :
 			profile=Profile.objects.get_or_none(name=key)
-			pprint.pprint(key)
 			if key == "estudiante" or key == 'engresado':
 				pprint.pprint(key)
 				tags_user = User.objects.filter(userext__profile=profile)	
