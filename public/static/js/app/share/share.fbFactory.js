@@ -71,8 +71,8 @@
                     window.FB.init({
                         appId      : options.fbId,
                         cookie     : true,
-                        xfbml      : true,
-                        version    : 'v2.0'
+                        xfbml      : false,
+                        version    : 'v2.2'
                     });
 
                     isFbInitiated = true;
