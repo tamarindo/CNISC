@@ -46,36 +46,26 @@
 	</form>
 </section>
 
-<!--
-<section id="messages">
-	<aside class="messages-list">
-		<div class="wrapper">
-			<section>
-				<h2 class="list-header flat">Mensajes Enviados</h2>
-				<ul class="list message-list bar-list">
-					<li ></li>
-				</ul>
-			</section>
 
-		</div>
-		<div class="load-more-container">
-			<button  class="flat load-more">Mensajes anteriores</button>
-		</div>
-	</aside>
-	<article class="message-content">
-		<header class="message-header">
-			<h2 class="message-title"></h2>
-			<p class="meta" ng-show="activeMessage">
-				
-			</p>
-		</header>
-		<div class="entry-content">
-			<div class="nomessage"><div class="iscbw center-text">
-		</div>
-	</article>
-	
+<section id="messages" class="msj_send">
+<h2> Mensajes Enviados </h2>
+<ul id="list-message-send" class="bar-list" >
+
+{% for item_message in messages_send %}
+	<li >
+		<a class="bar-list__item"> 
+			<h3 class="title ng-binding">{{ item_message.subject}}</h3>
+			<div class="small">
+				<time  class="ng-binding"><i class="icon-clock"></i>{{item_message.date_added}}</time>
+			</div>
+		</a>
+	</li>
+{% endfor %}
+
+
+</ul>
 </section>
--->
+
 {% endblock %}
 
 {% block js %}
