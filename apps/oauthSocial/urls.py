@@ -9,7 +9,7 @@ oauthSocial_urls = patterns('apps.oauthSocial.views',
 	url(r'^configurar_app/(\w+)/$','configura_app',name="configura_app"),
 
 	# Facebook
-	url(r'^facebook_connect/$','facebook_connect',name="facebook_connect"),
+	url(r'^facebook_connect$','facebook_connect',name="facebook_connect"),
 	
 )     
   

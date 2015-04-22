@@ -72,4 +72,15 @@
 
 	}]);
 
+	// Factoria para guardar los tokens de facebook
+	api.factory('ApiFacebook', ['$resource', 'ApiUrl', function($resource, ApiUrl) {
+
+		return $resource( ApiUrl.oauth + 'facebook_connect/', {}, {
+			'save' : {
+				method: 'POST'
+			}
+		});
+
+	}]);
+
 })();

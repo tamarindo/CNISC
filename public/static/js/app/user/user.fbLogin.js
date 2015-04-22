@@ -24,7 +24,7 @@
       $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
     }]);
 
-  app.controller('FBController', ['$scope', '$fblogin', function($scope, $fblogin) {
+  app.controller('FBController', ['$scope', '$fblogin', 'ApiFacebook', function($scope, $fblogin, ApiFacebook) {
 
     var onSucces = function(response) {
       console.log('success');
@@ -45,6 +45,14 @@
         // response.data.authResponse.accessToken (FB.getAccessToken())
         // response.data.authResponse.expiresIn 
         // response.data.authResponse.userID (FB.getUserId)
+        
+        ApiFacebook.save(
+          $.param( response.data.authResponse )
+        )
+        .$promise.then( function(response) {
+          console.log(response.message, parseInt(response.error, 10));
+        });
+
       }
 
     };

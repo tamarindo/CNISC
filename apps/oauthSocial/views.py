@@ -9,7 +9,7 @@ from apps.oauthSocial.forms import editApp
 from twython import Twython
 from django.contrib.auth.models import User
 
-import pprint,json
+import pprint, json, datetime
 
  # configurar las aplicaciones externas
 
@@ -98,5 +98,26 @@ def autentificar_usuario_twitter(request):
 		return HttpResponseRedirect(auth['auth_url'])
 
 
- # metodos para fb
+# metodos para fb
+def facebook_connect(request):
 
+	if 'POST' != request.method :
+		return HttpResponseRedirect( reverse("home") )
+
+	ob_app = App.objects.get_or_none(provedor="Facebook")
+	ob_user = User.objects.get(pk=request.user.pk)
+
+	access_token = request.POST.get('accessToken')
+	uid = request.POST.get('userID')
+	delta = int(request.POST.get('expiresIn'))
+	expires_in = datetime.datetime.utcnow() + datetime.timedelta(seconds=delta)
+
+	# Cuenta Social
+	# Se actualiza o crea el usuario si es que ya existe para esta app
+	ob_cuenta_social = CuentaSocial.objects.update_or_create(user=ob_user, app=ob_app, defaults={'uid': uid})
+	pprint.pprint(ob_cuenta_social)
+	
+	# Tokens
+	TokenSocial.objects.update_or_create(cuenta=ob_cuenta_social[0], defaults={'token':access_token, 'token_secreto':access_token, 'fecha_expiracion':expires_in })
+
+	return HttpResponse( json.dumps({'error': 0, 'message': ''}), content_type='application/json' )
