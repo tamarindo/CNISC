@@ -121,7 +121,7 @@ class Mensajes(View):
 					#newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
 					#newView.save()
 			
-			notificarMensaje(json_recipients)
+			notificarMensaje(json_recipients,subject,content_men)
 			
 			retorno = {'error':0,'msj':' '}
 
