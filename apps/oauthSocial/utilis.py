@@ -6,9 +6,9 @@ import pprint
 def verificar_conexion_twitter(usuario):
 
 	ob_app=App.objects.get_or_none(provedor="Twitter")
-	ob_CuentaSocial=CuentaSocial.objects.get_or_none(user=usuario)
+	ob_CuentaSocial=CuentaSocial.objects.get_or_none(user=usuario, app=ob_app)
 	if ob_CuentaSocial :
-		ob_TokenSocial=TokenSocial.objects.get_or_none(cuenta=ob_CuentaSocial, app=ob_app)
+		ob_TokenSocial=TokenSocial.objects.get_or_none(cuenta=ob_CuentaSocial)
 		if ob_TokenSocial:
 			twitter  =  Twython ( ob_app.consumer_key ,  ob_app.consumer_secret , ob_TokenSocial.token ,  ob_TokenSocial.token_secreto )
 			try:
