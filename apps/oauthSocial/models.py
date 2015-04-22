@@ -36,7 +36,7 @@ class TokenSocial(baseModel):
 	cuenta =  models.ForeignKey(CuentaSocial, verbose_name=_("CuentaSocial"))
 	token = models.CharField(max_length=500, verbose_name=_("token"))
 	token_secreto = models.CharField(max_length=500, verbose_name=_("token secreto"))
-#	fecha_expiracion =  models.DateTimeField(verbose_name=_("fecha expiracion"), null=True)
+	fecha_expiracion =  models.DateTimeField(verbose_name=_("fecha expiracion"), null=True)
 	
 	def __unicode__(self):
 		return str(self.token)
