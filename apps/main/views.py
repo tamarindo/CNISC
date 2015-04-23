@@ -69,6 +69,7 @@ def preferences(request):
 			template="preferencesAdminTemplate.html"	
 		else:
 			estado_twitter=verificar_conexion_twitter(request.user)
+			estado_facebook = verificar_conexion_facebook(request.user)
 			template="preferencesUserTemplate.html"	
 		return render_to_response(template,locals(),context_instance=RequestContext(request))					
 	else:

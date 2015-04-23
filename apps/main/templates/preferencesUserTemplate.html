@@ -66,10 +66,14 @@
 				Twitter conectado 
 			{% else %}
 				<a href= '{%url 'autentificar_twitter'%}' class="button twitter block center-text" ><i class="icon-twitter"> </i>Conectar con Twitter</a>
-			{% endif%}
+			{% endif %}
 		</div>
 		<p class="center">
-			<button class="flat button facebook block center-text" ng-click="login()"><i class="icon-facebook"> </i>Conectar con Facebook</button>
+			{% if estado_facebook %}
+				<span class="button facebook block center-text"><i class="icon-facebook"> </i>Su cuenta de Facebook está conectada</span>
+			{% else %}
+				<button class="flat button facebook block center-text" ng-click="login()"><i class="icon-facebook"> </i>Conectar con Facebook</button>
+			{% endif %}
 		</p>
 	</section>
 	
@@ -83,7 +87,7 @@
 
 	<script src="{{STATIC_URL}}/js/multipart-render.js"></script>
 	<script>
-
+	
       (function(d, s, id){
          var js, fjs = d.getElementsByTagName(s)[0];
          if (d.getElementById(id)) {return;}
