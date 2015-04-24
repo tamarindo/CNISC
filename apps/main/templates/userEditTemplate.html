@@ -9,6 +9,10 @@
 {% block body %}
 
 <section>
+	{% if mensaje %}
+		<div class="alert success">{{mensaje}}</div>
+	{% endif %}
+
 	<figure class="user-img__options entry-content center-text">
 		<div class="user-img-holder">
 			<img src="{{ usuario.userext.profile_image_url }}">
@@ -34,7 +38,7 @@
 			<p>
 				<span class="text-big">{{usuario.get_full_name}}</span>
 				<br>
-				<span class="gray-text">Cód.: {{usuario.username}}</span>
+				<span class="gray-text">Cód.: {{usuario.username}}, {{profile}}</span>
 				<p>
 					<a href="" class="button primary ghost">Enviar Mensaje</a>
 				</p>
@@ -52,32 +56,40 @@
 			</div>
 		</div>
 		<div class="form-field fluid-grid static">
-			<label for="">Email</label>
-			<input class="push-right" name="email" {% if email_actual != None  %} value="{{email_actual}}" {% endif %}  type="text">
+			<label for="email">Email</label>
+			<input id="email" class="push-right" name="email" {% if email_actual != None  %} value="{{email_actual}}" {% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
-			<label for="">Móvil</label>
-			<input class="push-right" name="mobile" {% if usuario.userext.mobile != None  %}value="{{usuario.userext.mobile}}"{% endif %}   type="text">
+			<label for="mobile">Móvil</label>
+			<input id="mobile" class="push-right" name="mobile" {% if usuario.userext.mobile != None  %}value="{{usuario.userext.mobile}}"{% endif %}   type="text">
 		</div>
 		<div class="form-field fluid-grid static">
-			<label for="">Dirección</label>
-			<input class="push-right" name="address" {% if usuario.userext.address != None  %}value="{{usuario.userext.address}}"{% endif %}  type="text">
+			<label for="address">Dirección</label>
+			<input id="address" class="push-right" name="address" {% if usuario.userext.address != None  %}value="{{usuario.userext.address}}"{% endif %}  type="text">
+		</div>
+	
+		{% for data in profile_info %}
+			<div class="form-field fluid-grid static">
+				<label for="{{data.key}}">{{data.key}}</label>
+				<input id="{{data.key}}" class="push-right" name="{{data.key}}" value="{{data.value}}"  type="text">
+			</div>
+		{% endfor %}
+
+		<div class="form-field fluid-grid static">
+			<label for="city">Ciudad</label>
+			<input id="city" class="push-right" name="city" {% if usuario.userext.city != None  %}value="{{usuario.userext.city}}"{% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
-			<label for="">Ciudad</label>
-			<input class="push-right" name="city" {% if usuario.userext.city != None  %}value="{{usuario.userext.city}}"{% endif %}  type="text">
+			<label for="province">Departamento</label>
+			<input id="province" class="push-right" name="province" {% if usuario.userext.province != None  %}value="{{usuario.userext.province}}"{% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
-			<label for="">Departamento</label>
-			<input class="push-right" name="province" {% if usuario.userext.province != None  %}value="{{usuario.userext.province}}"{% endif %}  type="text">
-		</div>
-		<div class="form-field fluid-grid static">
-			<label for="">Pais</label>
-			<input class="push-right" name="country" {% if usuario.userext.country != None  %}value="{{usuario.userext.country}}"{% endif %}  type="text">
+			<label for="country">Pais</label>
+			<input id="country" class="push-right" name="country" {% if usuario.userext.country != None  %}value="{{usuario.userext.country}}"{% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static password" >
-			<label for="">Contraseña</label>
-			<input class="push-right" name="pass"  type="password">
+			<label for="pass">Contraseña</label>
+			<input id="pass" class="push-right" name="pass"  type="password">
 		</div>
 		<div class="form-field fluid-grid static expand">
 			<p><button type="submit" class="flat button blue">Guardar Cambios</button></p>

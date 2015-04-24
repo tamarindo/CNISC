@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import *
@@ -192,21 +193,15 @@ class Usuario(View):
 
 		if ob_user.userext.profile.is_admin == 1:		
 			usuario=User.objects.get(pk=args[0])
-			engresado = False
-			estudiante = False
-
 
 			if ValidateEmail(usuario.userext.email_alt) :
 				email_actual = usuario.userext.email_alt
 			else :
 				email_actual = usuario.email
 
-			if usuario.userext.profile == 'estudiante' :
-				estudiante = True
-				info_estudiante = Students.objects.get_or_none( user = ob_user)
-			elif usuario.userext.profile == 'engresado' :
-				engresado = True
-				info_engresado = Graduate.objects.get_or_none( user = ob_user)		    	
+			# Perfil del usuario
+			profile = usuario.userext.profile.name
+			profile_info = ProfileMeta.objects.filter(user=usuario)
 
 			template="userEditTemplate.html"
 			fromfoto = from_foto()
@@ -244,17 +239,25 @@ class Usuario(View):
 			ob_userext.country= request.POST.get('country')
 			ob_userext.save()
 
-			engresado = False
-			estudiante = False
-			if usuario.userext.profile == 'estudiante' :
-				estudiante = True
-				info_estudiante = Students.objects.get_or_none( user = ob_user)
+			# Actualización del Perfil
+			if ob_userext.profile.name == 'estudiante' :
+				ProfileMeta.objects.update_or_create(user=usuario, key='semestre', defaults={'value': request.POST.get('semestre')})
+				ProfileMeta.objects.update_or_create(user=usuario, key='estado', defaults={'value': request.POST.get('estado')})
+			elif ob_userext.profile.name == 'egresado' :
+				ProfileMeta.objects.update_or_create(user=usuario, key='cargo', defaults={'value': request.POST.get('cargo')})
+				ProfileMeta.objects.update_or_create(user=usuario, key='empresa', defaults={'value': request.POST.get('empresa')})
+
+			# Perfil del usuario
+			profile = usuario.userext.profile.name
+			profile_info = ProfileMeta.objects.filter(user=usuario)
 				
 			if ValidateEmail(usuario.userext.email_alt) :
 				email_actual = usuario.userext.email_alt
 			else :
 				email_actual = usuario.email
 
+			fromfoto = from_foto()
+			mensaje = "Usuario actualizado"
 			template="userEditTemplate.html"	
 			return render_to_response(template,locals(),context_instance=RequestContext(request))	
 		else :
