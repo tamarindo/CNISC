@@ -35,10 +35,6 @@
 				<span class="text-big">{{usuario.get_full_name}}</span>
 				<br>
 				<span class="gray-text">Cód.: {{usuario.username}}</span>
-				<br>
-				{% if usuario.userext.student %}
-					<span class="gray-text">Semestre:  {{  usuario.userext.student.semestre }} </span>
-				{% endif %} 
 				<p>
 					<a href="" class="button primary ghost">Enviar Mensaje</a>
 				</p>
@@ -72,7 +68,7 @@
 			<input class="push-right" name="city" {% if usuario.userext.city != None  %}value="{{usuario.userext.city}}"{% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
-			<label for="">Estado</label>
+			<label for="">Departamento</label>
 			<input class="push-right" name="province" {% if usuario.userext.province != None  %}value="{{usuario.userext.province}}"{% endif %}  type="text">
 		</div>
 		<div class="form-field fluid-grid static">
