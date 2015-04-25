@@ -24,6 +24,7 @@ class App(baseModel):
 class CuentaSocial(baseModel):
 	user = models.ForeignKey(User, verbose_name=_("usuario"))
 	uid =  models.CharField(max_length=400, verbose_name=_("uid"), null=True, blank=True)
+	screen_name = models.CharField(max_length=400)
 	app = models.ForeignKey(App, verbose_name=_("App"))
 	select = models.BooleanField(default=False)
 	

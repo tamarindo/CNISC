@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.views.generic import View
 
 from apps.messaging.models import View_Messages_User , Message
-from apps.messaging.utils import notificarMensaje
+from apps.messaging.utils import notificar_mensaje
 
 import pprint
 import json
@@ -105,7 +105,8 @@ class Mensajes(View):
 		json_recipients=request.POST.get('json_recipients')
 		content_men=request.POST.get('content_men')
 		private=request.POST.get('private') 
-		
+		admin_user = User.objects.get(id=request.user.id)
+
 		if private == None :
 			private = False 
 
@@ -117,11 +118,11 @@ class Mensajes(View):
 			for receiver in recipients['users']:
 				ob_user = User.objects.get(username=int(receiver))
 				if ob_user:
-					pass
-					#newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
+					newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
 					#newView.save()
 			
-			notificarMensaje(json_recipients,subject,content_men)
+			if private:
+				notificar_mensaje(json_recipients,subject,content_men,admin_user)
 			
 			retorno = {'error':0,'msj':' '}
 

@@ -1,5 +1,4 @@
 # coding=utf-8
-from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.template.loader import render_to_string
 from django.core.validators import validate_email
