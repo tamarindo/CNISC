@@ -29,44 +29,59 @@
 
 		$scope.message = {};
     $scope.ccList = [];
+    $scope.selectedUsers = [];
     $scope.hideSpinner = true;
 
     $scope.hideList = function() {
       return $scope.ccList.length === 0;
     }
 
+    $scope.hideSelectedUsers = function() {
+      return $scope.selectedUsers.length === 0;
+    }
+
     $scope.autocomplete = function() {
       var key = $scope.message.to, m;
-      if( key.length > 3 ) {
 
-        $scope.ccList = []; // reset
-        $scope.hideSpinner = false;
-
-        ApiTags.query({tag: key})
-        .$promise.then(function(response) {
-          $scope.hideSpinner = true;
-
-          var isError = parseInt(response.error, 10);
-          if(isError) {
-            console.log('Amm.. algo salió mal con el autompletador. ' + isError);
-            return -1;
-          }
-
-          // Angular guarda dos objetos al final de cada consulta.
-          // Se restan para extraer los datos que se necesitan.
-          var tail = response.data.length - 1;
-          var list = response.data.slice(0, tail);
-
-          // Agregar nuevos mensajes
-          if ( list.length > 0 ) {
-            for( var i in list ) {
-              $scope.ccList.push( list[i] );
-            }
-          }
-
-        });
-
+      if( key.length < 4 ) {
+        $scope.ccList = [];
       }
+
+      $scope.hideSpinner = false;
+
+      ApiTags.query({tag: key})
+      .$promise.then(function(response) {
+        $scope.hideSpinner = true;
+
+        var isError = parseInt(response.error, 10);
+        if(isError) {
+          console.log('Amm.. algo salió mal con el autompletador. ' + isError);
+          return -1;
+        }
+
+        // Angular guarda dos objetos al final de cada consulta.
+        // Se restan para extraer los datos que se necesitan.
+        var tail = response.data.length - 1;
+        var list = response.data.slice(0, tail);
+
+        // Agregar nuevos mensajes
+        if ( list.length > 0 ) {
+          for( var i in list ) {
+            $scope.ccList.push( list[i] );
+          }
+        }
+
+      });
+
+    }
+
+    $scope.add = function(user) {
+      user.selected = true;
+      $scope.selectedUsers.push( user );
+    }
+
+    $scope.remove = function(user) {
+      $scope.selectedUsers.pop( user );
     }
 
     $scope.submit = function() {

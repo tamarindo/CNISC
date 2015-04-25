@@ -28,9 +28,19 @@
 			<input id="message__to" type="text" ng-model="message.to" ng-change="autocomplete()"  ng-model-options="{ debounce: 500 }" />
 			<div class="spinner" ng-hide="hideSpinner"><span></span></div>
 			<ul class="form-field autocomplete list" ng-hide="hideList()">
-				<li class="list-item" ng-repeat="user in ccList">{[{user.firstName}]} {[{user.lastName}]}<span class="pull-right">{[{user.username}]}</span></li>
+				<li class="list-item fluid-grid static" ng-click="add(this.user)" ng-repeat="user in ccList" ng-class="{selected: user.selected}" >
+					<span>{[{user.firstName}]} {[{user.lastName}]}</span>
+					<span>{[{user.username}]}</span>
+					<span>{[{user.email}]}</span>
+				</li>
 			</ul>
 		</div>
+		<ul class="form-field list selected-users-list fluid-grid static" ng-hide="hideSelectedUsers()">
+			<li class="selected-user" ng-repeat="user in selectedUsers">
+				{[{user.username}]} 
+				<button class="flat icon-close" ng-click="remove(this.user)"></button>
+			</li>
+		</ul>
 		<div class="form-field">
 		 	<p><label for="message">Mensaje</label></p>
 			<textarea id="message" name="content_men"> </textarea>

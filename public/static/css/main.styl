@@ -437,26 +437,49 @@ circle(radius, bg)
 	width radius
 	height radius
 	border-radius 50%
-	background-color bg
-	animation-name circle-expand
-	animation-duration 550ms
-	animation-iteration-count infinite
-	animation-fill-mode both
-	
+	background-color bg	
 
 .create-message
 	.to
 		position relative
 		
 	.spinner
+	.spinner:after
 		r = 25px
-		absolute right 10px top 50%
 		circle(r, primary)
+		animation-name circle-expand
+		animation-duration 550ms
+		animation-iteration-count infinite
+		animation-fill-mode both
+
+	.spinner
+		absolute right 10px top 50%
 		
 		&:after
 			content ""
 			display block
-			circle(r, white)
+			background-color white
+			
+	.selected-users-list
+		padding 10px
+		font-size 14px
+		margin-top -20px
+		background #F5F5F5
+		
+		.selected-user
+			background-color lighten-gray
+			border-radius 15px
+			padding 5px 5px 5px 10px
+			margin-right 5px
+		
+		button
+			font-size 12px
+			
+		&.ng-hide
+			display none !important
+			padding 0
+		
+	
 
 .autocomplete.list
 	absolute left 0 right 0
@@ -473,10 +496,31 @@ circle(radius, bg)
 		display none !important
 	
 	.list-item
-		padding 10px 20px
+		padding 13px 20px 13px 41px
 		cursor pointer
+		justify-content space-between
+		font-size 16px
+		position relative
+		
 		&:not(:last-child)
 			border-bottom 1px solid lighten-gray
 		&:hover
 			background-color rgba(primary, .9)
 			color white
+		span
+			display block
+			width 33.33%
+			text-align left
+			
+		&.selected:after
+			content '\e61f'
+			font-family 'cnisc'
+			font-weight normal
+			absolute left 10px top 15px
+			color green
+			circle(20px, white)
+			font-size 12px
+			display block
+			text-align center
+			line-height 20px
+			
