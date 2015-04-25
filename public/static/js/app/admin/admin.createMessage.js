@@ -75,13 +75,28 @@
 
     }
 
-    $scope.add = function(user) {
+    $scope.add = function(user, e) {
       user.selected = true;
       $scope.selectedUsers.push( user );
+      
+      if(e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
     }
 
-    $scope.remove = function(user) {
+    $scope.remove = function(user, e) {
       $scope.selectedUsers.pop( user );
+
+      if(e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    }
+
+    $scope.reset = function() {
+      $scope.ccList = [];
+      $scope.message.to = '';
     }
 
     $scope.submit = function() {

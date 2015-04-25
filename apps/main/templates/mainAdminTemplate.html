@@ -7,12 +7,12 @@
 {% block style %}{% endblock %}
 
 {% block bodyAttrs %}
-	ng-app="createMessage"
+	ng-app="createMessage" ng-controller="formController" ng-click="reset()"
 {% endblock %}
 
 {% block body %}  
 
-<section ng-controller="formController">
+<section>
 	<header>
 		<h1 class="">Crear un nuevo mensaje</h1>
 	</header>
@@ -28,7 +28,7 @@
 			<input id="message__to" type="text" ng-model="message.to" ng-change="autocomplete()"  ng-model-options="{ debounce: 500 }" />
 			<div class="spinner" ng-hide="hideSpinner"><span></span></div>
 			<ul class="form-field autocomplete list" ng-hide="hideList()">
-				<li class="list-item fluid-grid static" ng-click="add(this.user)" ng-repeat="user in ccList" ng-class="{selected: user.selected}" >
+				<li class="list-item fluid-grid static" ng-click="add(this.user, $event)" ng-repeat="user in ccList" ng-class="{selected: user.selected}" >
 					<span>{[{user.firstName}]} {[{user.lastName}]}</span>
 					<span>{[{user.username}]}</span>
 					<span>{[{user.email}]}</span>
@@ -38,7 +38,7 @@
 		<ul class="form-field list selected-users-list fluid-grid static" ng-hide="hideSelectedUsers()">
 			<li class="selected-user" ng-repeat="user in selectedUsers">
 				{[{user.username}]} 
-				<button class="flat icon-close" ng-click="remove(this.user)"></button>
+				<button class="flat icon-close" ng-click="remove(this.user, $event )"></button>
 			</li>
 		</ul>
 		<div class="form-field">
