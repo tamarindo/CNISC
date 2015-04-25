@@ -12,7 +12,8 @@
 		messaging : '/api/mensajes/',
 		oauth : '/api/oauth/',
 		alerts: '/api/avisos/',
-		newUser: '/usuarios/crear/'
+		newUser: '/usuarios/crear/',
+		tags: '/api/tags/'
 	});
 
 	// Factoria para actuar sobre mensajes
@@ -78,6 +79,17 @@
 		return $resource( ApiUrl.oauth + 'facebook_connect/', {}, {
 			'save' : {
 				method: 'POST'
+			}
+		});
+
+	}]);
+
+	// Factoria para hacer peticiones del autocompletador
+	api.factory('ApiTags', ['$resource', 'ApiUrl', function($resource, ApiUrl) {
+
+		return $resource( ApiUrl.tags + ':tag', { tag: "@tag" }, {
+			'query' : {
+				method: 'GET'
 			}
 		});
 

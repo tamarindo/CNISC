@@ -4,64 +4,67 @@
  
 {% endblock %}
 
-{% block style %}
+{% block style %}{% endblock %}
 
+{% block bodyAttrs %}
+	ng-app="createMessage"
 {% endblock %}
 
 {% block body %}  
 
-<section id="show-quick" > Crear Mensaje </section>
+<section ng-controller="formController">
+	<header>
+		<h1 class="">Crear un nuevo mensaje</h1>
+	</header>
 
-<section id="quick-message" class=" block-hide" >
-	<h1 class="">Crear Mensaje</h1>
-	<form method="POST" action="{%url 'message'%}" class="vform">
-	{% csrf_token %}
-		<div class="form-field fluid-grid static">
+	<form class="vform validate create-message" name="form" novalidate ng-submit="submit()">
+		{% csrf_token %}
+		<div class="form-field">
 			<label for="message__subject">Asunto</label>
-			<input id="message__subject" name="subject" type="text" autofocus/>
+			<input id="message__subject" name="subject" ng-model="message.subject" type="text" required ng-minlength="5" autofocus/>
 		</div>
-		<div class="form-field fluid-grid static">
-			<label for="message__to" >Para</label>
-			<input id="message__to" type="text"/>
+		<div class="form-field to">
+			<label for="message__to">Para</label>
+			<input id="message__to" type="text" ng-model="message.to" ng-change="autocomplete()"  ng-model-options="{ debounce: 500 }" />
+			<div class="spinner" ng-hide="hideSpinner"><span></span></div>
+			<ul class="form-field autocomplete list" ng-hide="hideList()">
+				<li class="list-item" ng-repeat="user in ccList">{[{user.firstName}]} {[{user.lastName}]}<span class="pull-right">{[{user.username}]}</span></li>
+			</ul>
 		</div>
-		<div id="selected" name="selected">
-			
-		</div>
-		<input id="json_recipients" name="json_recipients" class="hide"
-		 value='{"users":["1014440646","1018440645","100000000"]}' />
 		<div class="form-field">
 		 	<p><label for="message">Mensaje</label></p>
-			<textarea id="message" name="content_men" > </textarea>
-	    	{% wysiwyg_editor "message" %}   
+			<textarea id="message" name="content_men"> </textarea>
+	    	{% wysiwyg_editor "message" %}
 		</div>
-		<div class="form-field">
-			<p>
-				<label for="message" >Privado</label>
-				<input id="nature" name="private" type="checkbox"></input>
-			</p>
+		<div class="form-field right-text">
+			<label for="private" >Privado</label>
+			<input id="private" name="private" type="checkbox" ng-model="message.isPrivate" class="checkbox-render__fire" />
+			<label for="private" id="checkbox-render" class="icon-checkmark"></label>
 		</div>
 		<p class="center-text">
 			<button type="submit" class="flat button green">Previsualizar y enviar...</button>
 		</p>
 	</form>
+	<p>
+		{[{message.subject}]}
+	</p>
 </section>
 
 
 <section id="messages" class="msj_send">
 <h2> Mensajes Enviados </h2>
-<ul id="list-message-send" class="bar-list" >
+<ul id="list-message-send" class="list">
 
-{% for item_message in messages_send %}
-	<li >
-		<a class="bar-list__item"> 
-			<h3 class="title ng-binding">{{ item_message.subject}}</h3>
-			<div class="small">
-				<time  class="ng-binding"><i class="icon-clock"></i>{{item_message.date_added}}</time>
-			</div>
-		</a>
-	</li>
-{% endfor %}
-
+	{% for item_message in messages_send %}
+		<li >
+			<a class="bar-list__item"> 
+				<h3 class="title ng-binding">{{ item_message.subject}}</h3>
+				<div class="small">
+					<time  class="ng-binding"><i class="icon-clock"></i>{{item_message.date_added}}</time>
+				</div>
+			</a>
+		</li>
+	{% endfor %}
 
 </ul>
 </section>
@@ -69,14 +72,12 @@
 {% endblock %}
 
 {% block js %}
+	<script src="{{STATIC_URL}}js/lib/angular/angular.min.js"></script>
+	<script src="{{STATIC_URL}}js/lib/angular-resource/angular-resource.min.js"></script>
+    <script src="{{STATIC_URL}}js/lib/angular-cookies/angular-cookies.min.js"></script>
+    <script src="{{STATIC_URL}}js/lib/angular-animate/angular-animate.min.js"></script>
+    <script src="{{STATIC_URL}}js/lib/jquery/dist/jquery.min.js"></script>
 
-<script type="text/javascript">
-
-$(document).ready(function(){
-	$('#show-quick').on('click',function(){
-	$('#quick-message').toggle();
-	});
-})
-
-</script>
+    <script src="{{STATIC_URL}}js/app/api/api.services.js"></script>
+    <script src="{{STATIC_URL}}js/app/admin/admin.createMessage.js"></script>
 {% endblock %}

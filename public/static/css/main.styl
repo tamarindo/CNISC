@@ -415,6 +415,8 @@ header-border = 5px
 .form-field.password
 	display none
 	
+// Carga de usuarios
+	
 #result 
 	padding: 10px
 	border: 2px solid #b8b4b4
@@ -429,24 +431,52 @@ header-border = 5px
 .color_error
 	color red
 	
-.block-hide
-	display none
+
+// Creación de mensajes
+circle(radius, bg)
+	width radius
+	height radius
+	border-radius 50%
+	background-color bg
+	animation-name circle-expand
+	animation-duration 550ms
+	animation-iteration-count infinite
+	animation-fill-mode both
 	
-section#show-quick
-	width: 30%
-	margin: 0 auto
-	background: #3498db
-	text-align: center
-	padding: 5px
-	color: white
-	border-radius: 10px
-	font-weight: bold
 
-section#messages h2 
-	width: 100%
+.create-message
+	.to
+		position relative
+		
+	.spinner
+		r = 25px
+		absolute right 10px top 50%
+		circle(r, primary)
+		
+		&:after
+			content ""
+			display block
+			circle(r, white)
 
-.msj_send .bar-list
-	width 100%
-
-.bar-list 
-	list-style: None
+.autocomplete.list
+	absolute left 0 right 0
+	top 100%
+	opacity .95
+	z-index 1
+	padding 0
+	border 1px solid light-gray
+	border-top 0
+	background-color white
+	box-shadow 0 2px 6px light-gray
+	
+	&.ng-hide
+		display none !important
+	
+	.list-item
+		padding 10px 20px
+		cursor pointer
+		&:not(:last-child)
+			border-bottom 1px solid lighten-gray
+		&:hover
+			background-color rgba(primary, .9)
+			color white
