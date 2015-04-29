@@ -14,7 +14,7 @@
 
 <section id="quick-message" class=" block-hide" >
 	<h1 class="">Crear Mensaje</h1>
-	<form method="POST" action="{%url 'message'%}" class="vform">
+	<form method="POST" action="{%url 'message'%}" enctype="multipart/form-data" class="vform">
 	{% csrf_token %}
 		<div class="form-field fluid-grid static">
 			<label for="message__subject">Asunto</label>
@@ -27,8 +27,17 @@
 		<div id="selected" name="selected">
 			
 		</div>
+		<input >
+
 		<input id="json_recipients" name="json_recipients" class="hide"
 		 value='{"users":["1014440646","1018440645","100000000"]}' />
+		
+		 <div class="from-attachment">
+			<div id="boton-attacgemet">
+				{{ob_fromAttachment.data}}
+			</div>		 	
+		 </div>
+
 		<div class="form-field">
 		 	<p><label for="message">Mensaje</label></p>
 			<textarea id="message" name="content_men" > </textarea>

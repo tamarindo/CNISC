@@ -14,13 +14,13 @@ from apps.oauthSocial.models import *
 from apps.oauthSocial.utilis import *
 from apps.parceadores.models import *
 from apps.tags.models import *
+from apps.messaging.forms import fromAttachment
 from apps.userManager.models import *
 from apps.userManager.forms import from_foto
 from apps.userManager.urls import userManager_urls
 from apps.messaging.models import View_Messages_User , Message
 from apps.parceadores.froms import ImportXLSForm
 from django.views.generic import View
-
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 import pprint
@@ -36,6 +36,7 @@ def home(request):
 	if request.user.is_authenticated():
 		ob_user=User.objects.get(id=request.user.id)
 		if ob_user.userext.profile.is_admin == 1:
+			ob_fromAttachment = fromAttachment() 
 			messages_send=Message.objects.filter(sender=ob_user)			
 			template="mainAdminTemplate.html"
 			return render_to_response(template,locals(),context_instance=RequestContext(request))
