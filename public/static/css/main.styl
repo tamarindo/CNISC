@@ -415,6 +415,8 @@ header-border = 5px
 .form-field.password
 	display none
 	
+// Carga de usuarios
+	
 #result 
 	padding: 10px
 	border: 2px solid #b8b4b4
@@ -429,25 +431,98 @@ header-border = 5px
 .color_error
 	color red
 	
-.block-hide
-	display none
+
+// Creación de mensajes
+circle(radius, bg)
+	width radius
+	height radius
+	border-radius 50%
+	background-color bg	
+
+.create-message
+	.to
+		position relative
+		
+	.spinner
+	.spinner:after
+		r = 25px
+		circle(r, primary)
+		animation-name circle-expand
+		animation-duration 550ms
+		animation-iteration-count infinite
+		animation-fill-mode both
+
+	.spinner
+		absolute right 10px top 50%
+		
+		&:after
+			content ""
+			display block
+			background-color white
+			
+	.selected-users-list
+		padding 10px
+		font-size 14px
+		margin-top -20px
+		background #F5F5F5
+		
+		.selected-user
+			background-color lighten-gray
+			border-radius 15px
+			padding 5px 5px 5px 10px
+			margin-right 5px
+		
+		button
+			font-size 12px
+			
+		&.ng-hide
+			display none !important
+			padding 0
+		
 	
-section#show-quick
-	width: 30%
-	margin: 0 auto
-	background: #3498db
-	text-align: center
-	padding: 5px
-	color: white
-	border-radius: 10px
-	font-weight: bold
-
-section#messages h2 
-	width: 100%
-
-.msj_send .bar-list
-	width 100%
-
+.autocomplete.list
+	absolute left 0 right 0
+	top 100%
+	opacity .95
+	z-index 1
+	padding 0
+	border 1px solid light-gray
+	border-top 0
+	background-color white
+	box-shadow 0 2px 6px light-gray
+	
+	&.ng-hide
+		display none !important
+	
+	.list-item
+		padding 13px 20px 13px 41px
+		cursor pointer
+		justify-content space-between
+		font-size 16px
+		position relative
+		
+		&:not(:last-child)
+			border-bottom 1px solid lighten-gray
+		&:hover
+			background-color rgba(primary, .9)
+			color white
+		span
+			display block
+			width 33.33%
+			text-align left
+			
+		&.selected:after
+			content '\e61f'
+			font-family 'cnisc'
+			font-weight normal
+			absolute left 10px top 15px
+			color green
+			circle(20px, white)
+			font-size 12px
+			display block
+			text-align center
+			line-height 20px
+			
 .bar-list 
 	list-style: None
 	
@@ -465,4 +540,3 @@ div#boton-attacgemet
 		opacity 0
 		width 100%
 		height 100%
-		
