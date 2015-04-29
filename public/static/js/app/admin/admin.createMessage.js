@@ -38,13 +38,13 @@
     // Determina si se debe esconder la lista de autocompletado
     $scope.hideList = function() {
       return $scope.ccList.length === 0;
-    }
+    };
 
 
     // Determina si se debe esconder la lista de usuarios seleccionados
     $scope.hideSelectedUsers = function() {
       return $scope.selectedUsers.length === 0;
-    }
+    };
 
 
     // Valida si un usuario ya está incluido en la lista de envíos
@@ -98,7 +98,7 @@
         }
 
       });
-    }
+    };
 
 
     // Agrega un usuario a las listas
@@ -118,7 +118,7 @@
         e.stopPropagation();
         e.preventDefault();
       }
-    }
+    };
 
 
     // Eliminar un usuario de las listas
@@ -131,7 +131,7 @@
         e.stopPropagation();
         e.preventDefault();
       }
-    }
+    };
 
 
     // Hace un reset de las listas, sucede siempre que se da click en cualquier lugar
@@ -139,7 +139,7 @@
     $scope.reset = function() {
       $scope.ccList = [];
       $scope.message.to = '';
-    }
+    };
 
 
     // Valida que el form este bien
@@ -153,7 +153,7 @@
 
     $scope.submit = function() {
       // @TODO 
-    }
+    };
 
 
 	}]);
