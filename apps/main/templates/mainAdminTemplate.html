@@ -17,7 +17,7 @@
 		<h1 class="">Crear un nuevo mensaje</h1>
 	</header>
 
-	<form class="vform validate create-message" name="form" novalidate ng-submit="submit()">
+	<form class="vform validate create-message" enctype="multipart/form-data" name="form" novalidate ng-submit="submit()">
 		{% csrf_token %}
 		<div class="form-field">
 			<label for="message__subject">Asunto</label>
@@ -41,6 +41,11 @@
 				<button class="flat icon-close" ng-click="remove(this.user, $event )"></button>
 			</li>
 		</ul>
+		<div class="from-attachment">
+			<div id="boton-attacgemet">
+				{{ob_fromAttachment.data}}
+			</div>		 	
+		</div>
 		<div class="form-field">
 		 	<p><label for="message">Mensaje</label></p>
 			<textarea id="message" name="content_men"> </textarea>
