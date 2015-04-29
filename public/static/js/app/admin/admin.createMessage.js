@@ -85,7 +85,6 @@
 
         // Angular guarda dos objetos al final de cada consulta.
         // Se restan para extraer los datos que se necesitan.
-        var tail = response.data.length - 1;
         var list = response.data;
 
         // Agregar nuevos mensajes
