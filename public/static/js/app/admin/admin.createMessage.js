@@ -49,7 +49,7 @@
 
     // Valida si un usuario ya está incluido en la lista de envíos
     // @return bool
-    var userExist = function( user ) {
+    var isUserAdded = function( user ) {
       var index = _.findIndex($scope.selectedUsers, function(u) {
         return u.username === user.username;
       });
@@ -66,8 +66,10 @@
       var key = $scope.message.to;
 
       if( key.length < 4 ) {
-        $scope.ccList = [];
+        return;
       }
+      
+      $scope.ccList = [];
 
       $scope.hideSpinner = false;
 
@@ -84,12 +86,12 @@
         // Angular guarda dos objetos al final de cada consulta.
         // Se restan para extraer los datos que se necesitan.
         var tail = response.data.length - 1;
-        var list = response.data.slice(0, tail);
+        var list = response.data;
 
         // Agregar nuevos mensajes
         if ( list.length > 0 ) {
           for( var i in list ) {
-            if( userExist(list[i]) ) {  // O(n^2) :/
+            if( isUserAdded(list[i]) ) {  // O(n^2) :/
               list[i].selected = true;
             }
             $scope.ccList.push( list[i] );
@@ -104,7 +106,7 @@
     $scope.add = function(user, e) {
 
       // Si el usuario seleccionado ya existe, se elimina su selección y de la lista
-      if( userExist(user) ) {
+      if( isUserAdded(user) ) {
         user.selected = false;
         $scope.remove(user, e);
         return;
