@@ -25,7 +25,7 @@
 		</div>
 		<div class="form-field to">
 			<label for="message__to">Para</label>
-			<input id="message__to" type="text" ng-model="message.to" ng-change="autocomplete()"  ng-model-options="{ debounce: 500 }" />
+			<input id="message__to" type="text" ng-model="message.to" ng-change="autocomplete()" ng-model-options="{ debounce: 500 }" />
 			<div class="spinner" ng-hide="hideSpinner"><span></span></div>
 			<ul class="form-field autocomplete list" ng-hide="hideList()">
 				<li class="list-item fluid-grid static" ng-click="add(this.user, $event)" ng-repeat="user in ccList" ng-class="{selected: user.selected}" >
@@ -52,7 +52,7 @@
 			<label for="private" id="checkbox-render" class="icon-checkmark"></label>
 		</div>
 		<p class="center-text">
-			<button type="submit" class="flat button green">Previsualizar y enviar...</button>
+			<button type="submit" class="flat button green" ng-disabled="isInvalidForm()">Previsualizar y enviar...</button>
 		</p>
 	</form>
 </section>

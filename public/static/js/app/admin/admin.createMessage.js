@@ -142,6 +142,15 @@
     }
 
 
+    // Valida que el form este bien
+    $scope.isInvalidForm = function() {
+      if( $scope.selectedUsers.length === 0 ) {
+        return true;
+      }
+
+      return $scope.form.$invalid;
+    };
+
     $scope.submit = function() {
       // @TODO 
     }
