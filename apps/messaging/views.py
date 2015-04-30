@@ -117,7 +117,7 @@ class Mensajes(View):
 			for receiver in recipients['users']:
 				ob_user = User.objects.get(username=receiver)
 				if ob_user:
-					pass
+					# pass
 					newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
 					newView.save()
 			
