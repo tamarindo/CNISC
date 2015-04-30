@@ -27,7 +27,8 @@
 
 
 	// Controlador para el formulario. Lo valida, previsualiza y envía.
-	app.controller('formController', ['$scope', 'ApiTags', function($scope, ApiTags){
+	app.controller('formController', ['$scope', 'ApiTags', 'ApiMessages', 
+    function($scope, ApiTags, ApiMessages) {
 
 		$scope.message = {};
     $scope.hideSpinner = true;
@@ -152,7 +153,23 @@
     };
 
     $scope.submit = function() {
-      // @TODO 
+      // Agregar el array de codigos de usuarios como json
+      var users = { users: _.map($scope.selectedUsers, 'username')};
+      $scope.message.users = JSON.stringify(users);
+
+      // Texto del CKEDITOR con fallback al texarea
+      $scope.message.message = ( window.CKEDITOR ) ? 
+        window.CKEDITOR.instances.message.getData() : 
+        $scope.message.data;
+
+      ApiMessages.new( 
+        $.param($scope.message)
+      )
+      .$promise.then(function(response) {
+        console.log(response.error);
+        console.log(response);
+      });
+
     };
 
 
