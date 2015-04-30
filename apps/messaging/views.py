@@ -101,25 +101,25 @@ class Mensajes(View):
 
 		#Crear Mensaje
 		
-		subject=request.POST.get('subject')
-		json_recipients=request.POST.get('json_recipients')
-		content_men=request.POST.get('content_men')
-		private=request.POST.get('private') 
+		subject = request.POST.get('subject')
+		json_recipients = request.POST.get('users')
+		content_men = request.POST.get('message')
+		private = False if request.POST.get('isPrivate') is None else True
 		
 		if private == None :
 			private = False 
 
 		if subject and json_recipients and content_men:
 
-			new_mensaje= Message(sender=request.user,subject=subject,content=content_men)
+			new_mensaje = Message(sender=request.user,subject=subject,content=content_men)
 			new_mensaje.save()
-			recipients=json.loads(json_recipients)
+			recipients =json.loads(json_recipients)
 			for receiver in recipients['users']:
-				ob_user = User.objects.get(username=int(receiver))
+				ob_user = User.objects.get(username=receiver)
 				if ob_user:
 					pass
-					#newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
-					#newView.save()
+					newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
+					newView.save()
 			
 			notificarMensaje(json_recipients,subject,content_men)
 			
