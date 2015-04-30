@@ -35,16 +35,9 @@
 				},
 			},
 
-			// @TODO método POST para guardar un mensaje
-			'save': {
-				method: 'POST',
-				isArray: true,
-				params: {
-					asunto			: '(Sin asunto)',
-					destinatarios	: '',
-					cuerpo 			: '',
-					adjuntos 		: ''
-				},
+			// método POST para crear un mensaje
+			'new': {
+				method: 'POST'
 			}
 
 		});
