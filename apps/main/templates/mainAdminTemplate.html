@@ -63,22 +63,22 @@
 </section>
 
 
-<section id="messages" class="msj_send">
-<h2> Mensajes Enviados </h2>
-<ul id="list-message-send" class="list">
+<section>
+	<h2>Mensajes Enviados</h2>
+	<ul class="list message-list bar-list">
 
-	{% for item_message in messages_send %}
-		<li >
-			<a class="bar-list__item"> 
-				<h3 class="title ng-binding">{{ item_message.subject}}</h3>
-				<div class="small">
-					<time  class="ng-binding"><i class="icon-clock"></i>{{item_message.date_added}}</time>
-				</div>
-			</a>
-		</li>
-	{% endfor %}
+		{% for item_message in messages_send %}
+			<li>
+				<a href="#" class="bar-list__item"> 
+					<h3 class="title">{{ item_message.subject}}</h3>
+					<div class="small">
+						<time><i class="icon-clock"> </i>Enviado: {{item_message.date_added}}</time>
+					</div>
+				</a>
+			</li>
+		{% endfor %}
 
-</ul>
+	</ul>
 </section>
 
 {% endblock %}
