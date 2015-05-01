@@ -59,7 +59,7 @@
 		</header>
 		<div class="entry-content">
 			<div class="nomessage" ng-hide="activeMessage"><div class="iscbw center-text">Selecciona un mensaje</div></div>
-			{[{activeMessage.mensaje}]}
+			<div class="" ng-bind-html="activeMessage.mensaje"></div>
 		</div>
 	</article>
 	
@@ -73,6 +73,7 @@
 	var vector_messages = {{dic_messages|safe}}
 </script>
 <script src="{{STATIC_URL}}js/lib/angular-animate/angular-animate.min.js"></script>
+<script src="{{STATIC_URL}}js/lib/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="{{STATIC_URL}}js/lib/jquery/dist/jquery.min.js"></script>
 <script src="{{STATIC_URL}}js/app/user/user.main.js"></script>
 <script src="{{STATIC_URL}}js/app/messaging/messaging.main.js"></script>
