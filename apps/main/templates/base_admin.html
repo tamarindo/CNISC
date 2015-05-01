@@ -33,16 +33,14 @@
 
                     <li class="menu-item">
                         <a href="{% url 'panelUseradmin' %}" title="Usuarios">
-                            <i class="icon-user">
-                                <span class="text-hide-m">Usuarios</span>
-                            </i>
+                            <i class="icon-user"> </i>
+                            <span class="text-hide-m">Usuarios</span>
                         </a>
                     </li>
                     <li class="menu-item">
                         <a href="{% url 'preferences' %}" title="Preferencias">
-                            <i class="icon-cog">
-                                <span class="text-hide-m">Preferencias</span>
-                            </i>
+                            <i class="icon-cog"> </i>
+                            <span class="text-hide-m">Preferencias</span>
                         </a>
                     </li>
 
@@ -57,7 +55,21 @@
         {% endblock %}
 
     </div>
-
+    
+    <script type="text/javascript">
+      WebFontConfig = {
+        google: { families: [ 'Open+Sans:400italic,700italic,400,700:latin' ] }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+    </script>
     {% block js %}
     {% endblock %}
 

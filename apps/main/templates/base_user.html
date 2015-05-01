@@ -89,10 +89,25 @@
         {% block body %}
         {% endblock %}
     </div>
+    
 
     <script src="{% static "js/lib/angular/angular.min.js" %}"></script>
     <script src="{% static "js/lib/angular-resource/angular-resource.min.js" %}"></script>
     <script src="{% static "js/lib/angular-cookies/angular-cookies.min.js" %}"></script>
+    <script type="text/javascript">
+      WebFontConfig = {
+        google: { families: [ 'Open+Sans:400italic,700italic,400,700:latin' ] }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+    </script>
     {% block js %}
     {% endblock %}
 
