@@ -9,8 +9,14 @@
 
 {% block body %}
 
-
-
+<h3>Redes Sociales</h3>
+	<div> 
+		{% if estado_twitter %}
+			<span class="button twitter block center-text"><i class="icon-twitter"> </i>Su cuenta de Twitter está conectada</span>
+		{% else %}
+			<a href= '{%url 'autentificar_twitter'%}' class="button twitter block center-text" ><i class="icon-twitter"> </i>Conectar con Twitter</a>
+		{% endif %}
+	</div>
 
 
 {% endblock %}

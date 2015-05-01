@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login as auth_login , logout
 from apps.oauthSocial.models import App , CuentaSocial , TokenSocial
 from apps.oauthSocial.forms import editApp
+from apps.oauthSocial.utilis import *
 from twython import Twython
 from django.contrib.auth.models import User
 
@@ -41,11 +42,12 @@ def configura_app(request, *args):
 
 # metodos para tw
 def callbacktwitter(request):
+	pprint.pprint(request.user)
 	ob_app=App.objects.get_or_none(provedor="Twitter")
 	ob_user = User.objects.get(pk=request.user.pk)
 	ob_cuenta_twitter=CuentaSocial.objects.get(user=ob_user)
 
-	pprint.pprint(ob_cuenta_twitter)
+
 	if ob_cuenta_twitter != None:
 		ob_token = TokenSocial.objects.get_or_none(cuenta=ob_cuenta_twitter)		
 		oauth_verifier=request.GET.get('oauth_verifier')
@@ -53,15 +55,13 @@ def callbacktwitter(request):
 	if  ob_app and ob_cuenta_twitter and ob_token and oauth_verifier:
 		twitter = Twython(ob_app.consumer_key, ob_app.consumer_secret,ob_token.token, ob_token.token_secreto)
 		final_step = twitter.get_authorized_tokens(oauth_verifier)
-		pprint.pprint(final_step)
 		ob_token.token = final_step['oauth_token']
 		ob_token.token_secreto =  final_step['oauth_token_secret']
-
+		ob_cuenta_twitter.screen_name =  final_step['screen_name']
 		ob_cuenta_twitter.uid =final_step['user_id']
-		pprint.pprint(ob_cuenta_twitter.uid)
 		ob_cuenta_twitter.save()
 		ob_token.save()
-		
+
 		return HttpResponseRedirect(reverse("preferences"))	
 
 
