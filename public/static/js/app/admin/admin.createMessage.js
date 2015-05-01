@@ -30,8 +30,11 @@
 	app.controller('formController', ['$scope', 'ApiTags', 'ApiMessages', 
     function($scope, ApiTags, ApiMessages) {
 
-		$scope.message = {};
+		$scope.message = {
+      attachment : {}
+    };
     $scope.hideSpinner = true;
+    $scope.showUploader = true;
     $scope.ccList = []; // Carga los usuarios recibidos por la API para autocompletar
     $scope.selectedUsers = []; // Usuarios seleccionados para enviar mensajes
 
@@ -160,7 +163,7 @@
       // Texto del CKEDITOR con fallback al texarea
       $scope.message.message = ( window.CKEDITOR ) ? 
         window.CKEDITOR.instances.message.getData() : 
-        $scope.message.data;
+        $scope.message.text;
 
       ApiMessages.new( 
         $.param($scope.message)
@@ -168,6 +171,19 @@
       .$promise.then(function(response) {
         console.log(response.error);
         console.log(response);
+      });
+
+    };
+
+
+    $scope.attach = function( files ) {
+      if( files.length === 0 ) {
+        return;
+      }
+
+      $scope.$apply(function() {
+        $scope.message.attachment = files[0];
+        $scope.showUploader = false;
       });
 
     };

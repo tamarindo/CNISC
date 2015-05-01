@@ -43,13 +43,17 @@
 		</ul>
 		<div class="form-field">
 		 	<p><label for="message">Mensaje</label></p>
-			<textarea id="message" ng-model="message.data"></textarea>
+			<textarea id="message" ng-model="message.text"></textarea>
 	    	{% wysiwyg_editor "message" %}
 		</div>
 		<div class="form-field uploader fluid-grid static space-around">
-			<div class="uploader-render">
+			<div class="uploader-render" ng-show="showUploader">
 				<div class="button ghost"><i class="icon-paperclip"> </i> Adjuntar archivo</div>
 				{{ob_fromAttachment.data}}
+			</div>
+			<div class="selected-file" ng-hide="showUploader">
+				<i class="icon-file"> </i>{[{message.attachment.name}]}
+				<i class="icon-close remove" ng-click="showUploader=true"></i>
 			</div>
 			<div>
 				<label for="private" >Privado</label>
