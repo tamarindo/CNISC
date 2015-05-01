@@ -30,9 +30,7 @@
 	app.controller('formController', ['$scope', 'ApiTags', 'ApiMessages', 
     function($scope, ApiTags, ApiMessages) {
 
-		$scope.message = {
-      attachment : {}
-    };
+		$scope.message = {};
     $scope.modal = {};
     $scope.hideSpinner = true;
     $scope.showUploader = true;
@@ -176,9 +174,7 @@
         window.CKEDITOR.instances.message.getData() : 
         $scope.message.text;
 
-      ApiMessages.new( 
-        $.param($scope.message)
-      )
+      ApiMessages.new($scope.message)
       .$promise.then(function(response) {
         console.log(response.error);
         console.log(response);
