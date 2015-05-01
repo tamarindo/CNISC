@@ -9,7 +9,7 @@
 
    'use strict';
 
-   var app = angular.module('createMessage', ['ngCookies', 'Api'])
+   var app = angular.module('createMessage', ['ngCookies', 'ngSanitize', 'Api'])
 
 		// Cambiar el control de expresiones para prevenir 
 		// inconvenientes con las de Django.
@@ -162,7 +162,7 @@
       $scope.modal.content = ( window.CKEDITOR ) ? 
         window.CKEDITOR.instances.message.getData() : 
         $scope.message.text;
-        
+
       $scope.showMessagePreview = true;
     };
 
