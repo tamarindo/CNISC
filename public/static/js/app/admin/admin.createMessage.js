@@ -9,7 +9,7 @@
 
    'use strict';
 
-   var app = angular.module('createMessage', ['ngCookies', 'Api'])
+   var app = angular.module('createMessage', ['ngCookies', 'ngSanitize', 'Api'])
 
 		// Cambiar el control de expresiones para prevenir 
 		// inconvenientes con las de Django.
@@ -30,8 +30,13 @@
 	app.controller('formController', ['$scope', 'ApiTags', 'ApiMessages', 
     function($scope, ApiTags, ApiMessages) {
 
-		$scope.message = {};
+		$scope.message = {
+      attachment : {}
+    };
+    $scope.modal = {};
     $scope.hideSpinner = true;
+    $scope.showUploader = true;
+    $scope.showMessagePreview = false;
     $scope.ccList = []; // Carga los usuarios recibidos por la API para autocompletar
     $scope.selectedUsers = []; // Usuarios seleccionados para enviar mensajes
 
@@ -153,6 +158,15 @@
     };
 
     $scope.submit = function() {
+      $scope.modal.title = $scope.message.subject;
+      $scope.modal.content = ( window.CKEDITOR ) ? 
+        window.CKEDITOR.instances.message.getData() : 
+        $scope.message.text;
+
+      $scope.showMessagePreview = true;
+    };
+
+    $scope.send = function() {
       // Agregar el array de codigos de usuarios como json
       var users = { users: _.map($scope.selectedUsers, 'username')};
       $scope.message.users = JSON.stringify(users);
@@ -160,7 +174,7 @@
       // Texto del CKEDITOR con fallback al texarea
       $scope.message.message = ( window.CKEDITOR ) ? 
         window.CKEDITOR.instances.message.getData() : 
-        $scope.message.data;
+        $scope.message.text;
 
       ApiMessages.new( 
         $.param($scope.message)
@@ -168,6 +182,19 @@
       .$promise.then(function(response) {
         console.log(response.error);
         console.log(response);
+      });
+
+    };
+
+
+    $scope.attach = function( files ) {
+      if( files.length === 0 ) {
+        return;
+      }
+
+      $scope.$apply(function() {
+        $scope.message.attachment = files[0];
+        $scope.showUploader = false;
       });
 
     };
