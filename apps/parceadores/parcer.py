@@ -8,7 +8,7 @@ def unicidad_codigo(matriz,posicion,cod,posicionact):
 	unico= False
 	j = 0
 	for row in matriz :
-		
+
 		if row[posicion] == cod and j != posicionact :
 			unico = True
 		j = j + 1
@@ -31,7 +31,7 @@ def verificarIntegridad(matriz):
 		# verificar el Numero de columnas
 		if not control : # para que solo pregunte la primera vez
 			if len(row) < 14:
-				
+
 				json_error["error"] = True
 				msj_error.append({'msj':'la estructura del archivo esta incompleta','fila':'0','columna':'0'})
 
@@ -42,13 +42,13 @@ def verificarIntegridad(matriz):
 
 		# verificar unicidad de codigo en la matriz
 
-		if unicidad_codigo(matriz,0,codigo,i) : 
+		if unicidad_codigo(matriz,0,codigo,i) :
 			json_error["error"] = True
 			msj_error.append({'msj':'hay un codigo repetido en el archivo','fila':i,'columna':'A'})
 
 		# verificar unicidad de el email en la bd
-		
-		if unicidad_codigo(matriz,4,email,i) : 
+
+		if unicidad_codigo(matriz,4,email,i) :
 			json_error["error"] = True
 			msj_error.append({'msj':'hay un email repetido en el archivo','fila':i,'columna':'E'})
 		else :
@@ -60,18 +60,18 @@ def verificarIntegridad(matriz):
 
 		control = True
 		# verificar unicidad de el email en la bd
-	
+
 		i=i+1
 
 	json_error["data"] = msj_error
-	
+
 	return json_error
 
-		
+
 
 def CargarMatriz(matriz):
 	cont_new=0
-	cont_cam=0 
+	cont_cam=0
 	for row in matriz:
 		ob_user= User.objects.filter(username = int(row[0]))
 		pprint.pprint(len(ob_user))
@@ -82,7 +82,7 @@ def CargarMatriz(matriz):
 			p_ob_user.last_name = row[2]
 			p_ob_user.email = row[4]
 			p_ob_user.save()
-			
+
 			p_ob_user.userext.mobile= int(row[5])
 			p_ob_user.userext.address= row[6]
 			p_ob_user.userext.city= row[7]
@@ -91,20 +91,20 @@ def CargarMatriz(matriz):
 
 			p_ob_user.userext.save()
 
-			ProfileMeta.objects.update_or_create(user=user, key='same_key', defaults={'value' : 'A value'})
-			ProfileMeta.objects.update_or_create(user=user, key='same_key', defaults={'value' : 'A value'})
-			
-			if p_ob_user.userext.perfil.nombre ==  'estudiante' :
-				ProfileMeta.objects.update_or_create(user=user, key='semestre', defaults={'value' : row[11] })
-			elif p_ob_user.userext.perfil.nombre ==  'engresado' :
-				ProfileMeta.objects.update_or_create(user=user, key='job', defaults={'value' : row[13]})
-				ProfileMeta.objects.update_or_create(user=user, key='scope', defaults={'value' :  row[14]})
+			ProfileMeta.objects.update_or_create(user=p_ob_user, key='same_key', defaults={'value' : 'A value'})
+			ProfileMeta.objects.update_or_create(user=p_ob_user, key='same_key', defaults={'value' : 'A value'})
+
+			if p_ob_user.userext.profile.name ==  'estudiante' :
+				ProfileMeta.objects.update_or_create(user=p_ob_user, key='semestre', defaults={'value' : row[11] })
+			elif p_ob_user.userext.profile.name ==  'engresado' :
+				ProfileMeta.objects.update_or_create(user=p_ob_user, key='job', defaults={'value' : row[13]})
+				ProfileMeta.objects.update_or_create(user=p_ob_user, key='scope', defaults={'value' :  row[14]})
 
 			'''
 			ob_st = Student.objects.get_or_none( UserExt = p_ob_user.userext )
 			ob_gt = Graduate.objects.get_or_none( UserExt = p_ob_user.userext )
 			if ob_st :
-				ob_st.semestre = row[11] 
+				ob_st.semestre = row[11]
 				ob_st.save()
 			elif ob_gt :
 				ob_gt.program = 'ISC'
@@ -139,10 +139,10 @@ def CargarMatriz(matriz):
 
 
 			if row[10] == 'estudiante':
-				ProfileMeta.objects.update_or_create(user=user, key='semestre', defaults={'value' : row[11] })
+				ProfileMeta.objects.update_or_create(user=new_ob_userext, key='semestre', defaults={'value' : row[11] })
 			elif row[10] == 'engresado':
-				ProfileMeta.objects.update_or_create(user=user, key='job', defaults={'value' : row[13]})
-				ProfileMeta.objects.update_or_create(user=user, key='scope', defaults={'value' :  row[14]})
+				ProfileMeta.objects.update_or_create(user=new_ob_userext, key='job', defaults={'value' : row[13]})
+				ProfileMeta.objects.update_or_create(user=new_ob_userext, key='scope', defaults={'value' :  row[14]})
 			'''
 			if row[10] == 'estudiante':
 				new_ob_student = Student(
@@ -161,7 +161,7 @@ def CargarMatriz(matriz):
 				new_ob_student.save()
 			'''
 
-			cont_new = cont_new + 1			
+			cont_new = cont_new + 1
 	json={'u_new': cont_new,'u_cam': cont_cam}
 
 	return json
