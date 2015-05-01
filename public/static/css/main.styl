@@ -525,18 +525,27 @@ circle(radius, bg)
 			
 .bar-list 
 	list-style: None
-	
-div#boton-attacgemet
-	width: 50px;
-	height: 50px;
-	margin: 20px;
-	background: #3498db;
-	background-image: url("../../img/adjunto.png");
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: 61%;
-	cursor: pointer !important;
+
+.uploader-render
+	background-color white
+	position relative
+	width 210px
+	height 45px
+	overflow hidden
 	#id_data
+		cursor pointer
 		opacity 0
-		width 100%
-		height 100%
+	.button
+		color primary
+		absolute top 0 bottom 0
+		left 0
+		right 0
+		display block
+		line-height 35px
+	&:hover
+		background-color primary
+		.button
+			color white
+		
+		
+	

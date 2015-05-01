@@ -41,20 +41,21 @@
 				<button class="flat icon-close" ng-click="remove(this.user, $event )"></button>
 			</li>
 		</ul>
-		<div class="from-attachment">
-			<div id="boton-attacgemet">
-				{{ob_fromAttachment.data}}
-			</div>		 	
-		</div>
 		<div class="form-field">
 		 	<p><label for="message">Mensaje</label></p>
 			<textarea id="message" ng-model="message.data"></textarea>
 	    	{% wysiwyg_editor "message" %}
 		</div>
-		<div class="form-field right-text">
-			<label for="private" >Privado</label>
-			<input id="private" name="private" type="checkbox" ng-model="message.isPrivate" class="checkbox-render__fire" />
-			<label for="private" id="checkbox-render" class="icon-checkmark"></label>
+		<div class="form-field uploader fluid-grid static space-around">
+			<div class="uploader-render">
+				<div class="button ghost"><i class="icon-paperclip"> </i> Adjuntar archivo</div>
+				{{ob_fromAttachment.data}}
+			</div>
+			<div>
+				<label for="private" >Privado</label>
+				<input id="private" name="private" type="checkbox" ng-model="message.isPrivate" class="checkbox-render__fire" />
+				<label for="private" id="checkbox-render" class="icon-checkmark"></label>
+			</div>
 		</div>
 		<p class="center-text">
 			<button type="submit" class="flat button green" ng-disabled="isInvalidForm()">Previsualizar y enviar...</button>
