@@ -11,7 +11,13 @@ run:
 
 install:
 	pip install -r requirements.txt
+	sudo npm -g gulp
+	sudo npm -g bower
 	npm install
+	bower install
 	python manage.py syncdb
-
+	python manage.py loaddata ./fixtures/perfiles.json
+	python manage.py loaddata ./fixtures/oauthSOcial.json
+	python manage.py loaddata ./fixtures/user.json
+	
 all: run
