@@ -33,8 +33,10 @@
 		$scope.message = {
       attachment : {}
     };
+    $scope.modal = {};
     $scope.hideSpinner = true;
     $scope.showUploader = true;
+    $scope.showMessagePreview = false;
     $scope.ccList = []; // Carga los usuarios recibidos por la API para autocompletar
     $scope.selectedUsers = []; // Usuarios seleccionados para enviar mensajes
 
@@ -156,6 +158,15 @@
     };
 
     $scope.submit = function() {
+      $scope.modal.title = $scope.message.subject;
+      $scope.modal.content = ( window.CKEDITOR ) ? 
+        window.CKEDITOR.instances.message.getData() : 
+        $scope.message.text;
+        
+      $scope.showMessagePreview = true;
+    };
+
+    $scope.send = function() {
       // Agregar el array de codigos de usuarios como json
       var users = { users: _.map($scope.selectedUsers, 'username')};
       $scope.message.users = JSON.stringify(users);

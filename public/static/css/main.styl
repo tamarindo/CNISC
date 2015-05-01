@@ -559,3 +559,43 @@ circle(radius, bg)
 			cursor pointer
 			absolute right 9px top 13px
 	
+
+// MODAL
+// ----------------------------------------------------------------------------
+.modal
+	fixed top 0 bottom 0
+	left 0
+	right 0
+	background-color rgba(white, .9)
+	display flex
+	align-items center
+	justify-content center
+	&.ng-hide
+		display none
+	.wrapper
+		background-color white
+		padding 10px 40px
+		border 1px solid lighten-gray
+		width 90%
+		max-width 1000px
+		position relative
+		min-width 600px
+	h1
+		margin 5px 0 15px
+	.opaque
+		color light-gray
+		font-size 16px
+		margin-bottom 5px
+	.modal__content
+		max-height 50vh
+		overflow scroll
+	.modal__footer
+		padding-top 30px
+		margin-bottom 10px
+		position relative
+		&:before
+			content ""
+			absolute left 0 right 0
+			top -50px
+			height 70px
+			background-image linear-gradient(bottom, white 20%, transparent)

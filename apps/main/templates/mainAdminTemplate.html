@@ -86,6 +86,20 @@
 	</ul>
 </section>
 
+<div class="modal ng-hide" aria-hidden="true" ng-show="showMessagePreview">
+	<div class="wrapper">
+		<p class="opaque">Previsualización del mensaje.</p>
+		<h1>{[{modal.title}]}</h1>
+		<div class="modal__content">
+			{[{modal.content}]}
+		</div>
+		<footer class="center-text modal__footer">
+			<button class="flat button green" ng-click="send()"><i class="icon-paperplane"> </i>Enviar</button>
+			<button class="flat button ghost" ng-click="showMessagePreview=false">Cancelar</button>
+		</footer>
+	</div>	
+</div>
+
 {% endblock %}
 
 {% block js %}
