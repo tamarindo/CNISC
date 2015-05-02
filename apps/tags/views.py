@@ -20,7 +20,7 @@ def loadPredefinedList() :
 	predefinedList.append(dict([ ('username','egresados'), ('firstName','Todos los egresados'), ('lastName',''), ('email','') ]))
 
 	for i in range(1, 11) :
-		predefinedList.append(dict([ ('username','semestre_' + str(i)), ('firstName','Semestre'), ('lastName', str(i)), ('email','') ]))
+		predefinedList.append(dict([ ('username','semestre_' + str(i)), ('firstName','Estudiantes Semestre'), ('lastName', str(i)), ('email','') ]))
 
 	return predefinedList
 

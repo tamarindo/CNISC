@@ -42,7 +42,7 @@
 		</div>
 		<ul class="form-field list selected-users-list fluid-grid static" ng-hide="hideSelectedUsers()">
 			<li class="selected-user" ng-repeat="user in selectedUsers">
-				{[{user.username}]}
+				{[{user.firstName}]} {[{user.lastName | limitTo: 10}]}...
 				<button class="flat icon-close" ng-click="remove(this.user, $event )"></button>
 			</li>
 		</ul>
