@@ -37,6 +37,7 @@
     $scope.showMessagePreview = false;
     $scope.ccList = []; // Carga los usuarios recibidos por la API para autocompletar
     $scope.selectedUsers = []; // Usuarios seleccionados para enviar mensajes
+    $scope.showMessageForm = false;
 
 
     // Determina si se debe esconder la lista de autocompletado

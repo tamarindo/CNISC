@@ -600,3 +600,23 @@ circle(radius, bg)
 			top -50px
 			height 70px
 			background-image linear-gradient(bottom, white 20%, transparent)
+			
+// COLLAPSABLE
+// ----------------------------------------------------------------------------
+.collapsable
+	background-color light-blue
+	padding 0 20px 10px
+	margin-bottom 30px
+	.collapsable__header
+		margin 0
+		cursor pointer
+		h1
+			margin 0
+			padding-top 10px
+			font-size 1.5em
+		i
+			font-size 24px
+	.collapsable__content
+		padding-top 25px
+		&.ng-hide
+			display none

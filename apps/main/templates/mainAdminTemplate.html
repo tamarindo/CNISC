@@ -12,12 +12,13 @@
 
 {% block body %}
 
-<section>
-	<header>
+<section class="collapsable">
+	<header class="collapsable__header fluid-grid static inline-header" ng-click="showMessageForm=!showMessageForm">
 		<h1 class="">Crear un nuevo mensaje</h1>
+		<i ng-class="{'icon-circle-down': !showMessageForm, 'icon-circle-up': showMessageForm}"></i>
 	</header>
 
-	<form class="vform validate create-message" name="form" novalidate ng-submit="submit()">
+	<form ng-show="showMessageForm" class="vform validate create-message collapsable__content ng-hide" name="form" novalidate ng-submit="submit()">
 		{% csrf_token %}
 		<div class="form-field">
 			<label for="message__subject">Asunto</label>
@@ -69,7 +70,7 @@
 
 
 <section>
-	<h2>Mensajes Enviados</h2>
+	<h2 style="padding-left:20px">Mensajes Enviados</h2>
 	<ul class="list message-list bar-list">
 
 		{% for item_message in messages_send %}
