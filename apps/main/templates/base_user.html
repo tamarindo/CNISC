@@ -66,7 +66,7 @@
     
     <div id="opciones" ng-show="showMenu" class="ng-hide">
         <h2 class="title-option center-text main-title">Opciones</h2>
-        <ul class="list">
+        <ul class="list bordered">
             <li><button class="flat" ng-click="markAll()"><i class="icon-checkmark"> </i>Marcar todo como leído</button></li>
         </ul>
         <h3 class="secondary-title">Presentación</h3>
@@ -78,8 +78,8 @@
                 <button class="flat" ng-click="toggleMessageExcerpt(true)"><i class="icon-menu"> </i>Ver resumen</button>
             </li>
         </ul>
-        <footer class="logout">
-            <a href="logout" class="button ghost white">Salir</a>
+        <footer class="logout bordered">
+            <a href="logout" class="button ghost white"><i class="icon-exit"> </i>Salir</a>
         </footer>
         <button ng-click="showMenu=!showMenu" class="flat close"><span class="icon-close"> </span><span class="screen-reader-text">Cerrar menú</span></button>
     </div>
