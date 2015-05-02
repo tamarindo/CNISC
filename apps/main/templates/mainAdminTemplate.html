@@ -1,7 +1,7 @@
 {% extends "base_admin.html" %}
 {% load wysiwyg %}
 {% block title %}
- 
+
 {% endblock %}
 
 {% block style %}{% endblock %}
@@ -10,7 +10,7 @@
 	ng-app="createMessage" ng-controller="formController" ng-click="reset()"
 {% endblock %}
 
-{% block body %}  
+{% block body %}
 
 <section>
 	<header>
@@ -37,7 +37,7 @@
 		</div>
 		<ul class="form-field list selected-users-list fluid-grid static" ng-hide="hideSelectedUsers()">
 			<li class="selected-user" ng-repeat="user in selectedUsers">
-				{[{user.username}]} 
+				{[{user.username}]}
 				<button class="flat icon-close" ng-click="remove(this.user, $event )"></button>
 			</li>
 		</ul>
@@ -52,7 +52,7 @@
 				{{ob_fromAttachment.data}}
 			</div>
 			<div class="selected-file" ng-hide="showUploader">
-				<i class="icon-file"> </i>{[{message.attachment.name}]}
+				<i class="icon-file"> </i>{[{message.data.name}]}
 				<i class="icon-close remove" ng-click="showUploader=true"></i>
 			</div>
 			<div>
@@ -74,7 +74,7 @@
 
 		{% for item_message in messages_send %}
 			<li>
-				<a href="#" class="bar-list__item"> 
+				<a href="#" class="bar-list__item">
 					<h3 class="title">{{ item_message.subject}}</h3>
 					<div class="small">
 						<time><i class="icon-clock"> </i>Enviado: {{item_message.date_added}}</time>
@@ -95,7 +95,7 @@
 			<button class="flat button green" ng-click="send()"><i class="icon-paperplane"> </i>Enviar</button>
 			<button class="flat button ghost" ng-click="showMessagePreview=false">Cancelar</button>
 		</footer>
-	</div>	
+	</div>
 </div>
 
 {% endblock %}

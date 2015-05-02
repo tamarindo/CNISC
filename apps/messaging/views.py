@@ -130,10 +130,12 @@ class Mensajes(View):
 					newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
 					newView.save()
 					from_attachment = fromAttachment(request.POST, request.FILES)
-					pprint(from_attachment)
+
+					pprint.pprint(from_attachment.is_valid())
 					if from_attachment.is_valid():
-						from_attachment.message=new_mensaje
-						from_attachment.save()
+						new_att=from_attachment.save(commit=False)
+						new_att.message = new_mensaje
+						new_att.save()
 			if private:
 				notificar_mensaje(json_recipients,subject,content_men,admin_user)
 

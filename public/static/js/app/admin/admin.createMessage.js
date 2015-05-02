@@ -1,7 +1,7 @@
 /*
  * Aplicacion que provee el controlador para autocompletar la lista de contactos
  * validar y enviar el mensaje
- * 
+ *
  * @require lodash
  */
 
@@ -11,7 +11,7 @@
 
    var app = angular.module('createMessage', ['ngCookies', 'ngSanitize', 'Api'])
 
-		// Cambiar el control de expresiones para prevenir 
+		// Cambiar el control de expresiones para prevenir
 		// inconvenientes con las de Django.
 		.config(['$interpolateProvider', function($interpolateProvider){
 			$interpolateProvider.startSymbol('{[{');
@@ -27,7 +27,7 @@
 
 
 	// Controlador para el formulario. Lo valida, previsualiza y envía.
-	app.controller('formController', ['$scope', 'ApiTags', 'ApiMessages', 
+	app.controller('formController', ['$scope', 'ApiTags', 'ApiMessages',
     function($scope, ApiTags, ApiMessages) {
 
 		$scope.message = {};
@@ -72,7 +72,7 @@
       if( key.length < 4 ) {
         return;
       }
-      
+
       $scope.ccList = [];
 
       $scope.hideSpinner = false;
@@ -157,8 +157,8 @@
 
     $scope.submit = function() {
       $scope.modal.title = $scope.message.subject;
-      $scope.modal.content = ( window.CKEDITOR ) ? 
-        window.CKEDITOR.instances.message.getData() : 
+      $scope.modal.content = ( window.CKEDITOR ) ?
+        window.CKEDITOR.instances.message.getData() :
         $scope.message.text;
 
       $scope.showMessagePreview = true;
@@ -170,8 +170,8 @@
       $scope.message.users = JSON.stringify(users);
 
       // Texto del CKEDITOR con fallback al texarea
-      $scope.message.message = ( window.CKEDITOR ) ? 
-        window.CKEDITOR.instances.message.getData() : 
+      $scope.message.message = ( window.CKEDITOR ) ?
+        window.CKEDITOR.instances.message.getData() :
         $scope.message.text;
 
       ApiMessages.new($scope.message)
@@ -189,7 +189,7 @@
       }
 
       $scope.$apply(function() {
-        $scope.message.attachment = files[0];
+        $scope.message.data = files[0];
         $scope.showUploader = false;
       });
 
