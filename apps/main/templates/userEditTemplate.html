@@ -19,6 +19,7 @@
 
 			<form class="user-del-form" action="{%url 'eliminar_foto' %}" method="POST" >
 				{% csrf_token %}
+				<input class="visuallyhidden" name="id_user" value="{{usuario.id}}" type="text" />
 				<button class="flat remove button" type="submit">
 					<i class="icon-remove"> Eliminar</i>
 				</button>
@@ -30,6 +31,7 @@
 			<button class="flat button blue">Cambiar foto...</button>
 			<div class="visuallyhidden">
 				{{fromfoto.foto}}
+				<input class="hidden" name="id_user" value="{{usuario.id}}" type="text" />
 				<input type="submit" class="submit" value="Submit" />
 			</div>
 		</form>
@@ -67,7 +69,7 @@
 			<label for="address">Dirección</label>
 			<input id="address" class="push-right" name="address" {% if usuario.userext.address != None  %}value="{{usuario.userext.address}}"{% endif %}  type="text">
 		</div>
-	
+
 		{% for data in profile_info %}
 			<div class="form-field fluid-grid static">
 				<label for="{{data.key}}">{{data.key}}</label>
@@ -126,4 +128,3 @@
 	</script>
 
 {% endblock %}
- 

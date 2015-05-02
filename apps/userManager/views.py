@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template.loader import render_to_string
-from django.http import HttpResponseRedirect, HttpResponse 
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.forms import *
 from django.core.urlresolvers import *
@@ -21,7 +21,7 @@ import json
 import re
 from datetime import datetime
 from datetime import timedelta
-#  ----------------------------------------------------------   login  ---------------------------------------------------------------------------- 
+#  ----------------------------------------------------------   login  ----------------------------------------------------------------------------
 def v_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse("login"))
@@ -48,35 +48,35 @@ def login(request):
 		return render_to_response('login.html',{'mensaje':mensaje,'formulario':formularioLogin},context_instance=RequestContext(request))
 	else:
 		return render_to_response('login.html',{'formulario':formularioLogin},context_instance=RequestContext(request))
-#  ----------------------------------------------------------   Recuperar  ---------------------------------------------------------------------------- 
+#  ----------------------------------------------------------   Recuperar  ----------------------------------------------------------------------------
 def recuperar_pass(request):
 	if request.method == 'POST':
 		email=request.POST.get('email')
 		EmailV = re.match("^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,10}$",email)
 		if EmailV != None:
 			ob_user = User.objects.filter(email = email)
-	 		if not ob_user:
-				ob_user = UserExt.objects.filter(email_alt = email)				
+			if not ob_user:
+				ob_user = UserExt.objects.filter(email_alt = email)
 
 			if ob_user:
 
 				longitud = 18
 				valores = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 				p = ""
-				p = p.join([choice(valores) for i in range(longitud)])				
+				p = p.join([choice(valores) for i in range(longitud)])
 				Keys = TempKeys(key=p,user=ob_user[0])
-				Keys.save()				
+				Keys.save()
 				email_context = {
 					'key'    : p,
 			        'titulo' : 'Recuperación de password',
 			        # FIXME costruir tambien el nombre del dominio (host)
-			        'url'    : request.META['HTTP_HOST'] + reverse('verificar_keys'), 
+			        'url'    : request.META['HTTP_HOST'] + reverse('verificar_keys'),
 			        'usuario': ob_user[0].get_full_name(),
 			    }
 
 				send_email(email_context,'email_keys_send.html','Recupera Password CNISC','no-reply@isc.edu.co',[email]);
 				mensaje = 'Se ha enviado un correo con las instruciones para recuperar su contraseña'
-				
+
 			else :
 				mensaje = 'No existe este algún usuario con este correo'
 		else :
@@ -95,7 +95,7 @@ def verificar_keys(request, args):
 	if request.method == 'POST':
 		ob_key = TempKeys.objects.get_or_none(key=args)
 		if ob_key :
-			hora_actual = datetime.now()	
+			hora_actual = datetime.now()
 			delta = timedelta(hours=-24)
 			if ob_key.date_added.replace(tzinfo=None) + delta <= hora_actual :
 				password1=request.POST.get('password1')
@@ -111,13 +111,13 @@ def verificar_keys(request, args):
 			else :
 				mensaje = "La Key a vencido porfavor genera una nueva"
 		else :
-			mensaje = " key no valida"		
-	
+			mensaje = " key no valida"
+
 	template = 'verificar_pass.html'
 	return render_to_response(template,{'key':args},context_instance=RequestContext(request))
 
 # -------------------------------------------- API V2 ---------------------------------------------
-		
+
 class Email(View):
 
 	http_method_names = ['pull']
@@ -137,11 +137,11 @@ class Email(View):
 					retorno = {'error':1,'msj':'error al guardar'}
 
 			else :
-				retorno = {'error':1,'msj':'error en el formato'}			
-		else:	
+				retorno = {'error':1,'msj':'error en el formato'}
+		else:
 			retorno = {'error':1,'msj':'valores insuficientes'}
 		return HttpResponse(json.dumps(retorno),content_type="application/json")
-	
+
 
 
 def aviso_bienvenida(request):
@@ -149,28 +149,45 @@ def aviso_bienvenida(request):
 		ob_userext=UserExt.objects.get(user=request.user)
 		ob_userext.welcome_message=True
 		ob_userext.save()
-					
+
 		retorno = {'error':0}
 	else:
 		retorno = {'error':1,'msj':'Usuario no autentificado'}
-	return HttpResponse(json.dumps(retorno),content_type="application/json")			
+	return HttpResponse(json.dumps(retorno),content_type="application/json")
 
 def eliminar_foto(request):
-	if request.user.is_authenticated() :
-		ob_UserExt=UserExt.objects.get(user=request.user)  
-        if ob_UserExt:
-            ob_UserExt.foto.delete(save=True) 
-	return  HttpResponseRedirect(reverse_lazy("preferences"))
+    if request.user.is_authenticated() :
+        if request.user.userext.profile.is_admin == 1 :
+            id_user = request.POST.get('id_user')
+            ob_UserExt = UserExt.objects.get_or_none(user__id=id_user)
+            if ob_UserExt:
+                ob_UserExt.foto.delete(save=True)
+            return HttpResponseRedirect(reverse_lazy("usereditaradmin", args={id_user}))
+        else :
+            ob_UserExt=UserExt.objects.get(user=request.user)
+            if ob_UserExt:
+                ob_UserExt.foto.delete(save=True)
+        return  HttpResponseRedirect(reverse_lazy("preferences"))
 
-def change_foto(request):	
-	if request.user.is_authenticated() :
-		pprint.pprint(request.user)
-		ob_userext=UserExt.objects.get(user=request.user)
-		form = from_foto(request.POST, request.FILES,instance=ob_userext)
-        if form.is_valid():
-        	form.save()
-	return  HttpResponseRedirect(reverse_lazy("preferences"))
+def change_foto(request):
+    if request.user.is_authenticated() :
+        if request.user.userext.profile.is_admin == 1 :
+            id_user = request.POST.get('id_user')
+            ob_userext=UserExt.objects.get(user__id=id_user)
+            form = from_foto(request.POST, request.FILES,instance=ob_userext)
+            if form.is_valid():
+                form.save()
+            return HttpResponseRedirect(reverse_lazy("usereditaradmin", args={id_user}))
 
+        else :
+            ob_userext=UserExt.objects.get(user=request.user)
+            form = from_foto(request.POST, request.FILES,instance=ob_userext)
+            if form.is_valid():
+                form.save()
+            return HttpResponseRedirect(reverse_lazy("preferences"))
+
+    else:
+        return HttpResponseRedirect("/")
 
 def changeemail(request):
 	if request.user.is_authenticated() :
@@ -183,10 +200,6 @@ def changeemail(request):
 			ob_user.userext.save()
 		else:
 			ob_user.userext.email_alt=""
-			ob_user.userext.save()			
+			ob_user.userext.save()
 
-	return  HttpResponseRedirect(reverse_lazy("preferences"))	
-
-
-
-	
+	return  HttpResponseRedirect(reverse_lazy("preferences"))
