@@ -9,7 +9,7 @@
 
    'use strict';
 
-   var app = angular.module('createMessage', ['ngCookies', 'ngSanitize', 'Api'])
+   var app = angular.module('createMessage', ['ngCookies', 'ngSanitize', 'shareComponents', 'Api'])
 
 		// Cambiar el control de expresiones para prevenir
 		// inconvenientes con las de Django.
@@ -38,6 +38,12 @@
     $scope.ccList = []; // Carga los usuarios recibidos por la API para autocompletar
     $scope.selectedUsers = []; // Usuarios seleccionados para enviar mensajes
     $scope.showMessageForm = false;
+    $scope.isHidden = true; // Controla la visualización de las alertas
+    $scope.alert = {
+      message: '',
+      type: ''
+    };
+
 
 
     // Determina si se debe esconder la lista de autocompletado
@@ -62,6 +68,45 @@
       return (index === -1 ? false : true);
 
     };
+
+
+    // Muestra una alerta con un mensaje
+    var setAlert = function( message, isError ) {
+      var link = '';
+
+      $scope.alert = {
+        message: message,
+        type: isError ? 'error' : 'success'
+      };
+
+      // Si no hay error cree un enlace para editar el usuario
+      if( !isError ) {
+
+        link = 'El mensaje ha sido enviado. <a href="' + message + '">Ver mensaje</a>';
+
+        // Reemplazar contenido
+        document.querySelector('.alert .suggestion span').innerHTML = link;
+
+        // Ocultar el form de mensaje y resetear información y form
+        $scope.showMessageForm = false;
+        $scope.message = {};
+        $scope.selectedUsers = [];
+        $scope.form.$setPristine(true);
+        $scope.form.$setUntouched(true);
+        window.CKEDITOR.instances.message.setData('');
+      }
+
+      // Muestre la alerta
+      $scope.isHidden = false;
+
+    };
+    // Funcion que esconde el alert
+    $scope.hide = function() {
+
+      $scope.isHidden = true;
+
+    }
+
 
 
     // Función de autocompletado
@@ -177,13 +222,24 @@
 
       ApiMessages.new($scope.message)
       .$promise.then(function(response) {
-        console.log(response.error);
-        console.log(response);
+        
+        // Cree una nueva alerta
+        setAlert( response.message, parseInt(response.error, 10) );
+
+        // Esconder preview
+        $scope.showMessagePreview = false;
+        $scope.modal = {};
+
+        // Focus al inicio para ver el mensaje 
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+
       });
 
     };
 
-
+    // Escucha el cambio del input file y en caso que se seleccione un archivo
+    // se asigna al objeto mensaje.
     $scope.attach = function( files ) {
       if( files.length === 0 ) {
         return;

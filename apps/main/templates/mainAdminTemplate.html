@@ -12,6 +12,10 @@
 
 {% block body %}
 
+<div cn-alert class="alert ng-hide" ng-class="alert.type" ng-hide="isHidden" on-close="hide()">
+	{[{ alert.message }]}
+</div>
+
 <section class="collapsable">
 	<header class="collapsable__header fluid-grid static inline-header" ng-click="showMessageForm=!showMessageForm">
 		<h1 class="">Crear un nuevo mensaje</h1>
@@ -111,4 +115,5 @@
 
     <script src="{{STATIC_URL}}js/app/api/api.services.js"></script>
     <script src="{{STATIC_URL}}js/app/admin/admin.createMessage.js"></script>
+    <script src="{{STATIC_URL}}js/app/share/share.directives.js"></script>
 {% endblock %}

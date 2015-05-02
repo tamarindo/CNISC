@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import *
@@ -115,7 +116,7 @@ class Mensajes(View):
 		subject = request.POST.get('subject')
 		json_recipients = request.POST.get('users')
 		content_men = request.POST.get('message')
-		private = False if request.POST.get('isPrivate') is None else True
+		private = False if request.POST.get('isPrivate') is None or request.POST.get('isPrivate') == 'false' else True
 		admin_user = User.objects.get(id=request.user.id)
 
 		if subject and json_recipients and content_men:
@@ -139,10 +140,10 @@ class Mensajes(View):
 			if private:
 				notificar_mensaje(json_recipients,subject,content_men,admin_user)
 
-			retorno = {'error':0,'msj':' '}
+			retorno = {'error':0,'message':'/mensajes/' + str(new_mensaje.pk)}
 
 		else:
-			retorno = {'error':1,'msj':'Faltan parametros'}
+			retorno = {'error':1,'message':'Los campos enviados no son válidos'}
 
 		return HttpResponse(json.dumps(retorno),content_type="application/json")
 
