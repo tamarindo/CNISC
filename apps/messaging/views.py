@@ -7,7 +7,7 @@ from django.contrib.auth import login as auth_login , logout
 from django.template import RequestContext  # para hacer funcionar {% csrf_token %}
 from django.contrib.auth.models import User
 from django.views.generic import View
-
+from apps.messaging.forms import fromAttachment
 from apps.messaging.models import View_Messages_User , Message
 from apps.messaging.utils import notificar_mensaje
 
@@ -34,7 +34,13 @@ class Mensajes(View):
 					list_view_message_private = View_Messages_User.objects.filter(user=ob_user,private = True ).order_by('date_added')[lim_inf:lim_sup]
 
 					for item_view_message in list_view_message_private:
-						vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+						ob_attachment = item_view_message.have_attachment()
+						if ob_attachment :
+								url_atta = ob_attachment.get_url()
+						else:
+								url_atta = None
+
+						vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
 
 					retorno = vector_view_message_private
 
@@ -43,8 +49,13 @@ class Mensajes(View):
 					list_view_message_no_private = View_Messages_User.objects.filter(user=ob_user ,private = False).order_by('date_added')[lim_inf:lim_sup]
 
 					for item_view_message in list_view_message_no_private:
-						vector_view_message_no_private.append(
-						dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+						ob_attachment = item_view_message.have_attachment()
+						if ob_attachment :
+								url_atta = ob_attachment.get_url()
+						else:
+								url_atta = None
+
+						vector_view_message_no_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
 
 					retorno = vector_view_message_no_private
 			else:
@@ -59,7 +70,7 @@ class Mensajes(View):
 
 			vector_view_messag= []
 			ob_view_message = View_Messages_User.objects.get( pk = mensaje_id )
-			retorno = dict([('id',ob_view_message.id),('asunto',ob_view_message.message.subject),('mensaje',ob_view_message.message.content), ('esvisto',ob_view_message.seen), ('fecha',ob_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))])
+			retorno = dict([('id',ob_view_message.id),('asunto',ob_view_message.message.subject),('mensaje',ob_view_message.message.content), ('esvisto',ob_view_message.seen), ('fecha',ob_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)])
 
 			return HttpResponse(json.dumps(retorno),content_type="application/json")
 
@@ -118,7 +129,11 @@ class Mensajes(View):
 					# pass
 					newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
 					newView.save()
-
+					from_attachment = fromAttachment(request.POST, request.FILES)
+					pprint(from_attachment)
+					if from_attachment.is_valid():
+						from_attachment.message=new_mensaje
+						from_attachment.save()
 			if private:
 				notificar_mensaje(json_recipients,subject,content_men,admin_user)
 

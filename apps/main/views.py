@@ -23,7 +23,7 @@ from apps.parceadores.froms import ImportXLSForm
 from django.views.generic import View
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-import pprint
+from pprint import pprint
 import json
 from random import choice
 
@@ -36,51 +36,59 @@ def home(request):
 	if request.user.is_authenticated():
 		ob_user=User.objects.get(id=request.user.id)
 		if ob_user.userext.profile.is_admin == 1:
-			ob_fromAttachment = fromAttachment() 
-			messages_send=Message.objects.filter(sender=ob_user)			
+			ob_fromAttachment = fromAttachment()
+			messages_send=Message.objects.filter(sender=ob_user)
 			template="mainAdminTemplate.html"
 			return render_to_response(template,locals(),context_instance=RequestContext(request))
-		
-		else :
 
+		else :
 			vector_temp_message=[]
 			messages_not_seen=len(View_Messages_User.objects.filter(user=ob_user,seen=False))
 			list_view_message=View_Messages_User.objects.filter(user=ob_user,private=False)[0:5]
-
 			for item_view_message in list_view_message:
-				vector_temp_message.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+				ob_attachment = item_view_message.have_attachment()
+				if ob_attachment :
+					url_atta = ob_attachment.get_url()
+				else:
+					url_atta = None
+				vector_temp_message.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
 
 			vector_temp_message_private=[]
 			list_view_message_private=View_Messages_User.objects.filter(user=ob_user,private=True)[0:5]
 
 			for item_view_message in list_view_message_private:
-				vector_temp_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M"))]))
+				ob_attachment = item_view_message.have_attachment()
+				if ob_attachment :
+					url_atta = ob_attachment.get_url()
+				else:
+					url_atta = None
+				vector_temp_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
 
-			dic_messages= json.dumps({'mensajes':vector_temp_message,'mensajes-privados': vector_temp_message_private})		
-			
+			dic_messages= json.dumps({'mensajes':vector_temp_message,'mensajes-privados': vector_temp_message_private})
+
 			template="mainUserTemplate.html"
-			return render_to_response(template,locals(),context_instance=RequestContext(request))		
+			return render_to_response(template,locals(),context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect(reverse("login"))
 
 def preferences(request):
 	if request.user.is_authenticated():
-		ob_user=User.objects.get(id=request.user.id)	
-		if ob_user.userext.profile.is_admin == 1:	
-			estado_twitter=verificar_conexion_twitter(request.user)	
-			template="preferencesAdminTemplate.html"	
+		ob_user=User.objects.get(id=request.user.id)
+		if ob_user.userext.profile.is_admin == 1:
+			estado_twitter=verificar_conexion_twitter(request.user)
+			template="preferencesAdminTemplate.html"
 		else:
 			fromfoto=from_foto()
 			estado_twitter=verificar_conexion_twitter(request.user)
 			estado_facebook = verificar_conexion_facebook(request.user)
-			template="preferencesUserTemplate.html"	
-		return render_to_response(template,locals(),context_instance=RequestContext(request))					
+			template="preferencesUserTemplate.html"
+		return render_to_response(template,locals(),context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect(reverse("home"))
 
 def panelUseradmin(request):
 	ob_user=User.objects.get(id=request.user.id)
-	if ob_user.userext.profile.is_admin == 1:		
+	if ob_user.userext.profile.is_admin == 1:
 		list_usuarios = User.objects.filter(is_staff=0)
 
 		v_list_users = []
@@ -97,8 +105,8 @@ def panelUseradmin(request):
 
 		dic_list_users = json.dumps(v_list_users)
 
-		template="userAdminTemplate.html"	
-		return render_to_response(template,locals(),context_instance=RequestContext(request))	
+		template="userAdminTemplate.html"
+		return render_to_response(template,locals(),context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect(reverse("home"))
 
@@ -107,11 +115,11 @@ def panelCrearUsuarios(request):
 	ob_user = User.objects.get(id=request.user.id)
 
 	if ob_user.userext.profile.is_admin :
-	
+
 		if 'GET' == request.method :
-			template="userCreateTemplate.html"		
-			return render_to_response(template,locals(),context_instance=RequestContext(request))	
-		
+			template="userCreateTemplate.html"
+			return render_to_response(template,locals(),context_instance=RequestContext(request))
+
 		elif 'POST' == request.method :
 
 			nombre = request.POST.get('nombre')
@@ -132,7 +140,7 @@ def panelCrearUsuarios(request):
 				)
 
 				new_ob_user.set_password(codigo)
-				
+
 				# Informacion adicional del usuario
 				new_ob_userext = UserExt(
 					phone =  request.POST.get('mobile'),
@@ -155,9 +163,9 @@ def panelCrearUsuarios(request):
 					ob_perfil = Profile.objects.get_or_none( name = input_perfil )
 					new_ob_userext.profile = ob_perfil
 
-				else : 
+				else :
 					return HttpResponse( json.dumps( {'error': 1, 'message': 'Debe especificar un perfil'} ), content_type="application/json" )
-				
+
 				# Save user
 				new_ob_user.save()
 
@@ -190,10 +198,10 @@ class Usuario(View):
 	http_method_names = ['get','pull','post','delete']
 
 	def get(self,request,*args,**kwargs):
-		# traer Usuario	
+		# traer Usuario
 		ob_user=User.objects.get(id=request.user.id)
 
-		if ob_user.userext.profile.is_admin == 1:		
+		if ob_user.userext.profile.is_admin == 1:
 			usuario=User.objects.get(pk=args[0])
 
 			if ValidateEmail(usuario.userext.email_alt) :
@@ -207,16 +215,16 @@ class Usuario(View):
 
 			template="userEditTemplate.html"
 			fromfoto = from_foto()
-			return render_to_response(template,locals(),context_instance=RequestContext(request))	
+			return render_to_response(template,locals(),context_instance=RequestContext(request))
 		else:
 			return HttpResponseRedirect(reverse("home"))
 
-	
+
 	def post(self,request,*args,**kwargs):
-		if args[0] != None : 
+		if args[0] != None :
 			usuario=User.objects.get(pk=args[0])
 			ob_userext=UserExt.objects.get(user=usuario)
-			
+
 			if request.POST.get('is_active'):
 				data = True
 			else :
@@ -227,13 +235,13 @@ class Usuario(View):
 			password = request.POST.get('pass')
 			if password and password != "":
 				usuario.set_password(password)
-			
+
 			usuario.save()
 
 			if request.POST.get('email') != usuario.email :
-  
+
 				ob_userext.email_alt = request.POST.get('email')
-			
+
 			ob_userext.mobile= request.POST.get('mobile')
 			ob_userext.address= request.POST.get('address')
 			ob_userext.city= request.POST.get('city')
@@ -252,7 +260,7 @@ class Usuario(View):
 			# Perfil del usuario
 			profile = usuario.userext.profile.name
 			profile_info = ProfileMeta.objects.filter(user=usuario)
-				
+
 			if ValidateEmail(usuario.userext.email_alt) :
 				email_actual = usuario.userext.email_alt
 			else :
@@ -260,8 +268,8 @@ class Usuario(View):
 
 			fromfoto = from_foto()
 			mensaje = "Usuario actualizado"
-			template="userEditTemplate.html"	
-			return render_to_response(template,locals(),context_instance=RequestContext(request))	
+			template="userEditTemplate.html"
+			return render_to_response(template,locals(),context_instance=RequestContext(request))
 		else :
 			return HttpResponseRedirect(reverse("home"))
 
@@ -283,9 +291,7 @@ def changeTypeVisualization(request):
 			ob_confuser.save()
 			retorno = {'error':0,'msj':''}
 		except:
-			retorno = {'error':1,'msj':'error al guardar'}	
+			retorno = {'error':1,'msj':'error al guardar'}
 	else:
 		retorno = {'error':1,'msj':'Faltan Parametros'}
 	return HttpResponse(json.dumps(retorno),content_type="application/json")
-
-
