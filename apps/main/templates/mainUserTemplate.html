@@ -53,9 +53,17 @@
 	<article class="message-content">
 		<header class="message-header">
 			<h2 class="message-title">{[{activeMessage.asunto}]}</h2>
-			<p class="meta" ng-show="activeMessage">
-				Publicado el {[{activeMessage.fecha}]}
-			</p>
+			<div class="meta" ng-show="activeMessage">
+				<p>
+					Publicado el {[{activeMessage.fecha}]}
+				</p>
+				<div class="attachment" ng-show="activeMessage.adjunto">
+					<a href="{[{activeMessage.adjunto}]}" target="_blank" title="Ver adjunto">
+						<i class="icon-paperclip"> </i>
+						Ver archivo adjunto
+					</a>
+				</div>				
+			</div>
 		</header>
 		<div class="entry-content">
 			<div class="nomessage" ng-hide="activeMessage"><div class="iscbw center-text">Selecciona un mensaje</div></div>
