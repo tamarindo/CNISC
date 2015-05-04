@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from datetime import datetime
 from apps.userManager.models import Profile, baseModel
 
 
@@ -33,7 +34,7 @@ class View_Messages_User(baseModel):
 	user = models.ForeignKey(User, verbose_name=_("Usuario"))
 	seen = models.BooleanField(verbose_name=_("Visto"), default=False)
 	private = models.BooleanField(verbose_name=_("es privado"),default=False)
-	seen_date = models.DateTimeField(verbose_name=_("Fecha"), null=True, blank=True)
+	seen_date = models.DateTimeField(verbose_name=_("Fecha"), null=True, blank=True, default=datetime.now)
 
 	def __unicode__(self):
 		return self.message.subject
