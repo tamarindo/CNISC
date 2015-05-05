@@ -13,29 +13,29 @@
 			return;
 		}
 
-		// Initiate
-		var lastActiveIndex = [0, 0]; // last active index, last active list
-		
 		// Mostrar el mensaje seleccionado
-		$scope.show = function( index, list ) {
-			var lastIndex = lastActiveIndex[0];
-			var lastList = lastActiveIndex[1];
-			
-			if( lastIndex != index || lastList != list ) {
+		// Se detecta el ultimo mensaje activo por su atributo isActive
+		// Si el mensaje seleccionado es el mismo activo, no se sucede nada
+		// De otro caso se selecciona el nuevo mensaje y se marca como activo.
+		$scope.show = function(ob) {
+			var message = ob.mensaje;
+			var lastActive;
 
-				// Update the last active item if such
-				if($scope.activeMessage) {
-					$scope.list[lastList][lastIndex].isActive = false;
-				}
-				lastActiveIndex = [index, list];
+			// Buscar en las dos listas
+			lastActive = _.find($scope.list[0], 'isActive', true);
+			if( lastActive == undefined )
+				lastActive = _.find($scope.list[1], 'isActive', true);
 
-				// Update new active item
-				$scope.list[list][index].isActive = true;
-				$scope.activeMessage = $scope.list[list][index];
-			}
+			if(message === lastActive)
+				return;
 
-			// Marcar el mensaje como leido
-			markAsRead( this.mensaje );
+			if(lastActive != undefined)
+				lastActive.isActive = false;
+
+			message.isActive = true;
+			$scope.activeMessage = message;
+
+			markAsRead( message );
 		};
 
 		// Marca un mensaje como leído

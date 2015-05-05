@@ -1,4 +1,4 @@
-<a href class="message  bar-list__item" ng-class="{active : mensaje.isActive, seen : mensaje.esvisto}" ng-click="show($index, list)">
+<a href class="message  bar-list__item" ng-class="{active : mensaje.isActive, seen : mensaje.esvisto}" ng-click="show(this)">
 	<h3 class="title">{[{mensaje.asunto}]}</h3>
 	<div class="small">
 		<time datetime="date {[{mensaje.fecha | date}]}"><i class="icon-clock"></i> {[{mensaje.fecha | date}]}</time>
