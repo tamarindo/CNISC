@@ -1,0 +1,39 @@
+{% extends "base_admin.html" %}
+{% block title %}
+
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block body %}
+
+<div id="content" class="container medium" >
+    <article class="message-content message-sender">
+    		<header class="message-header">
+    			<h2 class="message-title ng-binding">{{ob_message.content|safe}}</h2>
+    			<p class="meta ng-binding" ng-show="activeMessage">
+    				Publicado el {{ob_message.date_added}}
+    			</p>
+    			<p  >
+                    {% if ob_attachment %}
+    				            <span>Adjunto :<a href="/media/{{ ob_attachment.data }}" >{{ ob_attachment.data.filename}}</a></span>
+    			    {% endif %}
+                </p>
+
+    		</header>
+    		<div class="entry-content">
+    				<div class="ng-binding" ng-bind-html="activeMessage.mensaje"><p> {{ob_message.content|safe}}</p>
+                    </div>
+    		</div>
+            <a href="{% url 'home' 'ob_message.id' %}">  <botton class="flat button blue reenviar" > Reenviar  </botton> </a>
+    </article>
+
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}{% endblock %}

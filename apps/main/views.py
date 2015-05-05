@@ -40,7 +40,6 @@ def home(request):
 			messages_send=Message.objects.filter(sender=ob_user)
 			template="mainAdminTemplate.html"
 			return render_to_response(template,locals(),context_instance=RequestContext(request))
-
 		else :
 			vector_temp_message=[]
 			messages_not_seen=len(View_Messages_User.objects.filter(user=ob_user,seen=False))
@@ -278,8 +277,18 @@ class Usuario(View):
 		pass
 		# Eliminar Usaurio
 
+def mensajeEnviado (request,*args):
 
-# API
+	if request.user.userext.profile.is_admin == 1 :
+		print args
+		if args != () :
+			#Enviar un solo Mensaje
+			mensaje_id = int( args[0] )
+			ob_message = Message.objects.get( pk = mensaje_id )
+			ob_attachment = Attachment.objects.get_or_none(message =ob_message )
+			template = 'adminSigleMessageTemplate.html'
+			return render_to_response(template,locals(),context_instance=RequestContext(request))
+	return HttpResponseRedirect(reverse("home"))# API
 
 
 def changeTypeVisualization(request):

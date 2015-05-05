@@ -12,7 +12,7 @@
 
 vendor-prefixes = webkit o ms moz official
 
-/* 
+/*
  * ------------------------------
  * General
  * ------------------------------
@@ -92,10 +92,10 @@ table
 	flex-flow row wrap
 	align-items center
 	justify-content center
-	
+
 	&.gradient
 		background radial-gradient(#fff, #ddd)
-	
+
 	>.container
 		padding 2rem 0
 
@@ -133,7 +133,7 @@ table
 
 #content
 	padding-bottom 1.3rem
-	
+
 // Navegacion
 // ----------------------------------------------------------------------------
 header-w = 55px
@@ -144,10 +144,10 @@ header-border = 5px
 	color #fff
 	height (header-border + header-w)
 	display flex // center vertically
-	
+
 	a
 		color #fff
-		
+
 	.fluid-grid
 		justify-content space-between
 		align-items center
@@ -159,7 +159,7 @@ header-border = 5px
 		// Forza a FF a no duplicar el line-height por haber
 		// dos elementos dentro de .menu-item a
 		max-height (header-border + header-w)
-		
+
 		a
 		button
 			display block
@@ -207,10 +207,10 @@ header-border = 5px
 		animation 150ms slideIn linear
 	&.ng-hide-add
 		animation 150ms slideOut linear
-		
+
 	.logout
 		margin-top 60px
-		
+
 @keyframes slideIn
 	0%
 		opacity 0
@@ -218,7 +218,7 @@ header-border = 5px
 	100%
 		opacity 1
 		transform translateX(0)
-		
+
 @keyframes slideOut
 	0%
 		opacity 1
@@ -243,7 +243,7 @@ header-border = 5px
 // ----------------------------------------------------------------------------
 .user-messages #content
 	padding-bottom 0
-	
+
 #messages
 	bp = 740px
 	fluid-grid(bp)
@@ -255,13 +255,13 @@ header-border = 5px
 		.message-content
 			width 66.66%
 			flex auto
-	
+
 
 .messages-list
 	border-right 2px solid lighten-gray
 	display flex
 	flex-direction column
-	
+
 	.list-header
 	.load-more
 		background-color lighten-gray
@@ -269,12 +269,12 @@ header-border = 5px
 	.list-header
 		padding .5rem 1rem
 		font-size 1rem
-	
+
 	.load-more-container
 		display flex
 		flex-direction column-reverse
 		flex 1 0 auto
-		
+
 	.load-more
 		padding .6rem 1rem
 		font-weight 700
@@ -283,7 +283,7 @@ header-border = 5px
 		position relative
 		&:hover
 			background-color lighten(lighten-gray, 15%)
-		
+
 
 .message-list
 	.message
@@ -292,13 +292,13 @@ header-border = 5px
 			background-color primary
 			.title
 				color #fff
-		
+
 		&.seen
 			.title
-				font-weight 400	
+				font-weight 400
 	.excerpt
 		margin-top 5px
-		
+
 .message-content
 	position relative
 	padding 10px 1.5rem 1rem
@@ -307,7 +307,7 @@ header-border = 5px
 	.meta
 		color light-gray
 		margin-top 0
-		
+
 	.nomessage
 		absolute left 0 right 0
 		top 0
@@ -317,7 +317,7 @@ header-border = 5px
 		justify-content center
 		align-items center
 		color lighten-gray
-		
+
 		.iscbw
 			&:before
 				width 149px
@@ -328,14 +328,14 @@ header-border = 5px
 				background url(../../img/logo-bw.jpg) 0 0 no-repeat
 				display block
 				margin-bottom 10px
-			
+
 
 // Fijar altura al mismo de la ventana
 .message-content
 .messages-list
 	height calc( 100vh - 60px ) // Tamaño del viewport - (tamaño navbar + border-bottom)
 	overflow-y scroll
-	
+
 // fix para contener los nuevos elementos al cargar más mensajes
 .messages-list .wrapper
 	overflow auto
@@ -350,16 +350,16 @@ header-border = 5px
 	to
 		opacity 1
 		transform translate3d(0,0,0)
-        
+
 .user-img__options
 	display flex
 	flex-flow column wrap
 	align-items center
-	
+
 	.user-img-holder
 		position relative
 		margin-bottom 1rem
-		
+
 	.user-del-form
 		absolute top 0 bottom 0
 		left 0
@@ -369,7 +369,7 @@ header-border = 5px
 		align-items center
 		justify-content center
 		transition background-color 250ms ease-in-out
-		
+
 		&:hover
 			background-color rgba(#fff, .3)
 			.remove.button
@@ -377,18 +377,18 @@ header-border = 5px
 				animation-duration 300ms
 				animation-fill-mode both
 				animation-name fade-up-in
-				
+
 	.remove.button
 		display none
 		background-color rgba(#000, .9)
 		color #fff
 		padding 1rem
-		
+
 	.text-big
 		font-weight 700
 	.gray-text
 		color light-gray
-		
+
 
 // ADMIN
 // ----------------------------------------------------------------------------
@@ -407,14 +407,14 @@ header-border = 5px
 		margin-right 1rem
 	p
 		margin 0
-		
+
 // Creación de usuarios
 .form-field.password
 	display none
-	
+
 // Carga de usuarios
-	
-#result 
+
+#result
 	padding: 10px
 	border: 2px solid #b8b4b4
 	margin: 20px 5px
@@ -427,19 +427,19 @@ header-border = 5px
 
 .color_error
 	color red
-	
+
 
 // Creación de mensajes
 circle(radius, bg)
 	width radius
 	height radius
 	border-radius 50%
-	background-color bg	
+	background-color bg
 
 .create-message
 	.to
 		position relative
-		
+
 	.spinner
 	.spinner:after
 		r = 25px
@@ -451,32 +451,32 @@ circle(radius, bg)
 
 	.spinner
 		absolute right 10px top 50%
-		
+
 		&:after
 			content ""
 			display block
 			background-color white
-			
+
 	.selected-users-list
 		padding 10px
 		font-size 14px
 		margin-top -20px
 		background #F5F5F5
-		
+
 		.selected-user
 			background-color lighten-gray
 			border-radius 15px
 			padding 5px 5px 5px 10px
 			margin-right 5px
-		
+
 		button
 			font-size 12px
-			
+
 		&.ng-hide
 			display none !important
 			padding 0
-		
-	
+
+
 .autocomplete.list
 	absolute left 0 right 0
 	top 100%
@@ -487,17 +487,17 @@ circle(radius, bg)
 	border-top 0
 	background-color white
 	box-shadow 0 2px 6px light-gray
-	
+
 	&.ng-hide
 		display none !important
-	
+
 	.list-item
 		padding 13px 20px 13px 41px
 		cursor pointer
 		justify-content space-between
 		font-size 16px
 		position relative
-		
+
 		&:not(:last-child)
 			border-bottom 1px solid lighten-gray
 		&:hover
@@ -507,7 +507,7 @@ circle(radius, bg)
 			display block
 			width 33.33%
 			text-align left
-			
+
 		&.selected:after
 			content '\e61f'
 			font-family 'cnisc'
@@ -519,8 +519,8 @@ circle(radius, bg)
 			display block
 			text-align center
 			line-height 20px
-			
-.bar-list 
+
+.bar-list
 	list-style: None
 
 .uploader-render
@@ -548,14 +548,14 @@ circle(radius, bg)
 .uploader
 	.selected-file
 		background-color lighten-gray
-		font-weight 700	
+		font-weight 700
 		padding 5px 45px 5px 10px
 		position relative
 		.remove
 			font-size 11px
 			cursor pointer
 			absolute right 9px top 13px
-	
+
 
 // MODAL
 // ----------------------------------------------------------------------------
@@ -596,7 +596,7 @@ circle(radius, bg)
 			top -50px
 			height 70px
 			background-image linear-gradient(bottom, white 20%, transparent)
-			
+
 // COLLAPSABLE
 // ----------------------------------------------------------------------------
 .collapsable
@@ -616,3 +616,12 @@ circle(radius, bg)
 		padding-top 25px
 		&.ng-hide
 			display none
+
+.message-sender
+	overflow hidden
+
+.reenviar
+	float right
+	padding 0.3rem 0.8rem
+	font-size 15px
+	cursor pointer
