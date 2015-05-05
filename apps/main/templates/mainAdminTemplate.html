@@ -26,7 +26,8 @@
 		{% csrf_token %}
 		<div class="form-field">
 			<label for="message__subject">Asunto</label>
-			<input id="message__subject" name="subject" ng-model="message.subject" type="text" required ng-minlength="5" autofocus/>
+			<input id="message__subject" name="subject" ng-model="message.subject" type="text" required ng-minlength="5"
+			 autofocus/>
 		</div>
 		<div class="form-field to">
 			<label for="message__to">Para</label>
@@ -48,7 +49,7 @@
 		</ul>
 		<div class="form-field">
 		 	<p><label for="message">Mensaje</label></p>
-			<textarea id="message" ng-model="message.text"></textarea>
+			<textarea id="message" ng-model="message.text" > {{ob_message.content|safe}} </textarea>
 	    	{% wysiwyg_editor "message" %}
 		</div>
 		<div class="form-field uploader fluid-grid static space-around">
@@ -79,7 +80,7 @@
 
 		{% for item_message in messages_send %}
 			<li>
-				<a href="#" class="bar-list__item">
+				<a href="{% url 'mensajeEnviado' item_message.id %}" class="bar-list__item">
 					<h3 class="title">{{ item_message.subject}}</h3>
 					<div class="small">
 						<time><i class="icon-clock"> </i>Enviado: {{item_message.date_added}}</time>
@@ -106,6 +107,8 @@
 {% endblock %}
 
 {% block js %}
+
+
 	<script src="{{STATIC_URL}}js/lib/angular/angular.min.js"></script>
 	<script src="{{STATIC_URL}}js/lib/angular-resource/angular-resource.min.js"></script>
     <script src="{{STATIC_URL}}js/lib/angular-cookies/angular-cookies.min.js"></script>
@@ -116,4 +119,9 @@
     <script src="{{STATIC_URL}}js/app/api/api.services.js"></script>
     <script src="{{STATIC_URL}}js/app/admin/admin.createMessage.js"></script>
     <script src="{{STATIC_URL}}js/app/share/share.directives.js"></script>
+{% if ob_message %}
+	<script type="text/javascript">
+	var subject ='{{ob_message.subject}}';
+	</script>
+{% endif %}
 {% endblock %}
