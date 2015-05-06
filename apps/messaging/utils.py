@@ -10,13 +10,13 @@ import json
 def notificar_mensaje(json_recipients,asunto,contenido,admin_user):
 	array = []
 	json_recipients=json.loads(json_recipients)
-	
 
-	
+
+
 	for data_id in json_recipients['users']:
 
 		ob_user= User.objects.get(username=int(data_id))
-		if ob_user :	
+		if ob_user :
 			if ValidateEmail(ob_user.userext.email_alt):
 				array.append(ob_user.userext.email_alt)
 			elif ValidateEmail(ob_user.email):
@@ -32,10 +32,15 @@ def notificar_mensaje(json_recipients,asunto,contenido,admin_user):
 				cursor_tw.update_status(status= texto )
 			except Exception, e:
 				pass
-	
+
 	correo = EmailMultiAlternatives(asunto,contenido,'no-reply@isc.edu.co',array)
 	correo.attach_alternative(contenido, 'text/html')
-	correo.send()
+	try:
+		correo.send()
+	except Exception, e:
+		pass
+
+
 
 
 
