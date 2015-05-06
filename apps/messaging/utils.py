@@ -39,9 +39,4 @@ def notificar_mensaje(json_recipients,asunto,contenido,admin_user):
 		correo.send()
 	except Exception, e:
 		pass
-
-
-
-
-
 	return False
