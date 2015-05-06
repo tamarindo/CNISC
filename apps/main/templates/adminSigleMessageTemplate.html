@@ -26,7 +26,9 @@
     				<div class="ng-binding" ng-bind-html="activeMessage.mensaje"><p> {{ob_message.content|safe}}</p>
                     </div>
     		</div>
-            <a href="{% url 'home' %}?id_msj={{ob_message.id}}">  <botton class="flat button blue reenviar" > Reenviar  </botton> </a>
+            <p class="right-text">
+                <a href="{% url 'home' %}?id_msj={{ob_message.id}}">  <botton class="flat button blue reenviar" > Reenviar  </botton> </a>
+            </p>
     </article>
 
 </div>
