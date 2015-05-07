@@ -39,9 +39,8 @@ def home(request):
 			id_msj=request.GET.get('id_msj')
 			if id_msj :
 				ob_message = Message.objects.get_or_none(pk=id_msj)
-				pprint(ob_message)
 			ob_fromAttachment = fromAttachment()
-			messages_send=Message.objects.filter(sender=ob_user)
+			messages_send=Message.objects.filter(sender=ob_user).order_by('-date_added')
 			template="mainAdminTemplate.html"
 			return render_to_response(template,locals(),context_instance=RequestContext(request))
 		else :

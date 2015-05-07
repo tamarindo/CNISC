@@ -11,8 +11,9 @@ from django.views.generic import View
 from apps.messaging.forms import fromAttachment
 from apps.messaging.models import View_Messages_User , Message
 from apps.messaging.utils import notificar_mensaje
+import sys
 
-import pprint
+from pprint import pprint
 import json
 # Create your views here.
 # ------------------------------------------------------- funciones de mensaje ----------------------------------------------------------------------
@@ -124,15 +125,28 @@ class Mensajes(View):
 			new_mensaje = Message(sender=request.user,subject=subject,content=content_men)
 			new_mensaje.save()
 			recipients =json.loads(json_recipients)
+			ob_users= User.objects.none()
+
 			for receiver in recipients['users']:
-				ob_user = User.objects.get(username=receiver)
+				if receiver == 'todos':
+					item_user =  User.objects.all()
+				else :
+					print receiver
+					if  receiver == 'estudiantes' or receiver == 'egresados' :
+						item_user = User.objects.filter(userext__profile__name=str(receiver))
+					elif receiver.find("semestre_") > 0:
+						array=receiver.split("_")
+						item_user = User.objects.filter(userext__profilemeta__key = array[0], userext__profilemeta__value=array[1])
+					else:
+						item_user = User.objects.filter(username=receiver)
+				ob_users = ob_users | item_user
+			pprint(ob_users)
+			for ob_user in  ob_users:
 				if ob_user:
 					# pass
 					newView=View_Messages_User(message=new_mensaje,user=ob_user,private=private)
 					newView.save()
 					from_attachment = fromAttachment(request.POST, request.FILES)
-
-					pprint.pprint(from_attachment.is_valid())
 					if from_attachment.is_valid():
 						new_att=from_attachment.save(commit=False)
 						new_att.message = new_mensaje
@@ -141,7 +155,6 @@ class Mensajes(View):
 				notificar_mensaje(json_recipients,subject,content_men,admin_user)
 
 			retorno = {'error':0,'message':'/mensajes/' + str(new_mensaje.pk)}
-
 		else:
 			retorno = {'error':1,'message':'Los campos enviados no son válidos'}
 
