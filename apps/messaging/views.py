@@ -1,4 +1,5 @@
 # coding=utf-8
+from datetime import datetime
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import *
@@ -89,6 +90,7 @@ class Mensajes(View):
 				if ob_viewmessage:
 					if ob_viewmessage.seen != True:
 						ob_viewmessage.seen = True
+						ob_viewmessage.seen_date = datetime.now()
 						try:
 							ob_viewmessage.save()
 							retorno = {'error':0}
@@ -105,7 +107,7 @@ class Mensajes(View):
 		else :
 
 			id_user = request.user.id
-			ob_viewmessage = View_Messages_User.objects.filter(user=id_user).update(seen=True)
+			ob_viewmessage = View_Messages_User.objects.filter(user=id_user).update(seen=True, seen_date=datetime.now())
 			retorno = {'error':0}
 			return HttpResponse(json.dumps(retorno),content_type="application/json")
 
