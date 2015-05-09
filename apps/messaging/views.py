@@ -33,7 +33,7 @@ class Mensajes(View):
 			if lim_inf and lim_sup and private:
 				if int(private):
 					vector_view_message_private  = []
-					list_view_message_private = View_Messages_User.objects.filter(user=ob_user,private = True ).order_by('date_added')[lim_inf:lim_sup]
+					list_view_message_private = View_Messages_User.objects.filter(user=ob_user,private = True ).order_by('-date_added')[lim_inf:lim_sup]
 
 					for item_view_message in list_view_message_private:
 						ob_attachment = item_view_message.have_attachment()
@@ -48,7 +48,7 @@ class Mensajes(View):
 
 				else:
 					vector_view_message_no_private = []
-					list_view_message_no_private = View_Messages_User.objects.filter(user=ob_user ,private = False).order_by('date_added')[lim_inf:lim_sup]
+					list_view_message_no_private = View_Messages_User.objects.filter(user=ob_user ,private = False).order_by('-date_added')[lim_inf:lim_sup]
 
 					for item_view_message in list_view_message_no_private:
 						ob_attachment = item_view_message.have_attachment()

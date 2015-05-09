@@ -46,7 +46,7 @@ def home(request):
 		else :
 			vector_temp_message=[]
 			messages_not_seen=len(View_Messages_User.objects.filter(user=ob_user,seen=False))
-			list_view_message=View_Messages_User.objects.filter(user=ob_user,private=False)[0:5]
+			list_view_message=View_Messages_User.objects.filter(user=ob_user,private=False).order_by('-date_added')[0:5]
 			for item_view_message in list_view_message:
 				ob_attachment = item_view_message.have_attachment()
 				if ob_attachment :
@@ -56,7 +56,7 @@ def home(request):
 				vector_temp_message.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
 
 			vector_temp_message_private=[]
-			list_view_message_private=View_Messages_User.objects.filter(user=ob_user,private=True)[0:5]
+			list_view_message_private=View_Messages_User.objects.filter(user=ob_user,private=True).order_by('-date_added')[0:5]
 
 			for item_view_message in list_view_message_private:
 				ob_attachment = item_view_message.have_attachment()
