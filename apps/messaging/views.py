@@ -131,16 +131,14 @@ class Mensajes(View):
 				if receiver == 'todos':
 					item_user =  User.objects.all()
 				else :
-					print receiver
-					if  receiver == 'estudiantes' or receiver == 'egresados' :
-						item_user = User.objects.filter(userext__profile__name=str(receiver))
-					elif receiver.find("semestre_") > 0:
+					if  receiver == 'estudiante' or receiver == 'egresado' :
+						item_user = User.objects.filter(userext__profile__name=receiver)
+					elif receiver.find("semestre_") != -1:
 						array=receiver.split("_")
-						item_user = User.objects.filter(userext__profilemeta__key = array[0], userext__profilemeta__value=array[1])
+						item_user = User.objects.filter(profilemeta__key = array[0], profilemeta__value=array[1])
 					else:
 						item_user = User.objects.filter(username=receiver)
 				ob_users = ob_users | item_user
-			pprint(ob_users)
 			for ob_user in  ob_users:
 				if ob_user:
 					# pass

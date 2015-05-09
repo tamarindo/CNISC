@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 
-from apps.userManager.models import  Profile 
+from apps.userManager.models import  Profile
 
 import pprint
 import json
@@ -16,8 +16,8 @@ def loadPredefinedList() :
 	predefinedList = []
 
 	predefinedList.append(dict([ ('username','todos'), ('firstName','Todos los usuarios'), ('lastName',''), ('email','') ]))
-	predefinedList.append(dict([ ('username','estudiantes'), ('firstName','Todos los estudiantes'), ('lastName',''), ('email','') ]))
-	predefinedList.append(dict([ ('username','egresados'), ('firstName','Todos los egresados'), ('lastName',''), ('email','') ]))
+	predefinedList.append(dict([ ('username','estudiante'), ('firstName','Todos los estudiantes'), ('lastName',''), ('email','') ]))
+	predefinedList.append(dict([ ('username','egresado'), ('firstName','Todos los egresados'), ('lastName',''), ('email','') ]))
 
 	for i in range(1, 11) :
 		predefinedList.append(dict([ ('username','semestre_' + str(i)), ('firstName','Estudiantes Semestre'), ('lastName', str(i)), ('email','') ]))
@@ -49,7 +49,7 @@ def autocomplete(request,*args):
 	retorno = {'error':1}
 
 	predefinedList = loadPredefinedList()
-	
+
 	if key == None or len(key) < min_length_for_query :
 		return HttpResponse(json.dumps(retorno),content_type="application/json")
 
@@ -58,13 +58,13 @@ def autocomplete(request,*args):
 		# Los resultados se inicializan con las coincidencias de la lista
 		# de envio predefinida
 		results = filter_by_tag(predefinedList, key)
-		
+
 		ob_users= User.objects.none()
 
 		ob_users = User.objects.filter(
-			Q(username__startswith=key) | 
-			Q(first_name__contains=key) | 
-			Q(last_name__contains=key) | 
+			Q(username__startswith=key) |
+			Q(first_name__contains=key) |
+			Q(last_name__contains=key) |
 			Q(email__startswith=key)
 		)[:10]
 
@@ -77,10 +77,10 @@ def autocomplete(request,*args):
 				("lastName",user.last_name),
 				("email",user.email)
 			]))
-		
+
 		retorno = {'error':0,'data':results}
 
-		return HttpResponse(json.dumps(retorno),content_type="application/json")	
+		return HttpResponse(json.dumps(retorno),content_type="application/json")
 
 	else:
 		return HttpResponse(json.dumps(retorno),content_type="application/json")
