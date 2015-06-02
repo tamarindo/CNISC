@@ -57,11 +57,12 @@
       // @TODO permitir elegir qué página enlazar
       else if( response.status === 'authenticate.fblogin' ) {
 
+        var account = response.data;
         var userId = FB.getUserID();
-        FB.api('/'+ userId +'/accounts', function(response) {
-          console.log(response.data);
-          var firstPage = response.data[0];
-          setFBPage(firstPage);
+        FB.api('/'+ userId +'/accounts', function(pagesInfo) {
+          console.log(pagesInfo.data);
+          var firstPage = pagesInfo.data[0];
+          setFBPage(firstPage, account);
         });
       }
     };
@@ -71,7 +72,7 @@
     //
     // @TODO validar si el usuario tienen permisos de escritura en la página
     // el atributo page.perms <array> deberá contener CREATE_CONTENT
-    var setFBPage = function(page) {
+    var setFBPage = function(page, account) {
 
       if( ! page ) {
         return;
@@ -81,7 +82,7 @@
         $.param({
           accessToken: page['access_token'],
           userID: page['id'],
-          expiresIn: 36*36*60*30, // 1 mes
+          expiresIn: account.authResponse.expiresIn
         })
       )
       .$promise.then( function(response) {

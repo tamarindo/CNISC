@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.contrib.auth.models import User
 from pprint import pprint
 from apps.main.utilities import send_email
@@ -10,8 +11,7 @@ import json
 def notificar_mensaje(json_recipients,asunto,contenido,admin_user):
 	array = []
 	json_recipients=json.loads(json_recipients)
-
-
+	csv_fb_ids = ''
 
 	for data_id in json_recipients['users']:
 
@@ -22,6 +22,7 @@ def notificar_mensaje(json_recipients,asunto,contenido,admin_user):
 			elif ValidateEmail(ob_user.email):
 				array.append(ob_user.email)
 
+		# Twitter
 		ob_cs=CuentaSocial.objects.get_or_none(user=ob_user)
 		cursor_tw = conexion_twitter(admin_user)
 		if cursor_tw :
@@ -33,6 +34,17 @@ def notificar_mensaje(json_recipients,asunto,contenido,admin_user):
 			except Exception, e:
 				pass
 
+		# Crea una lista separada por comas con los ID de usuarios de Facebook
+		token = get_token_social(ob_user, 'Facebook')
+		if token :
+			csv_fb_ids += token.cuenta.uid + ','
+
+	# Facebook
+	# Comprueba si el administrador tiene una cuenta de Facebook vinculada
+	# realiza un push de facebook del usuario y el mensaje
+	facebook_push(admin_user, csv_fb_ids)
+
+	# Email
 	correo = EmailMultiAlternatives(asunto,contenido,'no-reply@isc.edu.co',array)
 	correo.attach_alternative(contenido, 'text/html')
 	try:
