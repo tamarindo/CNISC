@@ -22,7 +22,8 @@
 			$http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 		}]);
 
-	app.controller('mainController', [ '$scope', '$timeout', 'ApiMessages' ,function($scope, $timeout, ApiMessages){
+	app.controller('mainController',
+		[ '$scope', '$timeout', 'ApiMessages' ,function($scope, $timeout, ApiMessages) {
 
 		$scope.unreadMessages = window.UNREAD_MESSAGES;
 		$scope.list = [
@@ -30,15 +31,19 @@
 			vector_messages['mensajes']
 		];
 
+		// Está el vector de mensajes vacio?
+		// Determina si existe por lo menos algún mensaje, ya sea privado
+		// o público
+		//
+		// @return bool
 		$scope.is_vector_messages_empty = function() {
 			if(vector_messages['mensajes-privados'].length > 0 || vector_messages['mensajes'].length > 0) {
 				return false;
 			}
-
 			return true;
 		}
 
-		// Si no hay mensajes, no continue.
+		// Si no hay algún mensaje, no continue.
 		if( $scope.is_vector_messages_empty() ) {
 			return;
 		}
@@ -47,6 +52,8 @@
 		// Se detecta el ultimo mensaje activo por su atributo isActive
 		// Si el mensaje seleccionado es el mismo activo, no se sucede nada
 		// De otro caso se selecciona el nuevo mensaje y se marca como activo.
+		//
+		// @param: ob <obj> Objeto seleccionado y que contiene el mensaje
 		$scope.show = function(ob) {
 			var message = ob.mensaje;
 			var lastActive;
@@ -69,6 +76,9 @@
 		};
 
 		// Marca un mensaje como leído
+		// Envía además la petición a la API para marcar el mensaje
+		//
+		// @param: messaje <obj>
 		var markAsRead = function( message ) {
 
 			if( message.esvisto ) {
@@ -82,7 +92,9 @@
 			$scope.unreadMessages -= 1;
 		};
 
-		$scope.markAll = function( index ) {
+		// Marca todos los mensajes como leídos
+		// Envía además la petición a la API
+		$scope.markAll = function() {
 			var i = 0;
 
 			for(i; i < $scope.list[0].length; i++) {
@@ -101,10 +113,9 @@
 
 			// Resetear contador de mensajes no leídos
 			$scope.unreadMessages = 0;
-
 		};
 
-		// Petición para cargar mensajes antiguos
+		// Cargar Mensajes
 		// Envía la petición de mensajes anteriores de acuerdo
 		// a la longitud del vector de mensajes de $scope.list
 		// @FIX sólo carga mensajes no privados
