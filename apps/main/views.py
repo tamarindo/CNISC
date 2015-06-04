@@ -37,9 +37,15 @@ def home(request):
 	if request.user.is_authenticated():
 		ob_user=User.objects.get(id=request.user.id)
 		if ob_user.userext.profile.is_admin == 1:
-			id_msj=request.GET.get('id_msj')
-			if id_msj :
-				ob_message = Message.objects.get_or_none(pk=id_msj)
+
+			# La query var 'm' indica que se debe precargar un mensaje (Reenviar).
+			# en caso de existir busca el mensaje con ese ID y lo guarda en preseted_messsage
+			should_preset_message=request.GET.get('m')
+			if should_preset_message :
+				ob_message = Message.objects.get_or_none(pk=should_preset_message)
+				if ob_message :
+					preseted_message = json.dumps({ 'subject': ob_message.subject, 'content': ob_message.content })
+
 			ob_fromAttachment = fromAttachment()
 			messages_send=Message.objects.filter(sender=ob_user).order_by('-date_added')
 			template="mainAdminTemplate.html"

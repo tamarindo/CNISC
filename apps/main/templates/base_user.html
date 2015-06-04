@@ -32,6 +32,11 @@
                         <span class="">Volver a mensajes</span>
                     </a>
                 {% endif %}
+                {% if messages_not_seen > 0 %}
+                    <abbr title="{{messages_not_seen}} Mensajes sin leer" class="messages__not-seen">
+                        {[{unreadMessages}]}
+                    </abbr>
+                {% endif %}
             </figure>
             <nav role="navigation" class="main-navigation">
                 <ul class="list fluid-grid static">
@@ -63,7 +68,7 @@
             </nav>
         </div>
     </header>
-    
+
     <div id="opciones" ng-show="showMenu" class="ng-hide">
         <h2 class="title-option center-text main-title">Opciones</h2>
         <ul class="list bordered">
@@ -88,7 +93,7 @@
         {% block body %}
         {% endblock %}
     </div>
-    
+
 
     <script src="{% static "js/lib/angular/angular.min.js" %}"></script>
     <script src="{% static "js/lib/angular-resource/angular-resource.min.js" %}"></script>
