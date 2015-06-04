@@ -10,8 +10,14 @@ from apps.oauthSocial.forms import editApp
 from apps.oauthSocial.utilis import *
 from twython import Twython
 from django.contrib.auth.models import User
+from django.conf import settings
 
 import pprint, json, datetime
+
+# HTTP fetch requests
+import urllib
+import urllib2
+
 
  # configurar las aplicaciones externas
 
@@ -99,6 +105,27 @@ def autentificar_usuario_twitter(request):
 		return HttpResponseRedirect(auth['auth_url'])
 
 
+# Extensor de tokens
+# transforma un token de duración corta de facebook (duración por defecto)
+# a uno de larga duración
+def get_long_lived_token( token ) :
+	url = 'https://graph.facebook.com/v2.3/oauth/access_token'
+	data = {}
+	data['grant_type'] = 'fb_exchange_token'
+	data['client_id'] = settings.FACEBOOK_APP_ID
+	data['client_secret'] = settings.FACEBOOK_APP_SECRET
+	data['fb_exchange_token'] = token
+
+	# Create request object
+	url_data = urllib.urlencode(data)
+	req = urllib2.Request(url, url_data)
+	res = urllib2.urlopen(req)
+
+	# @TODO: Guardar el ID retornado por Facebook en el log del sistema
+	data = res.read()
+	return json.loads(data)
+
+
 # metodos para fb
 def facebook_connect(request):
 
@@ -111,6 +138,17 @@ def facebook_connect(request):
 	access_token = request.POST.get('accessToken')
 	uid = request.POST.get('userID')
 	delta = int(request.POST.get('expiresIn'))
+
+	# Tranforma el access_token a uno de larga duración siempre y cuando el usuario
+	# sea administrador, no es necesario para los usuarios normales ya que sólo se
+	# requiere obtener su ID
+	if ob_user.is_staff :
+		long_token = get_long_lived_token(access_token)
+		pprint.pprint('Token de largo acceso generado:')
+		pprint.pprint(long_token)
+		access_token = long_token['access_token']
+		delta = int(long_token['expires_in'])
+
 	expires_in = datetime.datetime.utcnow() + datetime.timedelta(seconds=delta)
 
 	# Cuenta Social
