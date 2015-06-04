@@ -52,12 +52,15 @@ def login(request):
 def recuperar_pass(request):
 	if request.method == 'POST':
 		email=request.POST.get('email')
+		print email
 		EmailV = re.match("^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,10}$",email)
+		
 		if EmailV != None:
 			ob_user = User.objects.filter(email = email)
 			if not ob_user:
-				ob_user = UserExt.objects.filter(email_alt = email)
-
+				ob_userext = UserExt.objects.filter(email_alt = email)
+				if ob_userext:
+					ob_user = User.objects.filter(id = ob_userext[0].user.id)
 			if ob_user:
 
 				longitud = 18
