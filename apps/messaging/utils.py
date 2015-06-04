@@ -15,7 +15,7 @@ def notificar_mensaje(json_recipients,asunto,contenido,admin_user):
 
 	for data_id in json_recipients['users']:
 
-		ob_user= User.objects.get(username=int(data_id))
+		ob_user= User.objects.get(username=data_id)
 		if ob_user :
 			if ValidateEmail(ob_user.userext.email_alt):
 				array.append(ob_user.userext.email_alt)
