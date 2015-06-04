@@ -37,9 +37,11 @@ def home(request):
 	if request.user.is_authenticated():
 		ob_user=User.objects.get(id=request.user.id)
 		if ob_user.userext.profile.is_admin == 1:
-			id_msj=request.GET.get('id_msj')
-			if id_msj :
-				ob_message = Message.objects.get_or_none(pk=id_msj)
+			preset_message=request.GET.get('m')
+
+			if preset_message :
+				ob_message = Message.objects.get_or_none(pk=preset_message)
+
 			ob_fromAttachment = fromAttachment()
 			messages_send=Message.objects.filter(sender=ob_user).order_by('-date_added')
 			template="mainAdminTemplate.html"
