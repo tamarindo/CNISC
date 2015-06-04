@@ -37,14 +37,19 @@
     $scope.showMessagePreview = false;
     $scope.ccList = []; // Carga los usuarios recibidos por la API para autocompletar
     $scope.selectedUsers = []; // Usuarios seleccionados para enviar mensajes
-    $scope.showMessageForm = false;
+    $scope.showMessageForm = window.RESEND || false;
     $scope.isHidden = true; // Controla la visualización de las alertas
     $scope.alert = {
       message: '',
       type: ''
     };
 
-
+    // Determina si existe el objeto RESEND. En caso afirmativo, rellena los
+    // campos de subject y contenido
+    if (window.RESEND) {
+      $scope.message['subject'] = RESEND.subject;
+      window.CKEDITOR.instances.message.setData(RESEND.content);
+    }
 
     // Determina si se debe esconder la lista de autocompletado
     $scope.hideList = function() {
@@ -222,7 +227,7 @@
 
       ApiMessages.new($scope.message)
       .$promise.then(function(response) {
-        
+
         // Cree una nueva alerta
         setAlert( response.message, parseInt(response.error, 10) );
 
@@ -230,7 +235,7 @@
         $scope.showMessagePreview = false;
         $scope.modal = {};
 
-        // Focus al inicio para ver el mensaje 
+        // Focus al inicio para ver el mensaje
         document.body.scrollTop = document.documentElement.scrollTop = 0;
 
 
