@@ -34,7 +34,7 @@
                 {% endif %}
                 {% if messages_not_seen > 0 %}
                     <abbr title="{{messages_not_seen}} Mensajes sin leer" class="messages__not-seen">
-                        {{messages_not_seen}}
+                        {[{unreadMessages}]}
                     </abbr>
                 {% endif %}
             </figure>
