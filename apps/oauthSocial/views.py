@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext  # para hacer funcionar {% csrf_token %}
@@ -9,20 +10,26 @@ from apps.oauthSocial.forms import editApp
 from apps.oauthSocial.utilis import *
 from twython import Twython
 from django.contrib.auth.models import User
+from django.conf import settings
 
 import pprint, json, datetime
+
+# HTTP fetch requests
+import urllib
+import urllib2
+
 
  # configurar las aplicaciones externas
 
 def configura_app(request, *args):
 	provedor= args[0]
 	pprint.pprint(provedor)
-	if provedor == "Facebook" or provedor == "Twitter": 
+	if provedor == "Facebook" or provedor == "Twitter":
 		if request.method == 'POST':
 	 		modelsfrom = editApp(request.POST)
 	 		if modelsfrom.is_valid():
 	 			modelsfrom.save()
-	 			mensaje=" Aplicacion Guardada "	
+	 			mensaje=" Aplicacion Guardada "
 	 			error=1
 	 		else :
 	 			mensaje=" Error al guardar "
@@ -33,12 +40,12 @@ def configura_app(request, *args):
 			pprint.pprint(ob_app)
 			if ob_app:
 				modelsfrom = editApp(instance=ob_app)
-				return render_to_response('templateFormularioApp.html',{'formulario':modelsfrom},context_instance=RequestContext(request))				
+				return render_to_response('templateFormularioApp.html',{'formulario':modelsfrom},context_instance=RequestContext(request))
 			else:
-	 			return HttpResponseRedirect(reverse("preferences"))	
+	 			return HttpResponseRedirect(reverse("preferences"))
 	else:
-		return HttpResponseRedirect(reverse("preferences"))	
-	
+		return HttpResponseRedirect(reverse("preferences"))
+
 
 # metodos para tw
 def callbacktwitter(request):
@@ -49,7 +56,7 @@ def callbacktwitter(request):
 
 
 	if ob_cuenta_twitter != None:
-		ob_token = TokenSocial.objects.get_or_none(cuenta=ob_cuenta_twitter)		
+		ob_token = TokenSocial.objects.get_or_none(cuenta=ob_cuenta_twitter)
 		oauth_verifier=request.GET.get('oauth_verifier')
 
 	if  ob_app and ob_cuenta_twitter and ob_token and oauth_verifier:
@@ -62,7 +69,7 @@ def callbacktwitter(request):
 		ob_cuenta_twitter.save()
 		ob_token.save()
 
-		return HttpResponseRedirect(reverse("preferences"))	
+		return HttpResponseRedirect(reverse("preferences"))
 
 
 
@@ -73,7 +80,7 @@ def autentificar_usuario_twitter(request):
 
 		ob_cuenta_twitter=CuentaSocial.objects.get_or_none(user=request.user)
 		twitter = Twython(APP_KEY, APP_SECRET)
-		auth = twitter.get_authentication_tokens(callback_url='http://127.0.0.1:8000/api/oauth/callback_twitter')	
+		auth = twitter.get_authentication_tokens(callback_url='http://127.0.0.1:8000/api/oauth/callback_twitter')
 		OAUTH_TOKEN = auth['oauth_token']
 		OAUTH_TOKEN_SECRET = auth['oauth_token_secret']
 
@@ -82,7 +89,7 @@ def autentificar_usuario_twitter(request):
 			new_cuenta_twitter.save()
 			token_social = TokenSocial(cuenta=new_cuenta_twitter,token=OAUTH_TOKEN,token_secreto=OAUTH_TOKEN_SECRET)
 			token_social.save()
-		
+
 		else :
 			ob_token = TokenSocial.objects.get_or_none(cuenta=ob_cuenta_twitter)
 			if  ob_token :
@@ -91,11 +98,32 @@ def autentificar_usuario_twitter(request):
 				ob_token.token_secreto=OAUTH_TOKEN_SECRET
 				ob_token.save()
 
-			else:  
+			else:
 				token_social = TokenSocial(cuenta=ob_cuenta_twitter,token=OAUTH_TOKEN,token_secreto=OAUTH_TOKEN_SECRET)
 				token_social.save()
 
 		return HttpResponseRedirect(auth['auth_url'])
+
+
+# Extensor de tokens
+# transforma un token de duración corta de facebook (duración por defecto)
+# a uno de larga duración
+def get_long_lived_token( token ) :
+	url = 'https://graph.facebook.com/v2.3/oauth/access_token'
+	data = {}
+	data['grant_type'] = 'fb_exchange_token'
+	data['client_id'] = settings.FACEBOOK_APP_ID
+	data['client_secret'] = settings.FACEBOOK_APP_SECRET
+	data['fb_exchange_token'] = token
+
+	# Create request object
+	url_data = urllib.urlencode(data)
+	req = urllib2.Request(url, url_data)
+	res = urllib2.urlopen(req)
+
+	# @TODO: Guardar el ID retornado por Facebook en el log del sistema
+	data = res.read()
+	return json.loads(data)
 
 
 # metodos para fb
@@ -110,13 +138,24 @@ def facebook_connect(request):
 	access_token = request.POST.get('accessToken')
 	uid = request.POST.get('userID')
 	delta = int(request.POST.get('expiresIn'))
+
+	# Tranforma el access_token a uno de larga duración siempre y cuando el usuario
+	# sea administrador, no es necesario para los usuarios normales ya que sólo se
+	# requiere obtener su ID
+	if ob_user.is_staff :
+		long_token = get_long_lived_token(access_token)
+		pprint.pprint('Token de largo acceso generado:')
+		pprint.pprint(long_token)
+		access_token = long_token['access_token']
+		delta = int(long_token['expires_in'])
+
 	expires_in = datetime.datetime.utcnow() + datetime.timedelta(seconds=delta)
 
 	# Cuenta Social
 	# Se actualiza o crea el usuario si es que ya existe para esta app
 	ob_cuenta_social = CuentaSocial.objects.update_or_create(user=ob_user, app=ob_app, defaults={'uid': uid})
 	pprint.pprint(ob_cuenta_social)
-	
+
 	# Tokens
 	TokenSocial.objects.update_or_create(cuenta=ob_cuenta_social[0], defaults={'token':access_token, 'token_secreto':access_token, 'fecha_expiracion':expires_in })
 
