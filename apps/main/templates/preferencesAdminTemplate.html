@@ -21,7 +21,11 @@
   {% endif %}
 </p>
 <p class="facebook center-text">
-  <button class="flat button facebook block center-text" ng-click="login()"><i class="icon-facebook"> </i>Conectar una página de Facebook</button>
+  {% if estado_facebook %}
+    <span class="button facebook block center-text"><i class="icon-facebook"> </i>Su cuenta de Facebook está conectada</span>
+  {% else %}
+    <button class="flat button facebook block center-text" ng-click="login()"><i class="icon-facebook"> </i>Conectar una página de Facebook</button>
+  {% endif %}
 </p>
 
 {% endblock %}

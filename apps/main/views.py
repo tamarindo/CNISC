@@ -83,6 +83,7 @@ def preferences(request):
 		ob_user=User.objects.get(id=request.user.id)
 		if ob_user.userext.profile.is_admin == 1:
 			estado_twitter=verificar_conexion_twitter(request.user)
+			estado_facebook = verificar_conexion_facebook(request.user)
 			template="preferencesAdminTemplate.html"
 		else:
 			fromfoto=from_foto()
