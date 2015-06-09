@@ -23,7 +23,8 @@ def notificar_mensaje(json_recipients,asunto,contenido,admin_user):
 				array.append(ob_user.email)
 
 		# Twitter
-		ob_cs=CuentaSocial.objects.get_or_none(user=ob_user)
+		ob_app = App.objects.get_or_none(provedor="Twitter")
+		ob_cs = CuentaSocial.objects.get_or_none(user=ob_user, app=ob_app)
 		cursor_tw = conexion_twitter(admin_user)
 		if cursor_tw and ob_cs:
 
