@@ -12,8 +12,8 @@
 <div id="content" class="container medium" >
     <article class="message-content message-sender">
         <header class="message-header">
-            <h2 class="message-title ng-binding">{{ob_message.content|safe}}</h2>
-            <p class="meta ng-binding" ng-show="activeMessage">
+            <h2 class="message-title">{{ob_message.subject|safe}}</h2>
+            <p class="meta " ng-show="activeMessage">
                 Publicado el {{ob_message.date_added}}
             </p>
             <p  >
@@ -23,7 +23,7 @@
             </p>
         </header>
         <div class="entry-content">
-            <div class="ng-binding" ng-bind-html="activeMessage.mensaje"><p> {{ob_message.content|safe}}</p>
+            <div class="" ng-bind-html="activeMessage.mensaje"><p> {{ob_message.content|safe}}</p>
             </div>
         </div>
         <p class="right-text">
