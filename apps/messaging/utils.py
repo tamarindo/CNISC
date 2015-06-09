@@ -25,7 +25,7 @@ def notificar_mensaje(json_recipients,asunto,contenido,admin_user):
 		# Twitter
 		ob_cs=CuentaSocial.objects.get_or_none(user=ob_user)
 		cursor_tw = conexion_twitter(admin_user)
-		if cursor_tw :
+		if cursor_tw and ob_cs:
 
 			texto = "@"+ob_cs.screen_name+" hola tienes un nuevo mensaje privado en Centro de mensajes ISC - UTP  Sigue el link "
 			# TODO Manejar excepcion para informar al usuario que tiene que segir a la cuenta del admin
