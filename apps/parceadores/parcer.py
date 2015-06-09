@@ -9,8 +9,11 @@ def unicidad_codigo(matriz,posicion,cod,posicionact):
 	j = 0
 	for row in matriz :
 
-		if row[posicion] == cod and j != posicionact :
-			unico = True
+		if cod != '' and cod != None :
+			if row[posicion] == cod and j != posicionact :
+				unico = True
+		else:
+			print cod + str(posicion)
 		j = j + 1
 	return unico
 
@@ -74,7 +77,6 @@ def CargarMatriz(matriz):
 	cont_cam=0
 	for row in matriz:
 		ob_user= User.objects.filter(username = int(row[0]))
-		pprint.pprint(len(ob_user))
 		if len(ob_user) > 0 :
 			p_ob_user=ob_user[0]
 			p_ob_user.username =int(row[0])
@@ -91,8 +93,7 @@ def CargarMatriz(matriz):
 
 			p_ob_user.userext.save()
 
-			ProfileMeta.objects.update_or_create(user=p_ob_user, key='same_key', defaults={'value' : 'A value'})
-			ProfileMeta.objects.update_or_create(user=p_ob_user, key='same_key', defaults={'value' : 'A value'})
+
 
 			if p_ob_user.userext.profile.name ==  'estudiante' :
 				ProfileMeta.objects.update_or_create(user=p_ob_user, key='semestre', defaults={'value' : row[11] })
@@ -123,6 +124,8 @@ def CargarMatriz(matriz):
 				)
 			new_ob_user.set_password(int(row[0]))
 			new_ob_user.save()
+
+			new_ob_user = User.objects.get(username = int(row[0]))
 			perfil = Profile.objects.get_or_none(name=row[10])
 			# Informacion adicional del usuario
 			new_ob_userext = UserExt(
@@ -139,10 +142,11 @@ def CargarMatriz(matriz):
 
 
 			if row[10] == 'estudiante':
-				ProfileMeta.objects.update_or_create(user=new_ob_userext, key='semestre', defaults={'value' : row[11] })
+				ProfileMeta.objects.update_or_create(user=new_ob_user, key='semestre', defaults={'value' : row[11] })
+
 			elif row[10] == 'engresado':
-				ProfileMeta.objects.update_or_create(user=new_ob_userext, key='job', defaults={'value' : row[13]})
-				ProfileMeta.objects.update_or_create(user=new_ob_userext, key='scope', defaults={'value' :  row[14]})
+				ProfileMeta.objects.update_or_create(user=new_ob_user, key='job', defaults={'value' : row[13]})
+				ProfileMeta.objects.update_or_create(user=new_ob_user, key='scope', defaults={'value' :  row[14]})
 			'''
 			if row[10] == 'estudiante':
 				new_ob_student = Student(
