@@ -3,7 +3,5 @@
 	<div class="small">
 		<time datetime="date {[{mensaje.fecha | date}]}"><i class="icon-clock"></i> {[{mensaje.fecha | date}]}</time>
 	</div>
-	<p class="excerpt flat small" ng-show="showMessageExcerpt">
-		{[{::mensaje.mensaje | limitTo: 61}]}{[{ mensaje.mensaje.length > 20 ? '...' : '' }]}
-	</p>
+	<p class="excerpt flat small" ng-show="showMessageExcerpt" ng-bind-html="mensaje.excerpt"></p>
 </a>

@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.utils import timezone
+from django.utils.html import strip_tags
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.forms import *
@@ -61,8 +62,11 @@ def home(request):
 				else:
 					url_atta = None
 
+				content = item_view_message.message.content
+				excerpt = strip_tags(content)[:61].rstrip() + '...'
 				the_date = timezone.localtime( item_view_message.message.date_added )
-				vector_temp_message.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',the_date.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
+
+				vector_temp_message.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',content), ('excerpt', excerpt), ('esvisto',item_view_message.seen), ('fecha',the_date.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
 
 			vector_temp_message_private=[]
 			list_view_message_private=View_Messages_User.objects.filter(user=ob_user,private=True).order_by('-date_added')[0:5]
@@ -74,8 +78,11 @@ def home(request):
 				else:
 					url_atta = None
 
+				content = item_view_message.message.content
+				excerpt = strip_tags(content)[:61].rstrip() + '...'
 				the_date = timezone.localtime( item_view_message.message.date_added )
-				vector_temp_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',the_date.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
+
+				vector_temp_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',content), ('excerpt', excerpt), ('esvisto',item_view_message.seen), ('fecha',the_date.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
 
 			dic_messages= json.dumps({'mensajes':vector_temp_message,'mensajes-privados': vector_temp_message_private})
 
