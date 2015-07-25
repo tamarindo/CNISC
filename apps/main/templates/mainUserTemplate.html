@@ -26,7 +26,7 @@
 </div>
 {% endif %}
 
-<section ng-controller="messages" id="messages">
+<section id="messages">
 	<div class="alert info container" ng-show="is_vector_messages_empty()">
 		<p>Vaya, no tienes ningún mensaje aún :(</p>
 		<p>Puedes ir a las <a href="{% url 'preferences' %}" title="Ir a preferencias">Preferencias</a> y jugar un poco</p>
@@ -62,7 +62,7 @@
 						<i class="icon-paperclip"> </i>
 						Ver archivo adjunto
 					</a>
-				</div>				
+				</div>
 			</div>
 		</header>
 		<div class="entry-content">
@@ -70,22 +70,22 @@
 			<div class="" ng-bind-html="activeMessage.mensaje"></div>
 		</div>
 	</article>
-	
+
 </section>
-	
+
 
 {% endblock %}
 
 {% block js %}
 <script type="text/javascript">
-	var vector_messages = {{dic_messages|safe}}
+	var vector_messages = {{dic_messages|safe}};
+	window.UNREAD_MESSAGES = {{messages_not_seen}};
 </script>
 <script src="{{STATIC_URL}}js/lib/angular-animate/angular-animate.min.js"></script>
 <script src="{{STATIC_URL}}js/lib/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="{{STATIC_URL}}js/lib/lodash/lodash.min.js"></script>
 
 <script src="{{STATIC_URL}}js/app/user/user.main.js"></script>
-<script src="{{STATIC_URL}}js/app/messaging/messaging.main.js"></script>
 <script src="{{STATIC_URL}}js/app/share/share.directives.js"></script>
 <script src="{{STATIC_URL}}js/app/messaging/messaging.directives.js"></script>
 <script src="{{STATIC_URL}}js/app/api/api.services.js"></script>

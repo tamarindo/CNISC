@@ -9,6 +9,8 @@ from django.contrib.auth import login as auth_login , logout
 from django.template import RequestContext  # para hacer funcionar {% csrf_token %}
 from django.contrib.auth.models import User
 from django.views.generic import View
+from django.utils.html import strip_tags
+
 from apps.messaging.forms import fromAttachment
 from apps.messaging.models import View_Messages_User , Message
 from apps.messaging.utils import notificar_mensaje
@@ -43,7 +45,10 @@ class Mensajes(View):
 						else:
 								url_atta = None
 
-						vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
+						content = item_view_message.message.content
+						excerpt = strip_tags(content)[:61].rstrip() + '...'
+
+						vector_view_message_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject), ('mensaje',content), ('excerpt', excerpt), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
 
 					retorno = vector_view_message_private
 
@@ -58,7 +63,10 @@ class Mensajes(View):
 						else:
 								url_atta = None
 
-						vector_view_message_no_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',item_view_message.message.content), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
+						content = item_view_message.message.content
+						excerpt = strip_tags(content)[:61].rstrip() + '...'
+
+						vector_view_message_no_private.append(dict([('id',item_view_message.id),('asunto',item_view_message.message.subject),('mensaje',content), ('excerpt', excerpt), ('esvisto',item_view_message.seen), ('fecha',item_view_message.message.date_added.strftime("%Y-%m-%d %H:%M")),('adjunto',url_atta)]))
 
 					retorno = vector_view_message_no_private
 			else:

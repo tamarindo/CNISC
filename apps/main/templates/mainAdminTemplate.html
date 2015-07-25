@@ -26,8 +26,7 @@
 		{% csrf_token %}
 		<div class="form-field">
 			<label for="message__subject">Asunto</label>
-			<input id="message__subject" name="subject" ng-model="message.subject" type="text" required ng-minlength="5"
-			 autofocus/>
+			<input id="message__subject" name="subject" ng-model="message.subject" type="text" required ng-minlength="5" autofocus />
 		</div>
 		<div class="form-field to">
 			<label for="message__to">Para</label>
@@ -108,20 +107,21 @@
 
 {% block js %}
 
-
 	<script src="{{STATIC_URL}}js/lib/angular/angular.min.js"></script>
 	<script src="{{STATIC_URL}}js/lib/angular-resource/angular-resource.min.js"></script>
-    <script src="{{STATIC_URL}}js/lib/angular-cookies/angular-cookies.min.js"></script>
-    <script src="{{STATIC_URL}}js/lib/angular-animate/angular-animate.min.js"></script>
-    <script src="{{STATIC_URL}}js/lib/angular-sanitize/angular-sanitize.min.js"></script>
-    <script src="{{STATIC_URL}}js/lib/lodash/lodash.min.js"></script>
+	<script src="{{STATIC_URL}}js/lib/angular-cookies/angular-cookies.min.js"></script>
+	<script src="{{STATIC_URL}}js/lib/angular-animate/angular-animate.min.js"></script>
+	<script src="{{STATIC_URL}}js/lib/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="{{STATIC_URL}}js/lib/lodash/lodash.min.js"></script>
 
-    <script src="{{STATIC_URL}}js/app/api/api.services.js"></script>
-    <script src="{{STATIC_URL}}js/app/admin/admin.createMessage.js"></script>
-    <script src="{{STATIC_URL}}js/app/share/share.directives.js"></script>
-{% if ob_message %}
-	<script type="text/javascript">
-	var subject ='{{ob_message.subject}}';
-	</script>
-{% endif %}
+	<script src="{{STATIC_URL}}js/app/api/api.services.js"></script>
+	<script src="{{STATIC_URL}}js/app/admin/admin.createMessage.js"></script>
+	<script src="{{STATIC_URL}}js/app/share/share.directives.js"></script>
+
+	{% if ob_message %}
+		<script type="text/javascript">
+			window.RESEND = {{preseted_message | safe}}
+		</script>
+	{% endif %}
+
 {% endblock %}
