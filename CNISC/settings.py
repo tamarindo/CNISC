@@ -3,7 +3,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SECRET_KEY = '614+m4hd)64isqk#s%9*-4z)uvtumlnj&12ebqpwp15p4%249r'
+SECRET_KEY = '614+m4hd)64isqk#s%9*-4z)uv3umlnj&12ebqpwp15p4%249r'
 
 try:
     from .local_settings import DEBUG , TEMPLATE_DEBUG
@@ -101,12 +101,18 @@ MEDIA_URL = '/media/'
 DJANGO_WYSIWYG_FLAVOR = 'ckeditor'
 DJANGO_WYSIWYG_MEDIA_URL = STATIC_URL + "libs/ckeditor/"
 
+try:
+    from .local_settings import FACEBOOK_APP_ID , FACEBOOK_APP_SECRET
+except Exception:
+    FACEBOOK_APP_ID = 'XXXXXX'
+    FACEBOOK_APP_SECRET =  'XXXXXXXXXXXXXXXXXX'
 
-FACEBOOK_APP_ID = '530163547121767'
-FACEBOOK_APP_SECRET =  '1be29092135566813f648e4b00608db9'
 
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'jonalvarezz'
-EMAIL_HOST_PASSWORD = '3rhYLcyeQgG8VC'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+try:
+    from .local_settings import EMAIL_HOST , EMAIL_HOST_USER , EMAIL_HOST_PASSWORD , EMAIL_PORT , EMAIL_USE_TLS
+except Exception:
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_HOST_USER = 'XXXXX'
+    EMAIL_HOST_PASSWORD = 'XXXXXXS'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
